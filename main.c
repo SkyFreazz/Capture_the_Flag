@@ -149,10 +149,10 @@ int main( void )
 
   printf( "Found tacho motors:\n" );
   
-mvt_motor(l_sn, r_sn, 5000, 2000, 1, l_state, r_state);
+mvt_motor(l_sn, r_sn, 5000, 2000, 0.5, l_state, r_state);
 printf("ici 1");
 Sleep( 3000 );
-mvt_l_motor(l_sn, 3000,  1000,  1/3, l_state);
+mvt_l_motor(l_sn, 3000,  1000,  (1/3), l_state);
 printf("ici 2");
 Sleep( 3000 );
 mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
