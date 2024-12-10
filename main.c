@@ -23,7 +23,7 @@
 //////////////////////////////////////////////////
 #endif
 
-void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit)
+void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit, FLAGS_T l_state, FLAGS_T r_state)
 {
     if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
       int l_max_speed;
@@ -51,12 +51,16 @@ void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit)
       set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
       printf("%u\n", l_sn);
       set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
+      do {
+        get_tacho_state_flags( l_sn, &l_state );
+        get_tacho_state_flags( r_sn, &r_state );
+      } while ( l_state && r_state );
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
 }
 
-void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit)
+void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit, FLAGS_T l_state)
 {
     if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) ){
       int l_max_speed;
@@ -68,12 +72,15 @@ void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit)
       set_tacho_ramp_up_sp( l_sn, ramp );
       set_tacho_ramp_down_sp( l_sn, ramp );
       set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
+      do {
+        get_tacho_state_flags( l_sn, &l_state );
+      } while ( l_state);
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
 }
 
-void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit)
+void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
 {
     if (ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
       int r_max_speed;
@@ -85,6 +92,9 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit)
       set_tacho_ramp_up_sp( r_sn, ramp );
       set_tacho_ramp_down_sp( r_sn, ramp );
       set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
+      do {
+        get_tacho_state_flags( r_sn, &r_state );
+      } while ( r_state );
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
