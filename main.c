@@ -82,7 +82,7 @@ int main( void )
     set_tacho_ramp_down_sp( r_sn, 2000 );
     set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
     set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
-    print("ici 1");
+    printf("ici 1");
     Sleep( 100 );
     set_tacho_stop_action_inx( l_sn, TACHO_COAST );
     set_tacho_stop_action_inx( r_sn, TACHO_COAST );
@@ -96,7 +96,7 @@ int main( void )
     set_tacho_ramp_down_sp( r_sn, 500 );
     set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
     set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
-    print("ici 2");
+    printf("ici 2");
     Sleep( 100 );
     set_tacho_stop_action_inx( l_sn, TACHO_COAST );
     set_tacho_speed_sp( l_sn, l_max_speed);
@@ -104,7 +104,7 @@ int main( void )
     set_tacho_ramp_up_sp( l_sn, 1000 );
     set_tacho_ramp_down_sp( l_sn, 1000 );
     set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
-    print("ici 3");
+    printf("ici 3");
     Sleep( 100 );
     set_tacho_stop_action_inx( r_sn, TACHO_COAST );
     set_tacho_speed_sp( r_sn, r_max_speed);
