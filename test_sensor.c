@@ -23,6 +23,16 @@
 //////////////////////////////////////////////////
 #endif
 
+static bool _check_pressed( uint8_t sn )
+{
+  int val;
+
+  if ( sn == SENSOR__NONE_ ) {
+    return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
+  }
+  return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
+}
+
 void main ()
 {
     uint8_t sn_touch;
