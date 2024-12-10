@@ -69,8 +69,10 @@ void main ()
     for ( ; ; ){
     if ( ev3_search_sensor( LEGO_EV3_COLOR, &sn_color, 0 )) {
       printf( "COLOR sensor is found, reading COLOR...\n" );
-      get_sensor_value( 0, sn_color, &val );
-      printf( "\r(%d$) \n", val);
+      if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+        val = 0;
+      }
+      printf( "\r(%s) \n", color[ val ]);
       fflush( stdout );
     }
     if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){

@@ -22,6 +22,18 @@
 
 //////////////////////////////////////////////////
 #endif
+const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
+#define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
+
+static bool _check_pressed( uint8_t sn )
+{
+  int val;
+
+  if ( sn == SENSOR__NONE_ ) {
+    return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
+  }
+  return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
+}
 
 void turn_arm(uint8_t a_sn, int angle, int ramp, int vit, FLAGS_T a_state)
 {
@@ -155,7 +167,8 @@ int main( void )
   printf( "Waiting tacho is plugged...\n" );
 
 #endif
-  while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
+  while ( ev3_tacho_init() <  ) Sleep( 1000 );
+  while ()
 
   printf( "*** ( EV3 ) Hello! ***\n" );
 
@@ -171,9 +184,9 @@ mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
 printf("ici 3");
 Sleep( 1000 );
 mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
-Sleep(3000); */
+Sleep(3000); 
 turn_arm(a_sn, 90, 0,  2,  a_state);
-Sleep(1000);
+Sleep(1000);*/
 turn_arm(a_sn, -90, 0,  2,  a_state);
 return ( 0 );
 }
