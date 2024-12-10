@@ -36,9 +36,9 @@ void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit, FLAGS_T 
       set_tacho_stop_action_inx( r_sn, TACHO_COAST );
       l_max_speed = -l_max_speed;
       r_max_speed = -r_max_speed;
-      set_tacho_speed_sp( l_sn, l_max_speed * vit );
+      set_tacho_speed_sp( l_sn, l_max_speed * 1/vit );
       printf("%u\n", l_sn);
-      set_tacho_speed_sp( r_sn, r_max_speed * vit );
+      set_tacho_speed_sp( r_sn, r_max_speed * 1/vit );
       set_tacho_time_sp( l_sn, time );
       printf("%u\n", l_sn);
       set_tacho_time_sp( r_sn, time );
@@ -69,7 +69,7 @@ void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit, FLAGS_T l_state)
       get_tacho_max_speed( l_sn, &l_max_speed );
       set_tacho_stop_action_inx( l_sn, TACHO_COAST );
       l_max_speed = -l_max_speed;
-      set_tacho_speed_sp( l_sn, l_max_speed * vit );
+      set_tacho_speed_sp( l_sn, l_max_speed * 1/vit );
       set_tacho_time_sp( l_sn, time );
       set_tacho_ramp_up_sp( l_sn, ramp );
       set_tacho_ramp_down_sp( l_sn, ramp );
@@ -91,7 +91,7 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
       get_tacho_max_speed( r_sn, &r_max_speed );
       set_tacho_stop_action_inx( r_sn, TACHO_COAST );
       r_max_speed = -r_max_speed;
-      set_tacho_speed_sp( r_sn, r_max_speed * vit );
+      set_tacho_speed_sp( r_sn, r_max_speed * 1/vit );
       set_tacho_time_sp( r_sn, time );
       set_tacho_ramp_up_sp( r_sn, ramp );
       set_tacho_ramp_down_sp( r_sn, ramp );
@@ -149,15 +149,15 @@ int main( void )
 
   printf( "Found tacho motors:\n" );
   
-mvt_motor(l_sn, r_sn, 5000, 2000, 0.5, l_state, r_state);
+mvt_motor(l_sn, r_sn, 5000, 2000, 2, l_state, r_state);
 printf("ici 1");
 Sleep( 3000 );
-mvt_l_motor(l_sn, 3000,  1000,  (1/3), l_state);
+mvt_l_motor(l_sn, 3000,  1000,  3, l_state);
 printf("ici 2");
 Sleep( 3000 );
 mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
 printf("ici 3");
 Sleep( 3000 );
-mvt_r_motor(r_sn,  3000,  1000,  1/3, r_state);
+mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
 return ( 0 );
 }
