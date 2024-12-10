@@ -104,7 +104,8 @@ int main( void )
 {
   int i;
 
-  FLAGS_T state;
+  FLAGS_T l_state;
+  FLAGS_T r_state;
   uint8_t sn_touch;
   uint8_t sn_color;
   uint8_t sn_compass;
@@ -142,15 +143,15 @@ int main( void )
 
   printf( "Found tacho motors:\n" );
   
-mvt_motor(l_sn, r_sn, 5000, 2000, 2/3);
+mvt_motor(l_sn, r_sn, 5000, 2000, 2/3, l_state, r_state);
 printf("ici 1");
 Sleep( 3000 );
-mvt_l_motor(l_sn, 3000,  1000,  1/3);
+mvt_l_motor(l_sn, 3000,  1000,  1/3, l_state);
 printf("ici 2");
 Sleep( 3000 );
-mvt_motor(l_sn, r_sn, 5000, 500, 1);
+mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
 printf("ici 3");
 Sleep( 3000 );
-mvt_r_motor(r_sn,  3000,  1000,  1/3);
+mvt_r_motor(r_sn,  3000,  1000,  1/3, r_state);
 return ( 0 );
 }
