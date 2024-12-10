@@ -81,11 +81,15 @@ int main( void )
       get_tacho_max_speed( sn, &max_speed );
       printf("  max speed = %d , sn = %u\n", max_speed, sn);
       set_tacho_stop_action_inx( sn, TACHO_COAST );
+      printf("%u \n", sn);
+      printf(TACHO_COAST);
+      printf(DESC_LIMIT);
       set_tacho_speed_sp( sn, max_speed * 2 / 3 );
       set_tacho_time_sp( sn, 5000 );
       set_tacho_ramp_up_sp( sn, 2000 );
       set_tacho_ramp_down_sp( sn, 2000 );
       set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+      printf(TACHO_RUN_TIMED);
       /* Wait tacho stop */
       Sleep( 100 );
       do {
@@ -98,6 +102,7 @@ int main( void )
       set_tacho_position_sp( sn, 90 );
       for ( i = 0; i < 8; i++ ) {
         set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+        printf(TACHO_RUN_TO_REL_POS);
         Sleep( 500 );
       }
 
