@@ -126,16 +126,16 @@ int main( void )
 
   printf( "Found tacho motors:\n" );
   
-mvt_motor(l_sn, r_sn, int 5000, int 2000, int 2/3)
+mvt_motor(l_sn, r_sn, 5000, 2000, 2/3)
 printf("ici 1");
 Sleep( 1000 );
-mvt_motor(l_sn, r_sn, int 5000, int 500, int 1);
+mvt_motor(l_sn, r_sn, 5000, 500, 1);
 printf("ici 2");
 Sleep( 1000 );
-mvt_l_motor(l_sn, int 3000, int 1000, int 1/3);
+mvt_l_motor(l_sn, 3000,  1000,  1/3);
 printf("ici 3");
 Sleep( 1000 );
-void mvt_r_motor(r_sn, int 3000, int 1000, int 1/3);
+mvt_r_motor(r_sn,  3000,  1000,  1/3);
 return ( 0 );
 }
 
