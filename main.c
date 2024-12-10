@@ -59,6 +59,7 @@ void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit, FLAGS_T 
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
+    return;
 }
 
 void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit, FLAGS_T l_state)
@@ -80,6 +81,7 @@ void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit, FLAGS_T l_state)
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
+    return;
 }
 
 void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
@@ -101,6 +103,7 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
+    return;
 }
 
 int main( void )
