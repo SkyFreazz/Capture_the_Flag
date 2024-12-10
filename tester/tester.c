@@ -79,7 +79,7 @@ int main( void )
 
       printf( "LEGO_EV3_M_MOTOR 1 is found, run for 5 sec...\n" );
       get_tacho_max_speed( sn, &max_speed );
-      printf("  max speed = %d\n", max_speed );
+      printf("  max speed = %d , sn = %u\n", max_speed, sn);
       set_tacho_stop_action_inx( sn, TACHO_COAST );
       set_tacho_speed_sp( sn, max_speed * 2 / 3 );
       set_tacho_time_sp( sn, 5000 );
