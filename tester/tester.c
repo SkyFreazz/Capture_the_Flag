@@ -89,7 +89,18 @@ int main( void )
       set_tacho_command_inx( sn, TACHO_RUN_TIMED );
       /* Wait tacho stop */
       Sleep( 100 );
-      
+      do {
+        get_tacho_state_flags( sn, &state );
+      } while ( state );
+      printf( "run to relative position...\n" );
+      set_tacho_speed_sp( sn, max_speed / 2 );
+      set_tacho_ramp_up_sp( sn, 0 );
+      set_tacho_ramp_down_sp( sn, 0 );
+      set_tacho_position_sp( sn, 90 );
+      for ( i = 0; i < 8; i++ ) {
+        set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+        Sleep( 500 );
+      }
 
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
