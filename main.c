@@ -25,7 +25,7 @@
 
 void turn_arm(uint8_t a_sn, int angle, int ramp, int vit, FLAGS_T a_state)
 {
-  if ( ev3_search_tacho_plugged_in(port,0, &sn, 0 )){
+  if ( ev3_search_tacho_plugged_in(ARM,0, &a_sn, 0 )){
     int a_max_speed;
     get_tacho_max_speed( a_sn, &a_max_speed );
     set_tacho_stop_action_inx( a_sn, TACHO_COAST );
@@ -33,7 +33,7 @@ void turn_arm(uint8_t a_sn, int angle, int ramp, int vit, FLAGS_T a_state)
     set_tacho_ramp_up_sp( a_sn, ramp );
     set_tacho_ramp_down_sp( a_sn, ramp );
     set_tacho_position_sp( a_sn, angle );
-    set_tacho_command_inx( a_sn, TACHO_RUN_TO_REL_POS )
+    set_tacho_command_inx( a_sn, TACHO_RUN_TO_REL_POS );
     do {
         get_tacho_state_flags( a_sn, &a_state );
       } while ( a_state);
@@ -123,7 +123,7 @@ int main( void )
 
   FLAGS_T l_state;
   FLAGS_T r_state;
-  FLAGS_T a_state
+  FLAGS_T a_state;
   uint8_t sn_touch;
   uint8_t sn_color;
   uint8_t sn_compass;
