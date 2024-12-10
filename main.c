@@ -9,7 +9,6 @@
 #define L_WHEEL 68
 #define ARM 67
 #define M_SENSOR 66
-
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -128,13 +127,13 @@ int main( void )
   
 mvt_motor(l_sn, r_sn, 5000, 2000, 2/3);
 printf("ici 1");
-Sleep( 1000 );
+Sleep( 3000 );
 mvt_motor(l_sn, r_sn, 5000, 500, 1);
 printf("ici 2");
-Sleep( 1000 );
+Sleep( 3000 );
 mvt_l_motor(l_sn, 3000,  1000,  1/3);
 printf("ici 3");
-Sleep( 1000 );
+Sleep( 3000 );
 mvt_r_motor(r_sn,  3000,  1000,  1/3);
 return ( 0 );
 }
