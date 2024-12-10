@@ -172,7 +172,8 @@ printf("ici 3");
 Sleep( 1000 );
 mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
 Sleep(3000); */
-turn_arm(a_sn, 50, 0,  2,  a_state);
+turn_arm(a_sn, 90, 0,  2,  a_state);
+Sleep(1000);
 turn_arm(a_sn, -90, 0,  2,  a_state);
 return ( 0 );
 }
