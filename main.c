@@ -54,7 +54,8 @@ void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit, FLAGS_T 
       do {
         get_tacho_state_flags( l_sn, &l_state );
         get_tacho_state_flags( r_sn, &r_state );
-      } while ( l_state && r_state ){printf("wait both\n");};
+        printf("wait both\n");
+      } while ( l_state && r_state );
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
@@ -74,7 +75,8 @@ void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit, FLAGS_T l_state)
       set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
       do {
         get_tacho_state_flags( l_sn, &l_state );
-      } while ( l_state){printf("wait left\n");};
+        printf("wait left\n");
+      } while ( l_state);
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
@@ -94,7 +96,8 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
       set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
       do {
         get_tacho_state_flags( r_sn, &r_state );
-      } while ( r_state ){printf("wait right\n");};
+        printf("wait right\n");
+      } while ( r_state );
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
