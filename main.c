@@ -126,7 +126,7 @@ int main( void )
 
   printf( "Found tacho motors:\n" );
   
-mvt_motor(l_sn, r_sn, 5000, 2000, 2/3)
+mvt_motor(l_sn, r_sn, 5000, 2000, 2/3);
 printf("ici 1");
 Sleep( 1000 );
 mvt_motor(l_sn, r_sn, 5000, 500, 1);
