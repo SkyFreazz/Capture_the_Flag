@@ -24,61 +24,6 @@
 //////////////////////////////////////////////////
 #endif
 
-int main( void )
-{
-  int i;
-
-  FLAGS_T state;
-  uint8_t sn_touch;
-  uint8_t sn_color;
-  uint8_t sn_compass;
-  uint8_t sn_sonar;
-  char s[ 256 ];
-  int val;
-  float value;
-  uint32_t n, ii;
-  int l_max_speed;
-  uint8_t l_sn;
-  int r_max_speed;
-  uint8_t r_sn;
-  int a_max_speed;
-  uint8_t a_sn;
-  int sm_max_speed;
-  uint8_t sm_sn;
-
-#ifndef __ARM_ARCH_4T__
-  /* Disable auto-detection of the brick (you have to set the correct address below) */
-  ev3_brick_addr = "192.168.0.204";
-
-#endif
-  if ( ev3_init() == -1 ) return ( 1 );
-
-#ifndef __ARM_ARCH_4T__
-  printf( "The EV3 brick auto-detection is DISABLED,\nwaiting %s online with plugged tacho...\n", ev3_brick_addr );
-
-#else
-  printf( "Waiting tacho is plugged...\n" );
-
-#endif
-  while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
-
-  printf( "*** ( EV3 ) Hello! ***\n" );
-
-  printf( "Found tacho motors:\n" );
-  
-mvt_motor(l_sn, r_sn, int 5000, int 2000, int 2/3)
-printf("ici 1");
-Sleep( 1000 );
-mvt_motor(l_sn, r_sn, int 5000, int 500, int 1);
-printf("ici 2");
-Sleep( 1000 );
-mvt_l_motor(l_sn, int 3000, int 1000, int 1/3);
-printf("ici 3");
-Sleep( 1000 );
-void mvt_r_motor(r_sn, int 3000, int 1000, int 1/3);
-return ( 0 );
-}
-
 void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit)
 {
     if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
@@ -138,3 +83,59 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit)
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
 }
+
+int main( void )
+{
+  int i;
+
+  FLAGS_T state;
+  uint8_t sn_touch;
+  uint8_t sn_color;
+  uint8_t sn_compass;
+  uint8_t sn_sonar;
+  char s[ 256 ];
+  int val;
+  float value;
+  uint32_t n, ii;
+  int l_max_speed;
+  uint8_t l_sn;
+  int r_max_speed;
+  uint8_t r_sn;
+  int a_max_speed;
+  uint8_t a_sn;
+  int sm_max_speed;
+  uint8_t sm_sn;
+
+#ifndef __ARM_ARCH_4T__
+  /* Disable auto-detection of the brick (you have to set the correct address below) */
+  ev3_brick_addr = "192.168.0.204";
+
+#endif
+  if ( ev3_init() == -1 ) return ( 1 );
+
+#ifndef __ARM_ARCH_4T__
+  printf( "The EV3 brick auto-detection is DISABLED,\nwaiting %s online with plugged tacho...\n", ev3_brick_addr );
+
+#else
+  printf( "Waiting tacho is plugged...\n" );
+
+#endif
+  while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
+
+  printf( "*** ( EV3 ) Hello! ***\n" );
+
+  printf( "Found tacho motors:\n" );
+  
+mvt_motor(l_sn, r_sn, int 5000, int 2000, int 2/3)
+printf("ici 1");
+Sleep( 1000 );
+mvt_motor(l_sn, r_sn, int 5000, int 500, int 1);
+printf("ici 2");
+Sleep( 1000 );
+mvt_l_motor(l_sn, int 3000, int 1000, int 1/3);
+printf("ici 3");
+Sleep( 1000 );
+void mvt_r_motor(r_sn, int 3000, int 1000, int 1/3);
+return ( 0 );
+}
+
