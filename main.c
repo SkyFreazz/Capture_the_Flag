@@ -23,38 +23,50 @@
 //////////////////////////////////////////////////
 #endif
 
+void turn_arm(uint8_t a_sn, int angle, int ramp, int vit, FLAGS_T a_state)
+{
+  if ( ev3_search_tacho_plugged_in(port,0, &sn, 0 )){
+    int a_max_speed;
+    get_tacho_max_speed( a_sn, &a_max_speed );
+    set_tacho_stop_action_inx( a_sn, TACHO_COAST );
+    set_tacho_speed_sp( a_sn, a_max_speed / vit );
+    set_tacho_ramp_up_sp( a_sn, ramp );
+    set_tacho_ramp_down_sp( a_sn, ramp );
+    set_tacho_position_sp( a_sn, angle );
+    set_tacho_command_inx( a_sn, TACHO_RUN_TO_REL_POS )
+    do {
+        get_tacho_state_flags( a_sn, &a_state );
+      } while ( a_state);
+    } else {
+      printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
+    }
+    return;
+}
+
 void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit, FLAGS_T l_state, FLAGS_T r_state)
 {
     if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
       int l_max_speed;
       int r_max_speed;
       get_tacho_max_speed( l_sn, &l_max_speed );
-      printf("%u\n", l_sn);
       get_tacho_max_speed( r_sn, &r_max_speed );
       set_tacho_stop_action_inx( l_sn, TACHO_COAST );
-      printf("%u\n", l_sn);
       set_tacho_stop_action_inx( r_sn, TACHO_COAST );
       l_max_speed = -l_max_speed;
       r_max_speed = -r_max_speed;
       set_tacho_speed_sp( l_sn, l_max_speed * 1/vit );
-      printf("%u\n", l_sn);
       set_tacho_speed_sp( r_sn, r_max_speed * 1/vit );
       set_tacho_time_sp( l_sn, time );
-      printf("%u\n", l_sn);
       set_tacho_time_sp( r_sn, time );
       set_tacho_ramp_up_sp( l_sn, ramp );
-      printf("%u\n", l_sn);
       set_tacho_ramp_up_sp( r_sn, ramp );
       set_tacho_ramp_down_sp( l_sn, ramp );
-      printf("%u\n", l_sn);
       set_tacho_ramp_down_sp( r_sn, ramp );
       set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
-      printf("%u\n", l_sn);
       set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
       do {
         get_tacho_state_flags( l_sn, &l_state );
         get_tacho_state_flags( r_sn, &r_state );
-        printf("wait both\n");
       } while ( l_state && r_state );
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
@@ -76,7 +88,6 @@ void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit, FLAGS_T l_state)
       set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
       do {
         get_tacho_state_flags( l_sn, &l_state );
-        printf("wait left\n");
       } while ( l_state);
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
@@ -98,7 +109,6 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
       set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
       do {
         get_tacho_state_flags( r_sn, &r_state );
-        printf("wait right\n");
       } while ( r_state );
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
@@ -106,12 +116,14 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
     return;
 }
 
+
 int main( void )
 {
   int i;
 
   FLAGS_T l_state;
   FLAGS_T r_state;
+  FLAGS_T a_state
   uint8_t sn_touch;
   uint8_t sn_color;
   uint8_t sn_compass;
@@ -159,5 +171,7 @@ mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
 printf("ici 3");
 Sleep( 3000 );
 mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
+Sleep(3000);
+turn_arm(uint8_t a_sn, int 60, int 0, int 2, FLAGS_T a_state);
 return ( 0 );
 }
