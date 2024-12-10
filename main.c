@@ -71,8 +71,8 @@ int main( void )
     get_tacho_max_speed( r_sn, &r_max_speed );
     set_tacho_stop_action_inx( l_sn, TACHO_COAST );
     set_tacho_stop_action_inx( r_sn, TACHO_COAST );
-    
-    set_tacho_speed_sp( l_n, l_max_speed * 2 / 3 );
+
+    set_tacho_speed_sp( l_sn, l_max_speed * 2 / 3 );
     set_tacho_speed_sp( r_sn, r_max_speed * 2 / 3 );
     set_tacho_time_sp( l_sn, 5000 );
     set_tacho_time_sp( r_sn, 5000 );
@@ -83,7 +83,7 @@ int main( void )
     set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
     set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
 
-    set_tacho_speed_sp( l_n, l_max_speed);
+    set_tacho_speed_sp( l_sn, l_max_speed);
     set_tacho_speed_sp( r_sn, r_max_speed);
     set_tacho_time_sp( l_sn, 5000 );
     set_tacho_time_sp( r_sn, 5000 );
@@ -94,7 +94,7 @@ int main( void )
     set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
     set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
 
-    set_tacho_speed_sp( l_n, l_max_speed);
+    set_tacho_speed_sp( l_sn, l_max_speed);
     set_tacho_speed_sp( r_sn, r_max_speed);
     set_tacho_time_sp( l_sn, 5000 );
     set_tacho_time_sp( r_sn, 5000 );
