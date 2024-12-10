@@ -99,7 +99,7 @@ void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
 {
     if (ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
       int r_max_speed;
-      get_tacho_max_speed( r_sn, &r_max_speed );
+      get_tacho_max_speed(r_sn, &r_max_speed );
       set_tacho_stop_action_inx( r_sn, TACHO_COAST );
       r_max_speed = -r_max_speed;
       set_tacho_speed_sp( r_sn, r_max_speed * 1/vit );
@@ -172,6 +172,6 @@ printf("ici 3");
 Sleep( 3000 );
 mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
 Sleep(3000);
-turn_arm(uint8_t a_sn, int 60, int 0, int 2, FLAGS_T a_state);
+turn_arm(a_sn, 60, 0,  2,  a_state);
 return ( 0 );
 }
