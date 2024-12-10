@@ -41,6 +41,9 @@ void main ()
   uint8_t sn_sonar;
   int val;
   float value;
+  int i;
+  char s[ 256 ];
+  uint32_t n, ii;
 
   ev3_sensor_init();
   printf( "Found sensors:\n" );
