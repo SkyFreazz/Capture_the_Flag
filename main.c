@@ -174,23 +174,23 @@ int main( void )
 
   printf( "Found tacho motors:\n" );
  
-mvt_motor(l_sn, r_sn, 5000, 2000, 2, l_state, r_state);
-printf("ici 1");
-Sleep( 1000 );
-mvt_l_motor(l_sn, 3000,  1000,  3, l_state);
-printf("ici 2");
-Sleep( 1000 );
-mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
-printf("ici 3");
-Sleep( 1000 );
-mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
-Sleep(3000); 
-turn_arm(a_sn, 90, 0,  3,  a_state, ARM);
-Sleep(1000);
-turn_arm(a_sn, -90, 0,  3,  a_state, ARM);
-Sleep(3000); 
-turn_arm(sm_sn, -45, 0,  3,  sm_state, M_SENSOR);
-Sleep(1000);
-turn_arm(sm_sn, 45, 0,  3,  sm_state, M_SENSOR);
-return ( 0 );
+  mvt_motor(l_sn, r_sn, 5000, 2000, 2, l_state, r_state);
+  printf("ici 1");
+  Sleep( 1000 );
+  mvt_l_motor(l_sn, 3000,  1000,  3, l_state);
+  printf("ici 2");
+  Sleep( 1000 );
+  mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
+  printf("ici 3");
+  Sleep( 1000 );
+  mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
+  Sleep(3000); 
+  turn_arm(a_sn, 90, 0,  3,  a_state, ARM);
+  Sleep(1000);
+  turn_arm(a_sn, -90, 0,  3,  a_state, ARM);
+  Sleep(3000); 
+  turn_arm(sm_sn, -45, 0,  3,  sm_state, M_SENSOR);
+  Sleep(1000);
+  turn_arm(sm_sn, 45, 0,  3,  sm_state, M_SENSOR);
+  return ( 0 );
 }
