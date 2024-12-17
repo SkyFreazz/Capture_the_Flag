@@ -35,9 +35,9 @@ static bool _check_pressed( uint8_t sn )
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-void turn_arm(uint8_t a_sn, int angle, int ramp, int vit, FLAGS_T a_state)
+void turn_arm(uint8_t a_sn, int angle, int ramp, int vit, FLAGS_T a_state, int mode)
 {
-  if ( ev3_search_tacho_plugged_in(ARM,0, &a_sn, 0 )){
+  if ( ev3_search_tacho_plugged_in(mode,0, &a_sn, 0 )){
     int a_max_speed;
     get_tacho_max_speed( a_sn, &a_max_speed );
     set_tacho_stop_action_inx( a_sn, TACHO_COAST );
@@ -136,6 +136,7 @@ int main( void )
   FLAGS_T l_state;
   FLAGS_T r_state;
   FLAGS_T a_state;
+  FLAGS_T sm_state;
   uint8_t sn_touch;
   uint8_t sn_color;
   uint8_t sn_compass;
@@ -173,7 +174,7 @@ int main( void )
   printf( "*** ( EV3 ) Hello! ***\n" );
 
   printf( "Found tacho motors:\n" );
- /* 
+ 
 mvt_motor(l_sn, r_sn, 5000, 2000, 2, l_state, r_state);
 printf("ici 1");
 Sleep( 1000 );
@@ -185,8 +186,12 @@ printf("ici 3");
 Sleep( 1000 );
 mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
 Sleep(3000); 
-turn_arm(a_sn, 90, 0,  2,  a_state);
-Sleep(1000);*/
-turn_arm(a_sn, -90, 0,  2,  a_state);
+turn_arm(a_sn, 90, 0,  3,  a_state, ARM);
+Sleep(1000);
+turn_arm(a_sn, -90, 0,  3,  a_state, ARM);
+Sleep(3000); 
+turn_arm(sm_sn, -45, 0,  3,  sm_state, M_SENSOR);
+Sleep(1000);
+turn_arm(sm_sn, 45, 0,  3,  sm_state, M_SENSOR);
 return ( 0 );
 }
