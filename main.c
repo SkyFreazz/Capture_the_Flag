@@ -35,100 +35,6 @@ static bool _check_pressed( uint8_t sn )
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-void turn_arm(uint8_t a_sn, int angle, int ramp, int vit, FLAGS_T a_state)
-{
-  if ( ev3_search_tacho_plugged_in(ARM,0, &a_sn, 0 )){
-    int a_max_speed;
-    get_tacho_max_speed( a_sn, &a_max_speed );
-    set_tacho_stop_action_inx( a_sn, TACHO_COAST );
-    set_tacho_speed_sp( a_sn, a_max_speed / vit );
-    set_tacho_ramp_up_sp( a_sn, ramp );
-    set_tacho_ramp_down_sp( a_sn, ramp );
-    set_tacho_position_sp( a_sn, angle );
-    set_tacho_command_inx( a_sn, TACHO_RUN_TO_REL_POS );
-    do {
-        get_tacho_state_flags( a_sn, &a_state );
-      } while ( a_state);
-    } else {
-      printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
-    }
-    return;
-}
-
-void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int vit, FLAGS_T l_state, FLAGS_T r_state)
-{
-    if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
-      int l_max_speed;
-      int r_max_speed;
-      get_tacho_max_speed( l_sn, &l_max_speed );
-      get_tacho_max_speed( r_sn, &r_max_speed );
-      set_tacho_stop_action_inx( l_sn, TACHO_COAST );
-      set_tacho_stop_action_inx( r_sn, TACHO_COAST );
-      l_max_speed = -l_max_speed;
-      r_max_speed = -r_max_speed;
-      set_tacho_speed_sp( l_sn, l_max_speed * 1/vit );
-      set_tacho_speed_sp( r_sn, r_max_speed * 1/vit );
-      set_tacho_time_sp( l_sn, time );
-      set_tacho_time_sp( r_sn, time );
-      set_tacho_ramp_up_sp( l_sn, ramp );
-      set_tacho_ramp_up_sp( r_sn, ramp );
-      set_tacho_ramp_down_sp( l_sn, ramp );
-      set_tacho_ramp_down_sp( r_sn, ramp );
-      set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
-      set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
-      do {
-        get_tacho_state_flags( l_sn, &l_state );
-        get_tacho_state_flags( r_sn, &r_state );
-      } while ( l_state && r_state );
-    } else {
-      printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
-    }
-    return;
-}
-
-void mvt_l_motor(uint8_t l_sn, int time, int ramp, int vit, FLAGS_T l_state)
-{
-    if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) ){
-      int l_max_speed;
-      get_tacho_max_speed( l_sn, &l_max_speed );
-      set_tacho_stop_action_inx( l_sn, TACHO_COAST );
-      l_max_speed = -l_max_speed;
-      set_tacho_speed_sp( l_sn, l_max_speed * 1/vit );
-      set_tacho_time_sp( l_sn, time );
-      set_tacho_ramp_up_sp( l_sn, ramp );
-      set_tacho_ramp_down_sp( l_sn, ramp );
-      set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
-      do {
-        get_tacho_state_flags( l_sn, &l_state );
-      } while ( l_state);
-    } else {
-      printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
-    }
-    return;
-}
-
-void mvt_r_motor(uint8_t r_sn, int time, int ramp, int vit, FLAGS_T r_state)
-{
-    if (ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
-      int r_max_speed;
-      get_tacho_max_speed(r_sn, &r_max_speed );
-      set_tacho_stop_action_inx( r_sn, TACHO_COAST );
-      r_max_speed = -r_max_speed;
-      set_tacho_speed_sp( r_sn, r_max_speed * 1/vit );
-      set_tacho_time_sp( r_sn, time );
-      set_tacho_ramp_up_sp( r_sn, ramp );
-      set_tacho_ramp_down_sp( r_sn, ramp );
-      set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
-      do {
-        get_tacho_state_flags( r_sn, &r_state );
-      } while ( r_state );
-    } else {
-      printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
-    }
-    return;
-}
-
-
 int main( void )
 {
   int i;
@@ -136,6 +42,7 @@ int main( void )
   FLAGS_T l_state;
   FLAGS_T r_state;
   FLAGS_T a_state;
+  FLAGS_T sm_state
   uint8_t sn_touch;
   uint8_t sn_color;
   uint8_t sn_compass;
@@ -185,8 +92,12 @@ printf("ici 3");
 Sleep( 1000 );
 mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
 Sleep(3000); 
-turn_arm(a_sn, 90, 0,  2,  a_state);
-Sleep(1000);*/
-turn_arm(a_sn, -90, 0,  2,  a_state);
+turn_arm(a_sn, 90, 0,  3,  a_state);
+Sleep(1000);
+turn_arm(a_sn, -90, 0,  3,  a_state);
+sleep(1000);
+turn_arm(sm_sn, -45, 0,  4,  sm_state);
+Sleep(1000);
+turn_arm(sm_sn, 45, 0,  4,  sm_state);*/
 return ( 0 );
 }
