@@ -42,7 +42,7 @@ int main( void )
   FLAGS_T l_state;
   FLAGS_T r_state;
   FLAGS_T a_state;
-  FLAGS_T sm_state
+  FLAGS_T sm_state;
   uint8_t sn_touch;
   uint8_t sn_color;
   uint8_t sn_compass;
@@ -74,8 +74,7 @@ int main( void )
   printf( "Waiting tacho is plugged...\n" );
 
 #endif
-  while ( ev3_tacho_init() <  ) Sleep( 1000 );
-  while ()
+  while ( ev3_tacho_init() < 1) Sleep( 1000 );
 
   printf( "*** ( EV3 ) Hello! ***\n" );
 
