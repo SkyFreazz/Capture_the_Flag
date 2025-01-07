@@ -94,7 +94,7 @@ int main( void )
                 mvt_motor(l_sn, r_sn, 500, 400, 4, -4, l_state, r_state); // tourner vers la droite
         }
     }
-/*
+
     stp = 1;
     cross_2 = 0;
     while (!e1){
@@ -116,6 +116,6 @@ int main( void )
         }
         mvt_motor(l_sn, r_sn, 500, 200, 2, 2, l_state, r_state); //avance pendant 0.5s ?
 
-    } */
+    } 
     ev3_uninit();
 }
