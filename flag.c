@@ -52,7 +52,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       angle_int = (int) angle;
 
       if (abs(angle_int % 360) <= tol){
-        last_angle = angle_int;
+        last_angle = (int) angle;
         break;
       }
 
@@ -89,7 +89,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         printf("angle %d", angle_int);
 
         if (abs(angle_int % 360) <= tol){
-          last_angle = angle_int;
+          last_angle = (int) angle;
           break;
         }
 
@@ -132,7 +132,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         printf("angle %d", angle_int);
 
         if (abs(angle_int % 360) <= tol){
-          last_angle = angle_int;
+          last_angle = (int) angle;
           break;
         }
 
@@ -168,7 +168,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       printf("angle %d", angle_int);
 
       if (abs(angle_int % 360) <= tol){
-        last_angle = angle_int;
+        last_angle = (int) angle;
         break;
       }
 
@@ -213,7 +213,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         printf("angle %d", angle_int);
 
         if (abs(angle_int % 360) <= tol){
-          last_angle = angle_int;
+          last_angle = (int) angle;
           break;
         }
 
@@ -251,7 +251,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         printf("angle %d", angle_int);
 
         if (abs(angle_int % 360) <= tol){
-          last_angle = angle_int;
+          last_angle = (int) angle;
           break;
         }
 
@@ -281,7 +281,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         printf("angle %d", angle_int);
 
         if (abs(angle_int % 360) <= tol){
-          last_angle = angle_int;
+          last_angle = (int) angle;
           break;
         }
 
@@ -324,7 +324,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         printf("angle %d", angle_int);
 
         if (abs(angle_int % 360) <= tol){
-          last_angle = angle_int;
+          last_angle = (int) angle;
           break;
         }
 
