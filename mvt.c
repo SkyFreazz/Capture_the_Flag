@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "ev3.h"
 #include "ev3_port.h"
 #include "ev3_tacho.h"
@@ -112,7 +113,7 @@ float turn_precise(float final_angle, float tol){
 
       if (fabs(fmod(angle, 360.0)) <= 1){
         if (angle_180 >= 180){
-          mvt_forward(=100, 35, 8, -8);
+          mvt_forward(100, 35, 8, -8);
         } else {
           mvt_forward(100, 35, -8, 8);
       }
@@ -152,7 +153,7 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
         }
       }
 
-      mvt_forward(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state);
+      mvt_forward(100, 0, 2, 2);
     }
   }
 }
