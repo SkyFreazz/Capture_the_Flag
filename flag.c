@@ -134,8 +134,10 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
 
       angle -= initial_angle;
       angle_int = (int) angle;
-      angle_int -= 90;
-
+      if( flag == 1){
+        angle_int -= 90;
+      }
+      
       printf("angle %d", angle_int);
 
       if (abs(angle_int % 360) <= tol){
