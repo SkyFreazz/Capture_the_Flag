@@ -122,6 +122,7 @@ int couleur(uint8_t sn_color, int val, int stp){
 int touch(uint8_t sn_compass, uint8_t sn_touch, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state){
     float angl;
     float value;
+    printf("j'ai touché un mur'");
     if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )){
         if ( _check_pressed( sn_touch )){
             Sleep( 100 );
@@ -208,4 +209,14 @@ void turn(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, in
                     angl = compas(sn_compass, value);
                 }
             }
+}
+
+void stay(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int max_vit, int min_vit, FLAGS_T l_state, FLAGS_T r_state, int index, float degre, float ecart) {
+    float value;
+    float angl = compas(sn_compass, value);
+    if (angl + ecart > degre){ // si partis vers la gauche
+        mvt_motor(l_sn, r_sn, time, ramp, max_vit, min_vit, l_state, r_state); //tourner a droite
+    } else if (angl + ecart < degre) { // si parti vers la droite
+        mvt_motor(l_sn, r_sn, time, ramp, min_vit, max_vit, l_state, r_state); //tourner a gauche
+    }
 }
