@@ -22,6 +22,8 @@
 
 //////////////////////////////////////////////////
 #endif
+const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
+#define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
 static bool _check_pressed( uint8_t sn )
 {
