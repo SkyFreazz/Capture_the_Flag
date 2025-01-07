@@ -36,7 +36,7 @@ static bool _check_pressed( uint8_t sn )
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t l_sn, uint8_t r_sn, FLAGS_T l_state, FLAGS_T r_state)
+int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t l_sn, uint8_t r_sn, FLAGS_T l_state, FLAGS_T r_state, int initial_angle)
 {
   int tol = 2; //set a tolerance for the angle
   int angle;
@@ -47,6 +47,8 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
     if ( !get_sensor_value0(sn_compass, &value )) {
       angle = 0;
     }
+
+    angle -= initial_angle;
 
     if (abs(angle % 360) <= tol){
       last_angle = angle;
@@ -72,6 +74,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
         angle = 0;
       }
 
+      angle -= initial_angle;
       angle += 90;
 
       if (abs(angle % 360) <= tol){
@@ -108,6 +111,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
       angle = 0;
     }
 
+    angle -= initial_angle;
     angle -= 90;
 
     if (abs(angle % 360) <= tol){
@@ -150,6 +154,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
         angle = 0;
       }
 
+      angle -= initial_angle;
       angle -= 180;
 
       if (abs(angle % 360) <= tol){
@@ -157,6 +162,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
         break;
       }
 
+      angle -= initial_angle;
       angle = (angle % 360 + 360) % 360;
 
       if (angle >= 180){
@@ -172,6 +178,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
         angle = 0;
       }
 
+      angle -= initial_angle;
       angle -= 90;
 
       if (abs(angle % 360) <= 2){
