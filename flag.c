@@ -59,9 +59,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       angle_int = (angle_int % 360 + 360) % 360;
 
       if (angle_int >= 180){
-        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
+        mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
       } else {
-        mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+        mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
       }
     }
     printf("initial position set\n");
@@ -96,9 +96,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         angle_int = (angle_int % 360 + 360) % 360;
 
         if (angle_int >= 180){
-          mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
+          mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
         } else {
-          mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+          mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
         }
       }
       printf("Turn 90 left set\n");
@@ -146,9 +146,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       angle_int = (angle_int % 360 + 360) % 360;
 
       if (angle_int >= 180){
-        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
+        mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
       } else {
-        mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+        mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
       }
     }
     printf("Turn 90 right set\n");
@@ -202,9 +202,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         angle_int = (angle_int % 360 + 360) % 360;
 
         if (angle_int >= 180){
-          mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
+          mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
         } else {
-          mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+          mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
         }
       }
       printf("Turn 180 right set\n");
@@ -232,9 +232,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         angle_int = (angle_int % 360 + 360) % 360;
 
         if (angle_int >= 180){
-          mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
+          mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
         } else {
-          mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+          mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
         }
       }
       printf("Turn 90 right set\n");
