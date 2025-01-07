@@ -84,13 +84,13 @@ int main( void )
 
 
 ev3_sensor_init();
-int initial_angle;
+float initial_angle;
 
 if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
   if ( !get_sensor_value0(sn_compass, &initial_angle )) {
     initial_angle = 0;
   }
-  printf("initial_angle: %d", initial_angle);
+  printf("initial_angle: %f", initial_angle);
 }
 
 mvt_forward(l_sn, r_sn, 1000, 0, 2, 2, l_state, r_state);

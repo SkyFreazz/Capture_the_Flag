@@ -30,10 +30,11 @@ static bool _check_pressed( uint8_t sn )
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t r_sn, uint8_t a_sn, FLAGS_T l_state, FLAGS_T r_state, FLAGS_T a_state, int initial_angle)
+int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t r_sn, uint8_t a_sn, FLAGS_T l_state, FLAGS_T r_state, FLAGS_T a_state, float initial_angle)
 {
   int tol = 2; //set a tolerance for the angle
-  int angle;
+  float angle;
+  int angle_int;
   float value;
   int last_angle;
 
@@ -48,14 +49,16 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
 
       angle -= initial_angle;
 
-      if (abs(angle % 360) <= tol){
-        last_angle = angle;
+      angle_int = (int) angle;
+
+      if (abs(angle_int % 360) <= tol){
+        last_angle = angle_int;
         break;
       }
 
-      angle = (angle % 360 + 360) % 360;
+      angle_int = (angle_int % 360 + 360) % 360;
 
-      if (angle >= 180){
+      if (angle_int >= 180){
         mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
       } else {
         mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
@@ -80,18 +83,19 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         }
 
         angle -= initial_angle;
-        angle += 90;
+        angle_int = (int) angle;
+        angle_int += 90;
 
-        printf("angle %i", angle);
+        printf("angle %d", angle_int);
 
-        if (abs(angle % 360) <= tol){
-          last_angle = angle;
+        if (abs(angle_int % 360) <= tol){
+          last_angle = angle_int;
           break;
         }
 
-        angle = (angle % 360 + 360) % 360;
+        angle_int = (angle_int % 360 + 360) % 360;
 
-        if (angle >= 180){
+        if (angle_int >= 180){
           mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
         } else {
           mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
@@ -111,7 +115,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       
       printf("distance: %f", value);
 
-      if (value <= 10 && _check_pressed( sn_touch )){
+      if (value <= 150 && _check_pressed( sn_touch )){
         break;
       }
 
@@ -129,18 +133,19 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       }
 
       angle -= initial_angle;
-      angle -= 90;
+      angle_int = (int) angle;
+      angle_int -= 90;
 
-      printf("angle: %i\n", angle);
+      printf("angle %d", angle_int);
 
-      if (abs(angle % 360) <= tol){
-        last_angle = angle;
+      if (abs(angle_int % 360) <= tol){
+        last_angle = angle_int;
         break;
       }
 
-      angle = (angle % 360 + 360) % 360;
+      angle_int = (angle_int % 360 + 360) % 360;
 
-      if (angle >= 180){
+      if (angle_int >= 180){
         mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
       } else {
         mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
@@ -162,7 +167,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       
       printf("distance : %f\n", value);
 
-      if (value <= 10 && _check_pressed( sn_touch )){
+      if (value <= 150 && _check_pressed( sn_touch )){
         break;
       }
 
@@ -177,57 +182,62 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   if (flag == 0){
     //Turn 180 right
     if(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-      printf("turn 180\n");
+      printf("Turn 180 right\n");
       while(true){
         if ( !get_sensor_value0(sn_compass, &angle )) {
           angle = 0;
         }
 
         angle -= initial_angle;
-        angle -= 180;
+        angle_int = (int) angle;
+        angle_int -= 180;
 
-        if (abs(angle % 360) <= tol){
-          last_angle = angle;
+        printf("angle %d", angle_int);
+
+        if (abs(angle_int % 360) <= tol){
+          last_angle = angle_int;
           break;
         }
 
-        angle -= initial_angle;
-        angle = (angle % 360 + 360) % 360;
+        angle_int = (angle_int % 360 + 360) % 360;
 
-        if (angle >= 180){
+        if (angle_int >= 180){
           mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
         } else {
           mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
         }
       }
-      printf("turn 180\n");
+      printf("Turn 180 right set\n");
     }
   } else {
     //Turn 90 right
     if(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-      printf("turn 90\n");
+      printf("Turn 90 right\n");
       while(true){
         if ( !get_sensor_value0(sn_compass, &angle )) {
           angle = 0;
         }
 
         angle -= initial_angle;
-        angle -= 90;
+        angle_int = (int) angle;
+        angle_int -= 90;
 
-        if (abs(angle % 360) <= 2){
-          last_angle = angle;
+        printf("angle %d", angle_int);
+
+        if (abs(angle_int % 360) <= tol){
+          last_angle = angle_int;
           break;
         }
 
-        angle = (angle % 360 + 360) % 360;
+        angle_int = (angle_int % 360 + 360) % 360;
 
-        if (angle >= 180){
+        if (angle_int >= 180){
           mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
         } else {
           mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
         }
       }
-      printf("turn 90\n");
+      printf("Turn 90 right set\n");
     }
   }
 
@@ -239,7 +249,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         value = 0;
       }
       
-      if (value <= 10 && _check_pressed( sn_touch )){
+      if (value <= 150 && _check_pressed( sn_touch )){
         break;
       }
 
