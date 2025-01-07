@@ -112,7 +112,7 @@ int couleur(int stp){
         if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
             val = 0;
         }
-        printf("la couleur %s\n",color[val])
+        printf("la couleur %s\n",color[val]);
         fflush( stdout ); //seulement utile pour les print 
         if (strcmp(color[val], "BLACK") == 0){
             return 2;
