@@ -56,9 +56,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
     angle = (angle % 360 + 360) % 360;
 
     if (angle >= 180){
-      mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
-    } else {
       mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+    } else {
+      mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
     }
   }
 
@@ -82,9 +82,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
       angle = (angle % 360 + 360) % 360;
 
       if (angle >= 180){
-        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
-      } else {
         mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+      } else {
+        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
       }
   }
   }
@@ -118,9 +118,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
     angle = (angle % 360 + 360) % 360;
 
     if (angle >= 180){
-      mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
-    } else {
       mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+    } else {
+      mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
     }
   }
 
@@ -160,9 +160,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
       angle = (angle % 360 + 360) % 360;
 
       if (angle >= 180){
-        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
-      } else {
         mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+      } else {
+        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
       }
     }
   } else{
@@ -182,9 +182,9 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
       angle = (angle % 360 + 360) % 360;
 
       if (angle >= 180){
-        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
-      } else {
         mvt_forward(l_sn, r_sn, 100, 0, -2, 2, l_state, r_state);
+      } else {
+        mvt_forward(l_sn, r_sn, 100, 0, 2, -2, l_state, r_state);
       }
     }
   }
