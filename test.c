@@ -109,7 +109,7 @@ int main( void )
             turn(sn_compass, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state, index, 20.0);
             cross_2 +=1;
         }
-        if (dist < 10.0){
+        if (dist < 100.0){
             mvt_motor(l_sn, r_sn, 500, 400, 4, 4, l_state, r_state); //reculer
             angl = compas( sn_compass,  value);
             turn(sn_compass, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state, index, 10);
