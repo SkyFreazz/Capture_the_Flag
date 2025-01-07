@@ -83,15 +83,18 @@ int main( void )
 
     srand(time(NULL)); //demarage tirage alea
     int index = rand() % 2 ;
-    mvt_motor(l_sn, r_sn, 1500, 700, 2, 2, l_state, r_state); // sortir du carré
+    mvt_motor(l_sn, r_sn, 1500, 200, 2, 2, l_state, r_state); // sortir du carré
+    printf("je sors du carré");
     start_angl = compas( sn_compass, value);
     if (index == 0) {
         while (compas( sn_compass, value) > orientation [index] ){
-                mvt_motor(l_sn, r_sn, 500, 400, -4, 4, l_state, r_state); // tourner vers la gauche
+                mvt_motor(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state); // tourner vers la gauche
+                printf("je suis a gauche");
         }
     } else{
         while (compas( sn_compass, value) < orientation [index] ){
-                mvt_motor(l_sn, r_sn, 500, 400, 4, -4, l_state, r_state); // tourner vers la droite
+                mvt_motor(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state); // tourner vers la droite
+                printf("je suis a droite");
         }
     }
 
@@ -104,17 +107,19 @@ int main( void )
         //utilise tous les capteurs
         dist = sonar( sn_sonar, value);
         stp = couleur( sn_color, val, stp);
-        touch(sn_compass, sn_touch, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state);
+        touch(sn_compass, sn_touch, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state);
         if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
-            turn(sn_compass, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state, index, 20.0);
+            turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 20.0);
+            printf("j'ai atteint le centre'");
             cross_2 +=1;
         }
         if (dist < 100.0){
-            mvt_motor(l_sn, r_sn, 500, 400, 4, 4, l_state, r_state); //reculer
+            mvt_motor(l_sn, r_sn, 100, 35, 4, 4, l_state, r_state); //reculer
             angl = compas( sn_compass,  value);
-            turn(sn_compass, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state, index, 10);
+            turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 10);
+            printf("le mur est trop proche");
         }
-        mvt_motor(l_sn, r_sn, 500, 200, 2, 2, l_state, r_state); //avance pendant 0.5s ?
+        mvt_motor(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state); //avance pendant 0.5s ?
 
     } 
     ev3_uninit();
