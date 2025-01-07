@@ -87,7 +87,7 @@ float sonar(uint8_t sn_sonar, float value){
 }
 
 float compas(uint8_t sn_compass, float value){
-    if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
+    if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
       if ( !get_sensor_value0(sn_compass, &value )) {
         value = -1.0;
       }
@@ -156,7 +156,7 @@ void test_system(uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_color, uint8_t
             strcat(fail, test1);
         }
     }
-    if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
+    if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
         positif += 1;
         const char *test2 = "compas ";
         if (strlen(fail) + strlen(test2) < sizeof(fail)){
