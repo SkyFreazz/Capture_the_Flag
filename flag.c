@@ -20,9 +20,6 @@
 //////////////////////////////////////////////////
 #endif
 
-const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
-#define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
-
 static bool _check_pressed( uint8_t sn )
 {
   int val;
@@ -208,7 +205,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   }
   
   //Open the clamp
-  turn_arm(a_sn, 90, 0,  3,  a_state);
+  turn_angle(a_sn, 90, 0, 3, a_state, 67);
 
   //Move backward a bit
   mvt_forward(l_sn, r_sn, 500, 0, 2, 2, l_state, r_state);
