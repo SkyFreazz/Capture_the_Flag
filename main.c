@@ -39,28 +39,6 @@ static bool _check_pressed( uint8_t sn )
 
 int main( void )
 {
-  int i;
-
-  FLAGS_T l_state;
-  FLAGS_T r_state;
-  FLAGS_T a_state;
-  FLAGS_T sm_state;
-  uint8_t sn_touch;
-  uint8_t sn_color;
-  uint8_t sn_compass;
-  uint8_t sn_sonar;
-  char s[ 256 ];
-  int val;
-  float value;
-  uint32_t n, ii;
-  int l_max_speed;
-  uint8_t l_sn;
-  int r_max_speed;
-  uint8_t r_sn;
-  int a_max_speed;
-  uint8_t a_sn;
-  int sm_max_speed;
-  uint8_t sm_sn;
 
 #ifndef __ARM_ARCH_4T__
   /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -93,7 +71,7 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   printf("initial_angle: %f", initial_angle);
 }
 
-mvt_forward(l_sn, r_sn, 3000, 0, 2, 2, l_state, r_state);
+mvt_forward(3000, 0, 2, 2);
 
 
 catch_flag(sn_sonar, sn_touch, sn_compass, l_sn, r_sn, a_sn, l_state, r_state, a_state, initial_angle);

@@ -133,6 +133,8 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
   uint8_t sn_sonar, sn_compass, sn_touch;
   float value, angle;
 
+  ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 );
+
   if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
     while(true){
       if (!get_sensor_value0(sn_sonar, &value )) {
@@ -149,7 +151,7 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
         }
 
         if (fabs(start_angle - angle) > tol_dev){
-          start_angle = (start_angle, tol_angle);
+          angle = turn_precise(start_angle, tol_angle);
         }
       }
 
