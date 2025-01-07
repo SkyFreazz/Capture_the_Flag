@@ -90,6 +90,7 @@ if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
   if ( !get_sensor_value0(sn_compass, &initial_angle )) {
     initial_angle = 0;
   }
+  printf("initial_angle: %i", initial_angle);
 }
 
 mvt_forward(l_sn, r_sn, 1000, 0, 2, 2, l_state, r_state);

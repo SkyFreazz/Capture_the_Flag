@@ -68,7 +68,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   int flag = rand() % 2; //0: left, 1: right
 
   printf("flag %i\n", flag);
-  
+
 
   if (flag == 0){
   //Turn 90 left
@@ -109,7 +109,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         value = 0;
       }
       
-      printf("distance: %d", value);
+      printf("distance: %f", value);
 
       if (value <= 10 && _check_pressed( sn_touch )){
         break;
@@ -160,7 +160,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         value = 0;
       }
       
-      printf("distance : %d\n", value);
+      printf("distance : %f\n", value);
 
       if (value <= 10 && _check_pressed( sn_touch )){
         break;
