@@ -126,6 +126,7 @@ float turn_precise(float final_angle, float tol){
       }
     }
   }
+  return 0;
 }
 
 void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol_angle){
