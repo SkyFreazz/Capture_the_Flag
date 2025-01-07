@@ -104,7 +104,7 @@ int main( void )
         //utilise tous les capteurs
         dist = sonar( sn_sonar, value);
         stp = couleur( sn_color, val, stp);
-        touch( sn_touch, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state);
+        touch(sn_compass, sn_touch, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state);
         if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
             turn(sn_compass, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state, index, 20.0);
             cross_2 +=1;
