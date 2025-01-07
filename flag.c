@@ -32,7 +32,7 @@ static bool _check_pressed( uint8_t sn )
 
 int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t r_sn, uint8_t a_sn, FLAGS_T l_state, FLAGS_T r_state, FLAGS_T a_state, float initial_angle)
 {
-  int tol = 2; //set a tolerance for the angle
+  int tol = 1; //set a tolerance for the angle
   float angle;
   int angle_int;
   float value;
@@ -137,7 +137,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       if( flag == 1){
         angle_int -= 90;
       }
-      
+
       printf("angle %d", angle_int);
 
       if (abs(angle_int % 360) <= tol){
@@ -157,7 +157,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   }
 
   //Open the clamp
-  turn_angle(a_sn, 90, 0, 3, a_state, 67);
+  turn_angle(a_sn, 75, 0, 3, a_state, 67);
 
   //Move to the flag
   if(ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
@@ -179,7 +179,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   }
 
   //Close the clamp
-  turn_angle(a_sn, -90, 0, 3, a_state, 67);
+  turn_angle(a_sn, -75, 0, 3, a_state, 67);
 
   if (flag == 0){
     //Turn 180 right
@@ -261,7 +261,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   }
   
   //Open the clamp
-  turn_angle(a_sn, 90, 0, 3, a_state, 67);
+  turn_angle(a_sn, 75, 0, 3, a_state, 67);
 
   //Move backward a bit
   mvt_forward(l_sn, r_sn, 500, 0, -2, -2, l_state, r_state);
