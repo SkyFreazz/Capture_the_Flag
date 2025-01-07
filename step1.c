@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ev3.h"
 #include "ev3_port.h"
 #include "ev3_tacho.h"
 #include "ev3_sensor.h"
 
+#define R_WHEEL 65
+#define L_WHEEL 68
+#define ARM 67
+#define M_SENSOR 66
 
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
@@ -110,16 +115,16 @@ int touch(uint8_t sn_compass, uint8_t sn_touch, uint8_t l_sn, uint8_t r_sn, int 
         if ( _check_pressed( sn_touch )){
             Sleep( 100 );
             mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //reculer
-            angl = compas(sn_compass, &value);
+            angl = compas(sn_compass, value);
             if (angl < 0){
                 while (!(angl > 0 && angl < 5.0)) {
                     mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a droite
-                    angl = compas(sn_compass, &value);
+                    angl = compas(sn_compass, value);
                 }
             } else {
                 while (!(angl < 0 && angl > -5.0)) {
                     mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a gauche
-                    angl = compas(sn_compass, &value);
+                    angl = compas(sn_compass, value);
                 }
             }
         return 0;
@@ -179,16 +184,16 @@ void test_system(uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_color, uint8_t
 }
 
 void turn(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state, int index, float degre) {
-    float angl = compas(sn_compass, &value);
+    float angl = compas(sn_compass, value);
     if (index == 0){ // si partis vers la gauche
                 while (angl < degre){ 
                     mvt_motor(l_sn, r_sn, time, ramp, l_vit, -r_vit, l_state, r_state); //tourner a droite
-                    angl = compas(sn_compass, &value);
+                    angl = compas(sn_compass, value);
                 }
             } else { // si parti vers la droite
                 while (angl > -degre){ 
                     mvt_motor(l_sn, r_sn, time, ramp, -l_vit, r_vit, l_state, r_state); //tourner a gauche
-                    angl = compas(sn_compass, &value);
+                    angl = compas(sn_compass, value);
                 }
             }
 }
