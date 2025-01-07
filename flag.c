@@ -127,7 +127,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   }
 
   //Open the clamp
-  turn_arm(a_sn, 90, 0,  3,  a_state);
+  turn_angle(a_sn, 90, 0, 3, a_state, 67);
 
   //Move to the flag
   while (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
@@ -143,7 +143,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
     }
 
   //Close the clamp
-  turn_arm(a_sn, -90, 0,  3,  a_state);
+  turn_angle(a_sn, -90, 0, 3, a_state, 67);
 
   if (flag == 0){
     //Turn 180 right
