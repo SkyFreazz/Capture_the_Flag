@@ -6,7 +6,7 @@
 #include "ev3_port.h"
 #include "ev3_tacho.h"
 #include "ev3_sensor.h"
-#include "step1.h"
+#include "step1s.h"
 
 #define R_WHEEL 65
 #define L_WHEEL 68
@@ -30,34 +30,15 @@
 int main( void )
 {
 
-    int i;
-    FLAGS_T l_state;
-    FLAGS_T r_state;
-    FLAGS_T a_state;
-    FLAGS_T sm_state;
-    uint8_t sn_touch;
-    uint8_t sn_color;
-    uint8_t sn_compass;
-    uint8_t sn_sonar;
-    char s[ 256 ];
-    int val;
-    float value;
-    uint32_t n, ii;
-    int l_max_speed;
-    uint8_t l_sn;
-    int r_max_speed;
-    uint8_t r_sn;
-    int a_max_speed;
-    uint8_t a_sn;
-    int sm_max_speed;
-    uint8_t sm_sn;
     int e1 = 0;
     float dist;
     float angl;
     int stp;
     float start_angl;
     int cross_2;
-    int orientation[2] = {-30, 30};
+    float orientation[2] = {-30.0, 30.0};
+    float direction;
+
 
 #ifndef __ARM_ARCH_4T__
   /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -78,26 +59,26 @@ int main( void )
     printf( "Found tacho motors:\n" );
 
     ev3_sensor_init();
-    test_system( sn_sonar,  sn_compass,  sn_color,  sn_touch,  l_sn);
+    test_system();
     printf( "Found sensors:\n" );
 
     srand(time(NULL)); //demarage tirage alea
     int index = rand() % 2 ;
-    mvt_motor(l_sn, r_sn, 1500, 200, 2, 2, l_state, r_state); // sortir du carré
+    mvt_motor(1500, 200, 2, 2); // sortir du carré
     printf("je sors du carré");
-    start_angl = compas( sn_compass, value);
+    start_angl = compas();
     if (index == 0) {
-        while (compas( sn_compass, value) > orientation [index] ){
-                mvt_motor(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state); // tourner vers la gauche
+        while (compas() > orientation [index] ){
+                mvt_motor(100, 35, -4, 4); // tourner vers la gauche
                 printf("je suis a gauche");
         }
     } else{
-        while (compas( sn_compass, value) < orientation [index] ){
-                mvt_motor(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state); // tourner vers la droite
+        while (compas() < orientation [index] ){
+                mvt_motor(100, 35, 4, -4); // tourner vers la droite
                 printf("je suis a droite");
         }
     }
-
+    direction = orientation [index];
     stp = 1;
     cross_2 = 0;
     while (!e1){
@@ -105,21 +86,28 @@ int main( void )
             e1 = 1;
         } 
         //utilise tous les capteurs
-        dist = sonar( sn_sonar, value);
-        stp = couleur( sn_color, val, stp);
-        touch(sn_compass, sn_touch, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state);
+        dist = sonar();
+        stp = couleur(stp);
+        touch(100, 35, 4, 4);
         if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
-            turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 20.0);
             printf("j'ai atteint le centre'");
+            if (direction < 0) {
+                direction = 20;
+                turn(100, 35, 4, 4, index, direction);
+            } else {
+                direction = -20;
+                turn(100, 35, 4, 4, index, direction);
+            }
             cross_2 +=1;
         }
         if (dist < 100.0){
-            mvt_motor(l_sn, r_sn, 100, 35, 4, 4, l_state, r_state); //reculer
-            angl = compas( sn_compass,  value);
-            turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 10);
+            mvt_motor( 100, 35, -2, -2); //reculer
+            angl = compas();
+            turn(100, 35, 4, 4, index, 10);
             printf("le mur est trop proche");
         }
-        mvt_motor(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state); //avance pendant 0.5s ?
+        stay(100, 0, 2, 3, direction, 3.0);
+        //mvt_motor(100, 0, 2, 2);
 
     } 
     ev3_uninit();
