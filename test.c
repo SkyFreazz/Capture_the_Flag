@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h> //cherche random
 #include "ev3.h"
 #include "ev3_port.h"
@@ -25,18 +26,6 @@
 
 //////////////////////////////////////////////////
 #endif
-const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
-#define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
-
-static bool _check_pressed( uint8_t sn )
-{
-  int val;
-
-  if ( sn == SENSOR__NONE_ ) {
-    return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
-  }
-  return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
-}
 
 int main( void )
 {
@@ -66,7 +55,7 @@ int main( void )
     float dist;
     float angl;
     int stp;
-    float start_angl:
+    float start_angl;
     int cross_2;
     int orientation[2] = {-30, 30};
 
@@ -105,7 +94,7 @@ int main( void )
                 mvt_motor(l_sn, r_sn, 500, 400, 4, -4, l_state, r_state); // tourner vers la droite
         }
     }
-/*
+
     stp = 1;
     cross_2 = 0;
     while (!e1){
@@ -114,42 +103,19 @@ int main( void )
         } 
         //utilise tous les capteurs
         dist = sonar( sn_sonar, value);
-        stp = color( sn_color, val, stp);
+        stp = couleur( sn_color, val, stp);
         touch( sn_touch, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state);
         if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
-            /*if (index == 0){ // si parti vers la gauche
-                while (angl < 0){ 
-                    mvt_motor(l_sn, r_sn, time, ramp, vit, l_state, r_state); //tourner a droite
-                    angl = compas( sn_compass, value);
-                }
-            } else { // si parti vers la droite
-                while (angl > 0){ 
-                    mvt_motor(l_sn, r_sn, time, ramp, vit, l_state, r_state); //tourner a gauche
-                    angl = compas (sn_compass,  value);
-                }
-            }
             turn(sn_compass, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state, index, 20.0);
             cross_2 +=1;
         }
-        if (dist < 10.0){
+        if (dist < 100.0){
             mvt_motor(l_sn, r_sn, 500, 400, 4, 4, l_state, r_state); //reculer
             angl = compas( sn_compass,  value);
             turn(sn_compass, l_sn, r_sn, 500, 400, 4, 4, l_state, r_state, index, 10);
-            /*
-            if (index == 0){ // si partis vers la gauche
-                while (angl < 0){ 
-                    mvt_motor(l_sn, r_sn, time, ramp, vit, l_state, r_state); //tourner a droite
-                    angl = compas( sn_compass, value);
-                }
-            } else { // si parti vers la droite
-                while (angl > 0){ 
-                    mvt_motor(l_sn, r_sn, time, ramp, vit, l_state, r_state); //tourner a gauche
-                    angl = compas( sn_compass, value);
-                }
-            }
         }
         mvt_motor(l_sn, r_sn, 500, 200, 2, 2, l_state, r_state); //avance pendant 0.5s ?
 
-    }*/
+    } 
     ev3_uninit();
 }

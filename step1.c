@@ -97,7 +97,7 @@ float compas(uint8_t sn_compass, float value){
     return -1.0; //error
 }
 
-int color(uint8_t sn_color, int val, int stp){
+int couleur(uint8_t sn_color, int val, int stp){
     if ( ev3_search_sensor( LEGO_EV3_COLOR, &sn_color, 0 )) {
         if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
             val = 0;
