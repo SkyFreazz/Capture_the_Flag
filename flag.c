@@ -44,7 +44,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
 
   //Go back to initial angle (0°)
   while(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-    if ( !get_sensor_value0(sn_compass, &value )) {
+    if ( !get_sensor_value0(sn_compass, &angle )) {
       angle = 0;
     }
 
@@ -70,7 +70,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
   if (flag == 0){
   //Turn 90 left
     while(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-      if ( !get_sensor_value0(sn_compass, &value )) {
+      if ( !get_sensor_value0(sn_compass, &angle )) {
         angle = 0;
       }
 
@@ -107,7 +107,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
 
   //Turn 90 right
   while(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-    if ( !get_sensor_value0(sn_compass, &value )) {
+    if ( !get_sensor_value0(sn_compass, &angle )) {
       angle = 0;
     }
 
@@ -150,7 +150,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
   if (flag == 0){
     //Turn 180 right
     while(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-      if ( !get_sensor_value0(sn_compass, &value )) {
+      if ( !get_sensor_value0(sn_compass, &angle )) {
         angle = 0;
       }
 
@@ -174,7 +174,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
   } else{
     //Turn 90 right
     while(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-      if ( !get_sensor_value0(sn_compass, &value )) {
+      if ( !get_sensor_value0(sn_compass, &angle )) {
         angle = 0;
       }
 
