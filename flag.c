@@ -215,4 +215,5 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_color, int sn_compass, uint8_t
   //Move backward a bit
   mvt_forward(l_sn, r_sn, 500, 0, 2, 2, l_state, r_state);
 
+return 0;
 }
