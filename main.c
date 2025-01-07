@@ -4,6 +4,8 @@
 #include "ev3_port.h"
 #include "ev3_tacho.h"
 #include "ev3_sensor.h"
+#include "mvt.h"
+#include "flag.h"
 
 #define R_WHEEL 65
 #define L_WHEEL 68
@@ -79,6 +81,17 @@ int main( void )
   printf( "*** ( EV3 ) Hello! ***\n" );
 
   printf( "Found tacho motors:\n" );
+
+int initial_angle;
+
+if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
+  if ( !get_sensor_value0(sn_compass, &initial_angle )) {
+    initial_angle = 0;
+  }
+}
+
+catch_flag(sn_sonar, sn_touch, sn_color, sn_compass, l_sn, r_sn, l_state, r_state, initial_angle);
+
  /* 
 mvt_motor(l_sn, r_sn, 5000, 2000, 2, l_state, r_state);
 printf("ici 1");
