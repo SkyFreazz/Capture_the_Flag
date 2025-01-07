@@ -15,4 +15,6 @@ void test_system(uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_color, uint8_t
 
 void turn(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state, int index, float degre);
 
+void stay(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int max_vit, int min_vit, FLAGS_T l_state, FLAGS_T r_state, int index, float degre, float ecart);
+
 #endif
