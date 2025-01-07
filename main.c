@@ -84,7 +84,7 @@ int main( void )
 
 
 ev3_sensor_init();
-float initial_angle;
+int initial_angle;
 
 if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
   if ( !get_sensor_value0(sn_compass, &initial_angle )) {
