@@ -93,7 +93,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         value = 0;
       }
       
-      if (value <= 30){
+      if (value <= 10 && _check_pressed( sn_touch )){
         break;
       }
 
@@ -132,7 +132,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         value = 0;
       }
       
-      if (value <= 15 && _check_pressed( sn_touch )){
+      if (value <= 10 && _check_pressed( sn_touch )){
         break;
       }
 
@@ -197,7 +197,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
       value = 0;
     }
     
-    if (value <= 15 && _check_pressed( sn_touch )){
+    if (value <= 10 && _check_pressed( sn_touch )){
       break;
     }
 
