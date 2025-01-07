@@ -83,7 +83,7 @@ int main( void )
 
     srand(time(NULL)); //demarage tirage alea
     int index = rand() % 2 ;
-    mvt_motor(l_sn, r_sn, 1500, 2000, 1000, 2, l_state, r_state); // sortir du carré
+    mvt_motor(l_sn, r_sn, 1500, 2000, 1000, 2, 2, l_state, r_state); // sortir du carré
     start_angl = compas( sn_compass, value);
     if (index == 0) {
         while (compas( sn_compass, value) > orientation [index] ){
