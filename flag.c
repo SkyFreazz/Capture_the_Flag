@@ -40,6 +40,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   //Go back to initial angle (0°)
   if(ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
     printf("go to initial position\n");
+    fflush(stdout);
     while(true){
       if ( !get_sensor_value0(sn_compass, &angle )) {
         angle = 0;
@@ -67,6 +68,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   int flag = rand() % 2; //0: left, 1: right
 
   printf("flag %i\n", flag);
+  
 
   if (flag == 0){
   //Turn 90 left

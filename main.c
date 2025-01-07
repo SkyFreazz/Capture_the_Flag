@@ -82,6 +82,8 @@ int main( void )
 
   printf( "Found tacho motors:\n" );
 
+
+ev3_sensor_init();
 float initial_angle;
 
 if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
@@ -117,5 +119,6 @@ sleep(1000);
 turn_arm(sm_sn, -45, 0,  4,  sm_state);
 Sleep(1000);
 turn_arm(sm_sn, 45, 0,  4,  sm_state);*/
+ev3_uninit();
 return ( 0 );
 }
