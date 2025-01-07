@@ -90,10 +90,10 @@ if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
   }
 }
 
-mvt_forward(l_sn, r_sn, 1000, 0, -2, -2, l_state, r_state);
-mvt_forward(l_sn, r_sn, 1500, 0, 2, 2, l_state, r_state);
-mvt_forward(l_sn, r_sn, 1500, 0, 2, -2, l_state, r_state);
-mvt_forward(l_sn, r_sn, 1000, 0, -2, 2, l_state, r_state);
+mvt_forward(l_sn, r_sn, 1000, 0, 2, 2, l_state, r_state);
+mvt_forward(l_sn, r_sn, 1500, 0, -2, -2, l_state, r_state);
+mvt_forward(l_sn, r_sn, 1500, 500, 2, -2, l_state, r_state);
+mvt_forward(l_sn, r_sn, 1000, 350, -2, 2, l_state, r_state);
 
 
 catch_flag(sn_sonar, sn_touch, sn_compass, l_sn, r_sn, a_sn, l_state, r_state, a_state, initial_angle);
