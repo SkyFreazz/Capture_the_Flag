@@ -119,6 +119,33 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
         break;
       }
 
+      if(ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
+        while(true){
+        if ( !get_sensor_value0(sn_compass, &angle )) {
+          angle = 0;
+        }
+
+        angle -= initial_angle;
+        angle_int = (int) angle;
+        angle_int -= last_angle;
+
+        printf("angle %d", angle_int);
+
+        if (abs(angle_int % 360) <= tol){
+          last_angle = angle_int;
+          break;
+        }
+
+        angle_int = (angle_int % 360 + 360) % 360;
+
+        if (angle_int >= 180){
+          mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
+        } else {
+          mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
+        }
+      }
+      }
+
       mvt_forward(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state);
     }
     printf("Move forward set\n");
@@ -160,22 +187,49 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   turn_angle(a_sn, 75, 0, 3, a_state, 67);
 
   //Move to the flag
-  if(ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
-    printf("move to flag\n");
+  if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
+    printf("Move forward\n");
     while(true){
       if (!get_sensor_value0(sn_sonar, &value )) {
         value = 0;
       }
       
-      printf("distance : %f\n", value);
+      printf("distance: %f", value);
 
       if (value <= 150 && _check_pressed( sn_touch )){
         break;
       }
 
+      if(ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
+        while(true){
+        if ( !get_sensor_value0(sn_compass, &angle )) {
+          angle = 0;
+        }
+
+        angle -= initial_angle;
+        angle_int = (int) angle;
+        angle_int -= last_angle;
+
+        printf("angle %d", angle_int);
+
+        if (abs(angle_int % 360) <= tol){
+          last_angle = angle_int;
+          break;
+        }
+
+        angle_int = (angle_int % 360 + 360) % 360;
+
+        if (angle_int >= 180){
+          mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
+        } else {
+          mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
+        }
+      }
+      }
+
       mvt_forward(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state);
     }
-    printf("move to flag set\n");
+    printf("Move forward set\n");
   }
 
   //Close the clamp
@@ -245,19 +299,48 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
 
   //Move forward to the wall
   if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
-    printf("move forward\n");
+    printf("Move forward\n");
     while(true){
       if (!get_sensor_value0(sn_sonar, &value )) {
         value = 0;
       }
       
+      printf("distance: %f", value);
+
       if (value <= 150 && _check_pressed( sn_touch )){
         break;
       }
 
+      if(ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
+        while(true){
+        if ( !get_sensor_value0(sn_compass, &angle )) {
+          angle = 0;
+        }
+
+        angle -= initial_angle;
+        angle_int = (int) angle;
+        angle_int -= last_angle;
+
+        printf("angle %d", angle_int);
+
+        if (abs(angle_int % 360) <= tol){
+          last_angle = angle_int;
+          break;
+        }
+
+        angle_int = (angle_int % 360 + 360) % 360;
+
+        if (angle_int >= 180){
+          mvt_forward(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state);
+        } else {
+          mvt_forward(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state);
+        }
+      }
+      }
+
       mvt_forward(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state);
     }
-    printf("move forward\n");
+    printf("Move forward set\n");
   }
   
   //Open the clamp
