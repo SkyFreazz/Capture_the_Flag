@@ -5,6 +5,11 @@
 #include "ev3_tacho.h"
 #include "ev3_sensor.h"
 
+#define R_WHEEL 65
+#define L_WHEEL 68
+#define ARM 67
+#define M_SENSOR 66
+
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
