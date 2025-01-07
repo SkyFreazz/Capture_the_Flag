@@ -68,7 +68,7 @@ int catch_flag(int sn_sonar, int sn_touch, int sn_compass, uint8_t l_sn, uint8_t
   }
 
   //choose the flag to grab
-  int flag = rand() % 2; //0: left, 1: right
+  int flag = 0; //rand() % 2; //0: left, 1: right
 
   printf("flag %i\n", flag);
 
