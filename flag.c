@@ -43,7 +43,7 @@ int catch_flag(float initial_angle)
   forward_to_wall(150, last_angle, tol, tol);
 
   //Turn 90 right
-  last_angle = turn_precise(last_angle + 90)
+  last_angle = turn_precise(last_angle + 90, tol);
 
   //Open the clamp
   turn_angle(75, 0, 3, 67);
@@ -56,7 +56,7 @@ int catch_flag(float initial_angle)
 
 
   //Turn to go back to area
-  last_angle = turn_precise(initial_angle - 180);
+  last_angle = turn_precise(initial_angle - 180, tol);
   
   //Move forward to the wall
   forward_to_wall(150, last_angle, tol, tol);
