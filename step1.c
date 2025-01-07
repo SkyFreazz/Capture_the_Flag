@@ -25,7 +25,18 @@
 //////////////////////////////////////////////////
 #endif
 
+const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
+#define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
+static bool _check_pressed( uint8_t sn )
+{
+  int val;
+
+  if ( sn == SENSOR__NONE_ ) {
+    return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
+  }
+  return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
+}
 
 void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state)
 {
@@ -92,15 +103,15 @@ int color(uint8_t sn_color, int val, int stp){
             val = 0;
         }
         //fflush( stdout ); //seulement utile pour les print 
-        if (strcmp(color[*val], "BLACK") == 0){
+        if (strcmp(color[val], "BLACK") == 0){
             return 2;
-        }else if (strcmp(color[*val], "GREEN") == 0 || strcmp(color[*val], "YELLOW") == 0) {
+        }else if (strcmp(color[val], "GREEN") == 0 || strcmp(color[val], "YELLOW") == 0) {
             if (stp == 2 ) {
                 return 3; // return (stp == 2) ? 3 : 1; //d'apres gpt
             }else {
                 return 1;
             }
-        }else if (strcmp(color[*val], "WHITE") == 0) { // pour detecter le plot orange || strcmp(color[*val], "YELLOW") == 0
+        }else if (strcmp(color[val], "WHITE") == 0) { // pour detecter le plot orange || strcmp(color[*val], "YELLOW") == 0
             return stp;
         }
       
@@ -184,6 +195,7 @@ void test_system(uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_color, uint8_t
 }
 
 void turn(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state, int index, float degre) {
+    float value;
     float angl = compas(sn_compass, value);
     if (index == 0){ // si partis vers la gauche
                 while (angl < degre){ 
