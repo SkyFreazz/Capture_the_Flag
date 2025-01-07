@@ -75,7 +75,7 @@ void main ()
       printf( "\r(%s) \n", color[ val ]);
       fflush( stdout );
     }
-    if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
+    if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
       printf("COMPASS found, reading compass...\n");
       if ( !get_sensor_value0(sn_compass, &value )) {
         value = 0;
