@@ -67,7 +67,7 @@ int main( void )
     float dist;
     float angl;
     int stp;
-    float start_angl:
+    float start_angl;
     int cross_2;
     int orientation[2] = {-30, 30};
 
