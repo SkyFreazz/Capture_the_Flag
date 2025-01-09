@@ -69,23 +69,6 @@ void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_
     return;
 }
 
-float sonar(uint8_t sn_sonar, float value){
-    if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
-      if ( !get_sensor_value0(sn_sonar, &value )) {
-        value = -1.0;
-      }
-      if ((value <250.0) || (value > 5.0)){
-        //fflush( stdout ); //seulement utile pour les print 
-        return(value);
-      }else {
-        //fflush( stdout ); //seulement utile pour les print 
-        return 0 ;
-      }
-      
-    }
-    return -1.0; //error
-}
-
 float compas(uint8_t sn_compass, float value){
     if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
       if ( !get_sensor_value0(sn_compass, &value )) {
@@ -93,6 +76,51 @@ float compas(uint8_t sn_compass, float value){
       }
       //fflush( stdout ); //seulement utile pour les print 
       return(value);
+    }
+    return -1.0; //error
+}
+
+float sonar(uint8_t sn_sonar, float value){
+    if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
+        if ( !get_sensor_value0(sn_sonar, &value )) {
+            value = -1.0;
+        }
+        if ((value <250.0) || (value > 5.0)){ // si valeurs fausses
+            //fflush( stdout ); //seulement utile pour les print 
+            value = 0;
+        }
+    
+        if (dist < 100.0){
+            printf("le mur est trop proche");
+            mvt_motor(l_sn, r_sn, 100, 35, 4, 4, l_state, r_state); //reculer
+            angl = compas( sn_compass,  value);
+            if (angl > -20 && angl < 20){
+                if (angl < 0){
+                    while (angl > -45.0){ 
+                        mvt_motor(l_sn, r_sn, time, ramp, l_vit, -r_vit, l_state, r_state); //tourner a droite
+                        angl = compas(sn_compass, value);
+                    }
+                } else { // si parti vers la droite
+                    while (angl < 45){ 
+                        mvt_motor(l_sn, r_sn, time, ramp, -l_vit, r_vit, l_state, r_state); //tourner a gauche
+                        angl = compas(sn_compass, value);
+                    }
+                }
+            } else {
+                if (angl < 0){ // si partis vers la gauche
+                    while (!(angl > 0 && angl < 5.0)) {
+                        mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a droite
+                        angl = compas(sn_compass, value);
+                    }
+                } else { // si parti vers la droite
+                    while (!(angl < 0 && angl > -5.0)) {
+                        mvt_motor(time, ramp, l_vit, r_vit); //tourner a gauche
+                        angl = compas();
+                    }
+                }
+            }    
+        }
+        return 0;
     }
     return -1.0; //error
 }
@@ -128,15 +156,28 @@ int touch(uint8_t sn_compass, uint8_t sn_touch, uint8_t l_sn, uint8_t r_sn, int 
             Sleep( 100 );
             mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //reculer
             angl = compas(sn_compass, value);
-            if (angl < 0){
-                while (!(angl > 0 && angl < 5.0)) {
-                    mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a droite
-                    angl = compas(sn_compass, value);
+            if (angl > -20 && angl < 20) { // obstacle = plot
+                if (angl < 0){
+                    while (angl > -45.0){ 
+                        mvt_motor(l_sn, r_sn, time, ramp, l_vit, -r_vit, l_state, r_state); //tourner a droite
+                        angl = compas(sn_compass, value);
+                    }
+                } else { // si parti vers la droite
+                    while (angl < 45){ 
+                        mvt_motor(l_sn, r_sn, time, ramp, -l_vit, r_vit, l_state, r_state); //tourner a gauche
+                        angl = compas(sn_compass, value);
+                    }
                 }
             } else {
-                while (!(angl < 0 && angl > -5.0)) {
-                    mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a gauche
+                if (angl < 0){ // si partis vers la gauche
+                    while (!(angl > 0 && angl < 5.0)) {
+                    mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a droite
                     angl = compas(sn_compass, value);
+                } else { // si parti vers la droite
+                    while (!(angl < 0 && angl > -5.0)) {
+                        mvt_motor(time, ramp, l_vit, r_vit); //tourner a gauche
+                        angl = compas();
+                    }
                 }
             }
         return 0;

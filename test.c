@@ -57,7 +57,8 @@ int main( void )
     int stp;
     float start_angl;
     int cross_2;
-    int orientation[2] = {-30, 30};
+    int orientation[2] = {-40.0, 40.0};
+    int tch;
 
 #ifndef __ARM_ARCH_4T__
   /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -107,17 +108,14 @@ int main( void )
         //utilise tous les capteurs
         dist = sonar( sn_sonar, value);
         stp = couleur( sn_color, val, stp);
-        touch(sn_compass, sn_touch, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state);
+        tch = touch(sn_compass, sn_touch, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state);
+        if (dist == -1.0 || tch == -1){
+            e1 = 1;
+        }
         if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
             turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 20.0);
             printf("j'ai atteint le centre'");
             cross_2 +=1;
-        }
-        if (dist < 100.0){
-            mvt_motor(l_sn, r_sn, 100, 35, 4, 4, l_state, r_state); //reculer
-            angl = compas( sn_compass,  value);
-            turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 10);
-            printf("le mur est trop proche");
         }
         mvt_motor(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state); //avance pendant 0.5s ?
 
