@@ -22,7 +22,7 @@
 
 int catch_flag(float initial_angle)
 {
-  int tol = 0.5; //set a tolerance for the angle
+  int tol = 1; //set a tolerance for the angle
   float last_angle;
 
   //Go back to initial angle (0°)
