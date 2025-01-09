@@ -65,7 +65,7 @@ int catch_flag(float initial_angle)
   forward_to_wall(150, last_angle, tol, tol);
 
   //Close the clamp
-  turn_angle(-75, 0, 3, 67);
+  turn_angle(-90, 0, 3, 67);
 
 
   //Turn to go back to area
