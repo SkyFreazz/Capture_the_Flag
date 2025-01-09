@@ -69,7 +69,7 @@ int catch_flag(float initial_angle)
 
 
   //Turn to go back to area
-  last_angle = turn_precise(initial_angle - 180.0, tol);
+  last_angle = turn_precise(initial_angle - 182.0, tol);
 
   printf("last_angle: %f", last_angle);
   
