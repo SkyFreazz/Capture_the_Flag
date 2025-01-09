@@ -106,7 +106,7 @@ float turn_precise(float final_angle, float tol){
       angle -= final_angle;
 
       if (fabs(fmod(angle, 360.0)) <= tol){
-        return angle;
+        return angle + final_angle;
       }
 
       float angle_180 = roundf(fmod(fmod(angle, 360.0) + 360.0, 360.0));
