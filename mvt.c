@@ -34,7 +34,7 @@ static bool _check_pressed( uint8_t sn )
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-void turn_arm()
+void turn_arm(int vit)
 {
   uint8_t sn;
   FLAGS_T state;
@@ -44,8 +44,8 @@ void turn_arm()
       get_tacho_max_speed( sn, &max_speed );
       set_tacho_stop_action_inx( sn, TACHO_COAST );
       max_speed = -max_speed;
-      set_tacho_speed_sp( sn, max_speed * 1/3 );
-      set_tacho_time_sp( sn, 100 );
+      set_tacho_speed_sp( sn, max_speed * 1/vit );
+      set_tacho_time_sp( sn, 1000 );
       set_tacho_ramp_up_sp( sn, 0 );
       set_tacho_ramp_down_sp( sn, 0 );
       set_tacho_command_inx( sn, TACHO_RUN_TIMED );
