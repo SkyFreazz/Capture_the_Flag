@@ -9,7 +9,6 @@
 #define R_WHEEL 65
 #define L_WHEEL 68
 #define ARM 67
-#define M_SENSOR 66
 
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
@@ -35,18 +34,18 @@ static bool _check_pressed( uint8_t sn )
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-void turn_angle(int angle, int ramp, int vit, int motor)
+void turn_arm(int angle)
 {
   uint8_t sn;
   FLAGS_T state;
 
-  if ( ev3_search_tacho_plugged_in(motor,0, &sn, 0 )){
+  if ( ev3_search_tacho_plugged_in(ARM,0, &sn, 0 )){
     int max_speed;
     get_tacho_max_speed( sn, &max_speed );
     set_tacho_stop_action_inx( sn, TACHO_COAST );
-    set_tacho_speed_sp( sn, max_speed / vit );
-    set_tacho_ramp_up_sp( sn, ramp );
-    set_tacho_ramp_down_sp( sn, ramp );
+    set_tacho_speed_sp( sn, max_speed / 3);
+    set_tacho_ramp_up_sp( sn, 0 );
+    set_tacho_ramp_down_sp( sn, 0 );
     set_tacho_position_sp( sn, angle );
     set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
     do {

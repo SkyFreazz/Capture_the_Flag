@@ -2,7 +2,7 @@
 #define MVT_H
 
 
-void turn_angle(int angle, int ramp, int vit, int motor);
+void turn_arm(int angle);
 
 void mvt_forward(int time, int ramp, int l_vit, int r_vit);
 
