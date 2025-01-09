@@ -77,7 +77,7 @@ int catch_flag(float initial_angle)
   forward_to_wall(150, last_angle, 1, 1);
   
   //Open the clamp
-  turn_angle(75, 0, 3, 67);
+  turn_angle(90, 0, 3, 67);
 
   //Move backward a bit
   mvt_forward(500, 0, -2, -2);
