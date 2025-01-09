@@ -45,7 +45,7 @@ void turn_arm(int vit)
       set_tacho_stop_action_inx( sn, TACHO_COAST );
       max_speed = -max_speed;
       set_tacho_speed_sp( sn, max_speed * 1/vit );
-      set_tacho_time_sp( sn, 1000 );
+      set_tacho_time_sp( sn, 900 );
       set_tacho_ramp_up_sp( sn, 0 );
       set_tacho_ramp_down_sp( sn, 0 );
       set_tacho_command_inx( sn, TACHO_RUN_TIMED );
