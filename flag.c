@@ -40,14 +40,14 @@ int catch_flag(float initial_angle)
     printf("go here\n");
     printf("angle to reach: %f", initial_angle - 90.0);
     fflush(stdout);
-    last_angle = turn_precise(initial_angle - 90.0, 1);
+    last_angle = turn_precise(initial_angle - 90.0, 2);
   }
 
   printf("last_angle: %f", last_angle);
   fflush(stdout);
 
   //Move forward to the wall
-  forward_to_wall(150, last_angle, 1, 1);
+  forward_to_wall(150, last_angle, 1, 2);
 
   //Turn 90 right
   printf("angle to reach: %f", last_angle + 90.0);
