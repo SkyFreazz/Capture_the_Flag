@@ -59,13 +59,13 @@ int catch_flag(float initial_angle)
   
 
   //Open the clamp
-  turn_arm(3);
+  turn_arm(-3);
 
   //Move to the flag
   forward_to_wall(150, last_angle, tol, tol);
 
   //Close the clamp
-  turn_arm(-3);
+  turn_arm(3);
 
 
   //Turn to go back to area
@@ -77,7 +77,7 @@ int catch_flag(float initial_angle)
   forward_to_wall(150, last_angle, 1, 1);
   
   //Open the clamp
-  turn_arm(3);
+  turn_arm(-3);
 
   //Move backward a bit
   mvt_forward(500, 0, -2, -2);
