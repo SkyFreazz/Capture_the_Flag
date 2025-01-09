@@ -34,27 +34,30 @@ static bool _check_pressed( uint8_t sn )
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-void turn_arm(int angle)
+void turn_arm()
 {
   uint8_t sn;
   FLAGS_T state;
 
   if ( ev3_search_tacho_plugged_in(ARM,0, &sn, 0 )){
-    int max_speed;
-    get_tacho_max_speed( sn, &max_speed );
-    set_tacho_stop_action_inx( sn, TACHO_COAST );
-    set_tacho_speed_sp( sn, max_speed / 3);
-    set_tacho_ramp_up_sp( sn, 0 );
-    set_tacho_ramp_down_sp( sn, 0 );
-    set_tacho_position_sp( sn, angle );
-    set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-    do {
+      int max_speed;
+      get_tacho_max_speed( sn, &max_speed );
+      set_tacho_stop_action_inx( sn, TACHO_COAST );
+      max_speed = -max_speed;
+      set_tacho_speed_sp( sn, max_speed * 1/3 );
+      set_tacho_time_sp( sn, 100 );
+      set_tacho_ramp_up_sp( sn, 0 );
+      set_tacho_ramp_down_sp( sn, 0 );
+      set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+      do {
         get_tacho_state_flags( sn, &state );
-      } while ( state);
+      } while ( state );
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
     return;
+
+  return;
 }
 
 void mvt_forward(int time, int ramp, int l_vit, int r_vit)
