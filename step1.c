@@ -98,7 +98,7 @@ float sonar(uint8_t sn_sonar, float value){
         }
     
         if (value < 100.0){
-            printf("le mur est trop proche");
+            printf("le mur est trop proche\n");
             mvt_motor(l_sn, r_sn, 100, 35, -2, -2, l_state, r_state); //reculer
             angl = compas( sn_compass,  avalue);
             if (angl > -20.0 && angl < 20.0){
@@ -137,7 +137,8 @@ int couleur(uint8_t sn_color, int val, int stp){
         if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
             val = 0;
         }
-        //fflush( stdout ); //seulement utile pour les print 
+        printf("la couleur %s\n",color[val]);
+        fflush( stdout ); //seulement utile pour les print 
         if (strcmp(color[val], "BLACK") == 0){
             return 2;
         }else if (strcmp(color[val], "GREEN") == 0 || strcmp(color[val], "YELLOW") == 0) {
@@ -157,9 +158,10 @@ int couleur(uint8_t sn_color, int val, int stp){
 int touch(uint8_t sn_compass, uint8_t sn_touch, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state){
     float angl;
     float value;
-    printf("j'ai touché un mur'");
+    
     if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )){
         if ( _check_pressed( sn_touch )){
+            printf("j'ai touché un mur\n");
             Sleep( 100 );
             mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //reculer
             angl = compas(sn_compass, value);
