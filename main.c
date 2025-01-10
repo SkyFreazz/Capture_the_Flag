@@ -61,7 +61,7 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   printf("initial_angle: %f", initial_angle);
 }
 
-mvt_forward(4000, 0, 2, 2);
+//mvt_forward(4000, 0, 2, 2);
 
 
 catch_flag(initial_angle);
