@@ -106,7 +106,7 @@ float sonar(){
       }
 
       if (value < 100.0){
-            printf("le mur est trop proche");
+            printf("le mur est trop proche\n");
             mvt_motor(100, 35, -2, -2); //reculer
             angl = compas();
             if (angl > -20.0 && angl < 20.0){
@@ -168,9 +168,9 @@ int couleur(int stp){
 int touch(int time, int ramp, int l_vit, int r_vit){
     uint8_t sn_touch;
     float angl;
-    printf("j'ai touché un mur");
     if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )){
         if ( _check_pressed( sn_touch )){
+            printf("j'ai touché un mur\n");
             Sleep( 100 );
             mvt_motor(time, ramp, l_vit, r_vit); //reculer
             angl = compas();
