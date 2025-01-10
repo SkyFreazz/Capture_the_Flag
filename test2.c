@@ -103,7 +103,7 @@ int main( void )
 
     }
     if (dist == -1.0 || tch == -1){
-        printf("Il y a une erreur dans mes capteurs")
+        printf("Il y a une erreur dans mes capteurs");
     }else {
         printf("J'ai fini ma course");
     }

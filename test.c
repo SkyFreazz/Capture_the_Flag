@@ -80,13 +80,13 @@ int main( void )
 
     ev3_sensor_init();
     test_system( sn_sonar,  sn_compass,  sn_color,  sn_touch,  l_sn);
-    printf( "Found sensors:\n" );
 
     srand(time(NULL)); //demarage tirage alea
     int index = rand() % 2 ;
     mvt_motor(l_sn, r_sn, 1500, 200, 2, 2, l_state, r_state); // sortir du carré
     printf("je sors du carré");
     start_angl = compas( sn_compass, value);
+    printf("%s/n", start_angl);
     if (index == 0) {
         while (compas( sn_compass, value) > orientation [index] ){
                 mvt_motor(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state); // tourner vers la gauche
@@ -109,7 +109,7 @@ int main( void )
         dist = sonar( sn_sonar, value);
         stp = couleur( sn_color, val, stp);
         tch = touch(sn_compass, sn_touch, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state);
-        if (dist == -1.0 || tch == -1){
+        if (dist == -1.0 || tch == -1){ //si capteur non detecté
             e1 = 1;
         }
         if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
@@ -117,8 +117,12 @@ int main( void )
             printf("j'ai atteint le centre'");
             cross_2 +=1;
         }
-        mvt_motor(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state); //avance pendant 0.5s ?
-
-    } 
+        mvt_motor(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state); //avance 
+    }
+    if (dist == -1.0 || tch == -1){
+        printf("Il y a une erreur dans mes capteurs");
+    }else {
+        printf("J'ai fini ma course");
+    }
     ev3_uninit();
 }
