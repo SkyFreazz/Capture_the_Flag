@@ -113,18 +113,10 @@ void turn_precise(float final_angle, float tol){
 
       float angle_180 = roundf(fmod(fmod(angle, 360.0) + 360.0, 360.0));
 
-      if (fabs(fmod(angle, 360.0)) <= 1){
-        if (angle_180 >= 180){
-          mvt_forward(100, 35, 10, -10);
-        } else {
-          mvt_forward(100, 35, -10, 10);
-      }
-      }
-
       if (angle_180 >= 180){
-        mvt_forward(100, 35, 4, -4);
+        mvt_forward(100, 35, 6, -6);
       } else {
-        mvt_forward(100, 35, -4, 4);
+        mvt_forward(100, 35, -6, 6);
       }
     }
   }
