@@ -94,7 +94,7 @@ void mvt_forward(int time, int ramp, int l_vit, int r_vit)
     return;
 }
 
-float turn_precise(float final_angle, float tol){
+void turn_precise(float final_angle, float tol){
 
   uint8_t sn_compass;
   float angle;
@@ -108,7 +108,7 @@ float turn_precise(float final_angle, float tol){
       angle -= final_angle;
 
       if (fabs(fmod(angle, 360.0)) <= tol){
-        return angle + final_angle;
+        return;
       }
 
       float angle_180 = roundf(fmod(fmod(angle, 360.0) + 360.0, 360.0));
@@ -128,7 +128,7 @@ float turn_precise(float final_angle, float tol){
       }
     }
   }
-  return 0;
+  return;
 }
 
 void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol_angle){

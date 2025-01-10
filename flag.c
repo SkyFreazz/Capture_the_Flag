@@ -22,10 +22,10 @@
 
 int catch_flag(float initial_angle)
 {
-  float last_angle;
+  float last_angle = initial_angle;
 
   //Go back to initial angle (0°)
-  last_angle = turn_precise(initial_angle, 1);
+  turn_precise(initial_angle, 1);
 
   //choose the flag to grab
   int flag = 0; //rand() % 2; //0: left, 1: right
@@ -37,9 +37,10 @@ int catch_flag(float initial_angle)
   if (flag == 0){
   //Turn 90 left
     printf("go here\n");
-    printf("angle to reach: %f", initial_angle - 90.0);
+    printf("angle to reach: %f", last_angle - 90.0);
     fflush(stdout);
-    last_angle = turn_precise(initial_angle - 90.0, 2);
+    turn_precise(last_angle - 90.0, 2);
+    last_angle -= 90.0;
   }
 
   printf("last_angle: %f", last_angle);
@@ -51,7 +52,8 @@ int catch_flag(float initial_angle)
   //Turn 90 right
   printf("angle to reach: %f", last_angle + 90.0);
   fflush(stdout);
-  last_angle = turn_precise(last_angle + 90.0, 1);
+  turn_precise(last_angle + 90.0, 1);
+  last_angle += 90.0;
 
   printf("last_angle: %f", last_angle);
   fflush(stdout);
@@ -68,7 +70,9 @@ int catch_flag(float initial_angle)
 
 
   //Turn to go back to area
-  last_angle = turn_precise(initial_angle - 182.0, 1);
+  turn_precise(initial_angle - 181.0, 1);
+
+  last_angle = initial_angle - 181.0;
 
   printf("last_angle: %f", last_angle);
   
