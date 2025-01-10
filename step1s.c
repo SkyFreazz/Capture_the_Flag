@@ -30,12 +30,12 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 
 static bool _check_pressed( uint8_t sn )
 {
-  int val;
+    int val;
 
-  if ( sn == SENSOR__NONE_ ) {
-    return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
-  }
-  return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
+    if ( sn == SENSOR__NONE_ ) {
+        return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
+    }
+    return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
 void mvt_motor(int time, int ramp, int l_vit, int r_vit)
@@ -45,30 +45,37 @@ void mvt_motor(int time, int ramp, int l_vit, int r_vit)
     FLAGS_T l_state;
     FLAGS_T r_state;
     if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
-      int l_max_speed;
-      int r_max_speed;
-      get_tacho_max_speed( l_sn, &l_max_speed );
-      get_tacho_max_speed( r_sn, &r_max_speed );
-      set_tacho_stop_action_inx( l_sn, TACHO_COAST );
-      set_tacho_stop_action_inx( r_sn, TACHO_COAST );
-      l_max_speed = -l_max_speed;
-      r_max_speed = -r_max_speed;
-      set_tacho_speed_sp( l_sn, l_max_speed / l_vit );
-      set_tacho_speed_sp( r_sn, r_max_speed / r_vit );
-      set_tacho_time_sp( l_sn, time );
-      set_tacho_time_sp( r_sn, time );
-      set_tacho_ramp_up_sp( l_sn, ramp );
-      set_tacho_ramp_up_sp( r_sn, ramp );
-      set_tacho_ramp_down_sp( l_sn, ramp );
-      set_tacho_ramp_down_sp( r_sn, ramp );
-      set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
-      set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
-      do {
-        get_tacho_state_flags( l_sn, &l_state );
-        get_tacho_state_flags( r_sn, &r_state );
-      } while ( l_state && r_state ); // d'apres gpt (l_state || r_state)
+        if (l_sn == TACHO__NONE_ || r_sn == TACHO__NONE_) {
+            printf("Erreur : Identifiant de moteur non valide.\n");
+            return;
+        }
+        int l_max_speed;
+        int r_max_speed;
+        if (!get_tacho_max_speed(l_sn, &l_max_speed) ||
+            !get_tacho_max_speed(r_sn, &r_max_speed)) {
+            printf("Erreur : Impossible de récupérer la vitesse maximale des moteurs.\n");
+            return;
+        }
+        set_tacho_stop_action_inx( l_sn, TACHO_COAST );
+        set_tacho_stop_action_inx( r_sn, TACHO_COAST );
+        l_max_speed = -l_max_speed;
+        r_max_speed = -r_max_speed;
+        set_tacho_speed_sp( l_sn, l_max_speed / l_vit );
+        set_tacho_speed_sp( r_sn, r_max_speed / r_vit );
+        set_tacho_time_sp( l_sn, time );
+        set_tacho_time_sp( r_sn, time );
+        set_tacho_ramp_up_sp( l_sn, ramp );
+        set_tacho_ramp_up_sp( r_sn, ramp );
+        set_tacho_ramp_down_sp( l_sn, ramp );
+        set_tacho_ramp_down_sp( r_sn, ramp );
+        set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
+        set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
+        do {
+            get_tacho_state_flags( l_sn, &l_state );
+            get_tacho_state_flags( r_sn, &r_state );
+        } while ( l_state && r_state ); // d'apres gpt (l_state || r_state)
     } else {
-      printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
+        printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
     return;
 }
