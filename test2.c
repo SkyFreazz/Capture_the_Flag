@@ -36,8 +36,9 @@ int main( void )
     int stp;
     float start_angl;
     int cross_2;
-    float orientation[2] = {-30.0, 30.0};
+    float orientation[2] = {-40.0, 40.0};
     float direction;
+    int tch;
 
 
 #ifndef __ARM_ARCH_4T__
@@ -60,13 +61,13 @@ int main( void )
 
     ev3_sensor_init();
     test_system();
-    printf( "Found sensors:\n" );
 
     srand(time(NULL)); //demarage tirage alea
     int index = rand() % 2 ;
     mvt_motor(1500, 200, 2, 2); // sortir du carré
     printf("je sors du carré");
     start_angl = compas();
+    printf("%s/n", start_angl);
     if (index == 0) {
         while (compas() > orientation [index] ){
                 mvt_motor(100, 35, -4, 4); // tourner vers la gauche
@@ -88,27 +89,23 @@ int main( void )
         //utilise tous les capteurs
         dist = sonar();
         stp = couleur(stp);
-        touch(100, 35, 4, 4);
+        tch = touch(100, 35, 4, 4);
+        if (dist == -1.0 || tch == -1){ //si capteur non detecté
+            e1 = 1;
+        }
         if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
+            turn(100, 35, 4, 4, index, 20.0);
             printf("j'ai atteint le centre'");
-            if (direction < 0) {
-                direction = 20;
-                turn(100, 35, 4, 4, index, direction);
-            } else {
-                direction = -20;
-                turn(100, 35, 4, 4, index, direction);
-            }
             cross_2 +=1;
         }
-        if (dist < 100.0){
-            mvt_motor( 100, 35, -2, -2); //reculer
-            angl = compas();
-            turn(100, 35, 4, 4, index, 10);
-            printf("le mur est trop proche");
-        }
-        stay(100, 0, 2, 3, direction, 3.0);
-        //mvt_motor(100, 0, 2, 2);
+        //stay(100, 0, 2, 3, direction, 3.0);
+        mvt_motor(100, 0, 2, 2);
 
-    } 
+    }
+    if (dist == -1.0 || tch == -1){
+        printf("Il y a une erreur dans mes capteurs")
+    }else {
+        printf("J'ai fini ma course");
+    }
     ev3_uninit();
 }
