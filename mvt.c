@@ -147,7 +147,7 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
           angle = 0;
         }
 
-        if (fabs(start_angle - angle) > tol_dev){
+        if (fabs(start_angle - angle) >= tol_dev){
           turn_precise(start_angle, tol_angle);
         }
       }
