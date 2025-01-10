@@ -98,7 +98,7 @@ int main( void )
                 printf("je suis a droite\n");
         }
     }
-
+    fflush( stdout );
     stp = 1;
     cross_2 = 0;
     while (!e1){
@@ -118,11 +118,13 @@ int main( void )
             cross_2 +=1;
         }
         mvt_motor(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state); //avance 
+        fflush( stdout );
     }
     if (dist == -1.0 || tch == -1){
         printf("Il y a une erreur dans mes capteurs\n");
     }else {
         printf("J'ai fini ma course\n");
     }
+    fflush( stdout );
     ev3_uninit();
 }
