@@ -49,9 +49,9 @@ int catch_flag(float initial_angle)
   forward_to_wall(150, last_angle, 1, 2);
 
   //Turn 90 right
-  printf("angle to reach: %f", last_angle + 88.0);
+  printf("angle to reach: %f", last_angle + 89.5);
   fflush(stdout);
-  last_angle = turn_precise(last_angle + 88.0, 0.8);
+  last_angle = turn_precise(last_angle + 89.5, 1);
 
   printf("last_angle: %f", last_angle);
   fflush(stdout);
@@ -61,7 +61,7 @@ int catch_flag(float initial_angle)
   turn_arm(-3);
 
   //Move to the flag
-  forward_to_wall(150, last_angle, 0.8, 0.8);
+  forward_to_wall(150, last_angle, 1, 1);
 
   //Close the clamp
   turn_arm(3);

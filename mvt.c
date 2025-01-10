@@ -105,6 +105,7 @@ float turn_precise(float final_angle, float tol){
         angle = 0;
       }
 
+      printf("%f\n", angle);
       angle -= final_angle;
 
       if (fabs(fmod(angle, 360.0)) <= tol){
