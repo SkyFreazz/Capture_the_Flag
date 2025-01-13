@@ -28,7 +28,7 @@ int catch_flag(float initial_angle)
   turn_precise(initial_angle, 1);
 
   //choose the flag to grab
-  int flag = rand() % 2; //0: left, 1: right
+  int flag = 0;//rand() % 2; //0: left, 1: right
 
   printf("flag %i\n", flag);
   fflush(stdout);
