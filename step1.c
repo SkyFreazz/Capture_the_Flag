@@ -30,125 +30,129 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 
 static bool _check_pressed( uint8_t sn )
 {
-  int val;
+    int val;
 
-  if ( sn == SENSOR__NONE_ ) {
-    return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
-  }
-  return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
+    if ( sn == SENSOR__NONE_ ) {
+        return ( ev3_read_keys(( uint8_t *) &val ) && ( val & EV3_KEY_UP ));
+    }
+    return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
 
-void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state)
+void mvt_motor(int time, int ramp, int l_vit, int r_vit)
 {
+    uint8_t l_sn;
+    uint8_t r_sn;
+    FLAGS_T l_state;
+    FLAGS_T r_state;
     if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
-      int l_max_speed;
-      int r_max_speed;
-      //printf("j'ai initialisé mes variables\n");
-      get_tacho_max_speed( l_sn, &l_max_speed );
-      get_tacho_max_speed( r_sn, &r_max_speed );
-      //printf("j'ai recup la vitesse max\n");
-      set_tacho_stop_action_inx( l_sn, TACHO_COAST );
-      set_tacho_stop_action_inx( r_sn, TACHO_COAST );
-      //printf("j'ai defini l'action stop\n");
-      l_max_speed = -l_max_speed;
-      r_max_speed = -r_max_speed;
-      //printf("j'ai defini ma vitesse\n");
-      set_tacho_speed_sp( l_sn, l_max_speed / l_vit );
-      set_tacho_speed_sp( r_sn, r_max_speed / r_vit );
-      //printf("j'ai dis au moteur de rouler a telle vitesse\n");
-      set_tacho_time_sp( l_sn, time );
-      set_tacho_time_sp( r_sn, time );
-      //printf("j'ai dit aux moteurs de rouler pendant %d temps\n", time);
-      set_tacho_ramp_up_sp( l_sn, ramp );
-      set_tacho_ramp_up_sp( r_sn, ramp );
-      //printf("j'ai dit aux moteurs de faire un ramp up de %d\n", ramp);
-      set_tacho_ramp_down_sp( l_sn, ramp );
-      set_tacho_ramp_down_sp( r_sn, ramp );
-      //printf("j'ai dit aux moteurs de faire un ramp down de %d\n", ramp);
-      set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
-      set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
-      //printf("je sais plus mais la loop posiblement infinie va se lancer\n");
-      do {
-        get_tacho_state_flags( l_sn, &l_state );
-        get_tacho_state_flags( r_sn, &r_state );
-        printf("Je suis dans une boucle infinie\n");
-      } while ( l_state && r_state ); // d'apres gpt (l_state || r_state)
-      //printf("ça pas été une loop infinie\n");
+        if (l_sn == TACHO__NONE_ || r_sn == TACHO__NONE_) {
+            printf("Erreur : Identifiant de moteur non valide.\n");
+            return;
+        }
+        int l_max_speed;
+        int r_max_speed;
+
+        if (!get_tacho_max_speed(l_sn, &l_max_speed) ||
+            !get_tacho_max_speed(r_sn, &r_max_speed)) {
+            printf("Erreur : Impossible de récupérer la vitesse maximale des moteurs.\n");
+            return;
+        }
+        set_tacho_stop_action_inx( l_sn, TACHO_COAST );
+        set_tacho_stop_action_inx( r_sn, TACHO_COAST );
+
+        l_max_speed = -l_max_speed;
+        r_max_speed = -r_max_speed;
+
+        set_tacho_speed_sp( l_sn, l_max_speed / l_vit );
+        set_tacho_speed_sp( r_sn, r_max_speed / r_vit );
+
+        set_tacho_time_sp( l_sn, time );
+        set_tacho_time_sp( r_sn, time );
+
+        set_tacho_ramp_up_sp( l_sn, ramp );
+        set_tacho_ramp_up_sp( r_sn, ramp );
+
+        set_tacho_ramp_down_sp( l_sn, ramp );
+        set_tacho_ramp_down_sp( r_sn, ramp );
+
+        set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
+        set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
+        do {
+            get_tacho_state_flags( l_sn, &l_state );
+            get_tacho_state_flags( r_sn, &r_state );
+            printf("Je suis dans une boucle presque infinie");
+        } while ( l_state && r_state ); // d'apres gpt (l_state || r_state)
     } else {
-      printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
+        printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
-    //printf("je vais sortir de la fonction\n");
     return;
 }
 
-float compas(uint8_t sn_compass, float value){
-    //printf("je regarde ma bousole");
+float compas(){
+    uint8_t sn_compass;
+    float value;
     if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
       if ( !get_sensor_value0(sn_compass, &value )) {
         value = -1.0;
-        //printf("je regarde si mon capteur marche pas");
       }
-      //fflush( stdout ); //seulement utile pour les print 
       return(value);
     }
     return -1.0; //error
 }
 
-float sonar(uint8_t sn_sonar, float value){
-    float avalue;
-    uint8_t sn_compass;
-    uint8_t l_sn;
-    uint8_t r_sn;
-    FLAGS_T l_state;
-    FLAGS_T r_state;
+float sonar(){
+    uint8_t sn_sonar;
+    float value;
     float angl;
     if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
-        if ( !get_sensor_value0(sn_sonar, &value )) {
-            value = -1.0;
-        }
-        if ((value < 50.0) || (value > 2500.0)){ // si valeurs fausses
-            //fflush( stdout ); //seulement utile pour les print 
-            value = 0;
-        }
-    
-        if (value < 100.0){
-            printf("le mur est trop proche\n");
-            mvt_motor(l_sn, r_sn, 100, 35, -2, -2, l_state, r_state); //reculer
-            angl = compas( sn_compass,  avalue);
+      if ( !get_sensor_value0(sn_sonar, &value )) {
+        value = -1.0;
+      }
+      if ( (value < 50.0) || (value > 2500.0) ){
+        value = 0;
+      }
+
+      if (value < 100.0){
+            mvt_motor(100, 35, -2, -2); //reculer
+            angl = compas();
             if (angl > -20.0 && angl < 20.0){
                 if (angl < 0){
                     while (angl > -45.0){ 
-                        mvt_motor(l_sn, r_sn, 100, 0, 4, -4, l_state, r_state); //tourner a droite
-                        angl = compas(sn_compass, avalue);
-                        printf("le mur est trop proche à gauche\n");
+                        mvt_motor(100, 0, 4, -4); //tourner a droite
+                        angl = compas();
+                        printf("Je suis coincé dans 1");
                     }
                 } else { // si parti vers la droite
                     while (angl < 45.0){ 
-                        mvt_motor(l_sn, r_sn, 100, 0, -4, 4, l_state, r_state); //tourner a gauche
-                        angl = compas(sn_compass, avalue);
-                        printf("le mur est trop proch à droitee\n");
+                        mvt_motor(100, 0, -4, 4); //tourner a gauche
+                        angl = compas();
+                        printf("Je suis coincé dans 2");
                     }
                 }
             } else {
                 if (angl < 0){ // si partis vers la gauche
                     while (!(angl > 0 && angl < 5.0)) {
-                        mvt_motor(l_sn, r_sn, 100, 0, 4, -4, l_state, r_state); //tourner a droite
-                        angl = compas(sn_compass, avalue);
+                        mvt_motor(100, 0, 4, -4); //tourner a droite
+                        angl = compas();
+                        printf("Je suis coincé dans 3");
                     }
                 } else { // si parti vers la droite
                     while (!(angl < 0 && angl > -5.0)) {
-                        mvt_motor(l_sn, r_sn, 100, 0, -4, 4, l_state, r_state); //tourner a gauche
-                        angl = compas(sn_compass, avalue);
+                        mvt_motor(100, 0, -4, 4); //tourner a gauche
+                        angl = compas();
+                        printf("Je suis coincé dans 3");
                     }
                 }
             }    
         }
-        return 0;
+        return value;
     }
     return -1.0; //error
 }
 
-int couleur(uint8_t sn_color, int val, int stp){
+int couleur(int stp){
+    uint8_t sn_color;
+    int val;
     if ( ev3_search_sensor( LEGO_EV3_COLOR, &sn_color, 0 )) {
         if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
             val = 0;
@@ -171,53 +175,60 @@ int couleur(uint8_t sn_color, int val, int stp){
     return -1; //error
 }
 
-int touch(uint8_t sn_compass, uint8_t sn_touch, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state){
+int touch(int time, int ramp, int l_vit, int r_vit){
+    uint8_t sn_touch;
     float angl;
-    float value;
-    
+
     if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )){
         if ( _check_pressed( sn_touch )){
             printf("j'ai touché un mur\n");
             Sleep( 100 );
-            mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //reculer
-            angl = compas(sn_compass, value);
-            if (angl > -20.0 && angl < 20.0) { // obstacle = plot
+            mvt_motor(time, ramp, l_vit, r_vit); //reculer
+            angl = compas();
+            if (angl > -20 && angl < 20) { // obstacle = plot
                 if (angl < 0){
                     while (angl > -45.0){ 
-                        mvt_motor(l_sn, r_sn, time, ramp, l_vit, -r_vit, l_state, r_state); //tourner a droite
-                        angl = compas(sn_compass, value);
+                        mvt_motor(time, ramp, l_vit, -r_vit); //tourner a droite
+                        angl = compas();
+                        printf("Je suis coincé dans 5");
                     }
                 } else { // si parti vers la droite
                     while (angl < 45.0){ 
-                        mvt_motor(l_sn, r_sn, time, ramp, -l_vit, r_vit, l_state, r_state); //tourner a gauche
-                        angl = compas(sn_compass, value);
+                        mvt_motor(time, ramp, -l_vit, r_vit); //tourner a gauche
+                        angl = compas();
+                        printf("Je suis coincé dans 6");
                     }
                 }
             } else {
                 if (angl < 0){ // si partis vers la gauche
                     while (!(angl > 0 && angl < 5.0)) {
-                        mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a droite
-                        angl = compas(sn_compass, value);
+                        mvt_motor(time, ramp, l_vit, r_vit); //tourner a droite
+                        angl = compas();
+                        printf("Je suis coincé dans 7");
                     }
                 } else { // si parti vers la droite
                     while (!(angl < 0 && angl > -5.0)) {
-                        mvt_motor(l_sn, r_sn, time, ramp, l_vit, r_vit, l_state, r_state); //tourner a gauche
-                        angl = compas(sn_compass, value);
+                        mvt_motor(time, ramp, l_vit, r_vit); //tourner a gauche
+                        angl = compas();
+                        printf("Je suis coincé dans 8");
                     }
                 }
             }
-        }
         return 0;
+        }
     }
     return -1; //error
 }
 
-
-void test_system(uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_color, uint8_t sn_touch, uint8_t sn){
+void test_system(){
     int positif = 0;
     char fail[45] = ""; //"sonar compas color touch motor motor motor"
     int port;
-    
+    uint8_t sn_sonar;
+    uint8_t sn_compass;
+    uint8_t sn_color;
+    uint8_t sn_touch;
+    uint8_t sn;
     if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
         positif += 1;
         const char *test1 = "sonar ";
@@ -254,7 +265,7 @@ void test_system(uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_color, uint8_t
                 if (strlen(fail) + strlen(test5) < sizeof(fail)){
                     strcat(fail, test5);
                 }
-            } 
+            }
         }
     }
     if (positif > 0) {
@@ -265,30 +276,17 @@ void test_system(uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_color, uint8_t
     fflush( stdout );
 }
 
-void turn(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_vit, FLAGS_T l_state, FLAGS_T r_state, int index, float degre) {
-    float value;
-    float angl = compas(sn_compass, value);
+void turn(int time, int ramp, int l_vit, int r_vit, int index, float degre) {
+    float angl = compas();
     if (index == 0){ // si partis vers la gauche
                 while (angl < degre){ 
-                    mvt_motor(l_sn, r_sn, time, ramp, l_vit, -r_vit, l_state, r_state); //tourner a droite
-                    angl = compas(sn_compass, value);
+                    mvt_motor(time, ramp, l_vit, -r_vit); //tourner a droite
+                    angl = compas();
                 }
             } else { // si parti vers la droite
                 while (angl > -degre){ 
-                    mvt_motor(l_sn, r_sn, time, ramp, -l_vit, r_vit, l_state, r_state); //tourner a gauche
-                    angl = compas(sn_compass, value);
+                    mvt_motor(time, ramp, -l_vit, r_vit); //tourner a gauche
+                    angl = compas();
                 }
             }
-}
-
-void stay(uint8_t sn_compass, uint8_t l_sn, uint8_t r_sn, int time, int ramp, int max_vit, int min_vit, FLAGS_T l_state, FLAGS_T r_state, int index, float degre, float ecart) {
-    float value;
-    float angl = compas(sn_compass, value);
-    if (angl + ecart > degre){ // si partis vers la gauche
-        mvt_motor(l_sn, r_sn, time, ramp, max_vit, min_vit, l_state, r_state); //tourner a droite
-    } else if (angl + ecart < degre) { // si parti vers la droite
-        mvt_motor(l_sn, r_sn, time, ramp, min_vit, max_vit, l_state, r_state); //tourner a gauche
-    }else if (angl == degre) {
-        mvt_motor(l_sn, r_sn, time, ramp, max_vit, max_vit, l_state, r_state); //foncer
-    }
 }
