@@ -68,7 +68,7 @@ int main( void )
     mvt_motor(1500, 200, 2, 2); // sortir du carré
     printf("je sors du carré\n");
     start_angl = compas();
-    printf("%s/n", start_angl);
+    printf("%f/n", start_angl);
     if (index == 0) {
         while (compas() > orientation [index] ){
                 mvt_motor(100, 35, -4, 4); // tourner vers la gauche
@@ -109,5 +109,6 @@ int main( void )
     }else {
         printf("J'ai fini ma course\n");
     }
+    fflush( stdout );
     ev3_uninit();
 }
