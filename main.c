@@ -30,6 +30,36 @@
 int main( void )
 {
 
+int i;
+FLAGS_T l_state;
+FLAGS_T r_state;
+FLAGS_T a_state;
+FLAGS_T sm_state;
+uint8_t sn_touch;
+uint8_t sn_color;
+uint8_t sn_compass;
+uint8_t sn_sonar;
+char s[ 256 ];
+int val;
+float value;
+uint32_t n, ii;
+int l_max_speed;
+uint8_t l_sn;
+int r_max_speed;
+uint8_t r_sn;
+int a_max_speed;
+uint8_t a_sn;
+int sm_max_speed;
+uint8_t sm_sn;
+int e1 = 0;
+float dist;
+float angl;
+int stp;
+float start_angl;
+int cross_2;
+int orientation[2] = {-40.0, 40.0};
+int tch;
+
 #ifndef __ARM_ARCH_4T__
   /* Disable auto-detection of the brick (you have to set the correct address below) */
   ev3_brick_addr = "192.168.0.204";
