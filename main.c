@@ -30,32 +30,32 @@
 int main( void )
 {
 
-int i;
-FLAGS_T l_state;
-FLAGS_T r_state;
-FLAGS_T a_state;
-FLAGS_T sm_state;
-uint8_t sn_touch;
-uint8_t sn_color;
+//int i;
+//FLAGS_T l_state;
+//FLAGS_T r_state;
+//FLAGS_T a_state;
+//FLAGS_T sm_state;
+//uint8_t sn_touch;
+//uint8_t sn_color;
 uint8_t sn_compass;
-uint8_t sn_sonar;
-char s[ 256 ];
-int val;
-float value;
-uint32_t n, ii;
-int l_max_speed;
-uint8_t l_sn;
-int r_max_speed;
-uint8_t r_sn;
-int a_max_speed;
-uint8_t a_sn;
-int sm_max_speed;
-uint8_t sm_sn;
+//uint8_t sn_sonar;
+//char s[ 256 ];
+//int val;
+//float value;
+//uint32_t n, ii;
+//int l_max_speed;
+//uint8_t l_sn;
+//int r_max_speed;
+//uint8_t r_sn;
+//int a_max_speed;
+//uint8_t a_sn;
+//int sm_max_speed;
+//uint8_t sm_sn;
 int e1 = 0;
 float dist;
 float angl;
 int stp;
-float start_angl;
+//float start_angl;
 int cross_2;
 int orientation[2] = {-40.0, 40.0};
 int tch;
@@ -76,10 +76,6 @@ int tch;
 #endif
   while ( ev3_tacho_init() < 1) Sleep( 1000 );
 
-  printf( "*** ( EV3 ) Hello! ***\n" );
-
-  printf( "Found tacho motors:\n" );
-
 
 ev3_sensor_init();
 
@@ -92,25 +88,20 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   printf("initial_angle: %f", initial_angle);
 }
 
-test_system( sn_sonar,  sn_compass,  sn_color,  sn_touch,  l_sn);
-//printf("je lance mon tirage aleatoire\n");
+test_system();
+
 srand(time(NULL)); //demarage tirage alea
 int index = rand() % 2 ;
-//printf("j'ai obtenu un nombre aleatoire %d\n", index);
+
 mvt_motor(l_sn, r_sn, 1500, 200, 2, 2, l_state, r_state); // sortir du carré
-//printf("je sors du carré\n");
-start_angl = compas( sn_compass, value);
-//printf("j'ai obtenu ma direction\n");
-printf("%f/n", start_angl);
+
 if (index == 0) {
-    while (compas( sn_compass, value) > orientation [index] ){
-            mvt_motor(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state); // tourner vers la gauche
-            printf("je suis a gauche\n");
+    while (compas() > orientation [index] ){
+            mvt_motor(100, 35, -4, 4); // tourner vers la gauche
     }
 } else{
-    while (compas( sn_compass, value) < orientation [index] ){
-            mvt_motor(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state); // tourner vers la droite
-            printf("je suis a droite\n");
+    while (compas() < orientation [index] ){
+            mvt_motor(100, 35, 4, -4); // tourner vers la droite
     }
 }
 fflush( stdout );
@@ -128,44 +119,19 @@ while (!e1){
         e1 = 1;
     }
     if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
-        turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 20.0);
+        turn(100, 35, 4, 4, index, 20.0);
         printf("j'ai atteint le centre\n");
         cross_2 +=1;
     }
-    mvt_motor(l_sn, r_sn, 100, 0, 3, 3, l_state, r_state); //avance 
+    mvt_motor(100, 0, 3, 3); //avance 
     fflush( stdout );
 }
-if (dist == -1.0 || tch == -1){
-    printf("Il y a une erreur dans mes capteurs\n");
-}else {
-    printf("J'ai fini ma course\n");
-}
 fflush( stdout );
-
-//mvt_forward(4000, 0, 2, 2);
 
 
 catch_flag(initial_angle);
 
- /* 
-mvt_motor(l_sn, r_sn, 5000, 2000, 2, l_state, r_state);
-printf("ici 1");
-Sleep( 1000 );
-mvt_l_motor(l_sn, 3000,  1000,  3, l_state);
-printf("ici 2");
-Sleep( 1000 );
-mvt_motor(l_sn, r_sn, 5000, 500, 1, l_state, r_state);
-printf("ici 3");
-Sleep( 1000 );
-mvt_r_motor(r_sn,  3000,  1000,  3, r_state);
-Sleep(3000); 
-turn_arm(a_sn, 90, 0,  3,  a_state);
-Sleep(1000);
-turn_arm(a_sn, -90, 0,  3,  a_state);
-sleep(1000);
-turn_arm(sm_sn, -45, 0,  4,  sm_state);
-Sleep(1000);
-turn_arm(sm_sn, 45, 0,  4,  sm_state);*/
+
 ev3_uninit();
 return ( 0 );
 }
