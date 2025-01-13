@@ -73,6 +73,7 @@ void mvt_motor(int time, int ramp, int l_vit, int r_vit)
         do {
             get_tacho_state_flags( l_sn, &l_state );
             get_tacho_state_flags( r_sn, &r_state );
+            printf("Je suis dans une boucle presque infinie");
         } while ( l_state && r_state ); // d'apres gpt (l_state || r_state)
     } else {
         printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
@@ -83,6 +84,7 @@ void mvt_motor(int time, int ramp, int l_vit, int r_vit)
 float compas(){
     uint8_t sn_compass;
     float value;
+    printf("je regarde ma bousole");
     if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
       if ( !get_sensor_value0(sn_compass, &value )) {
         value = -1.0;
