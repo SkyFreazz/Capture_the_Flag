@@ -75,18 +75,29 @@ int main( void )
 
 #endif
     while ( ev3_tacho_init() < 1) Sleep( 1000 );
-
+    if ( ev3_tacho_init() < 1){
+        printf("No motors found ");
+        return 1;
+    }
     printf( "Found tacho motors:\n" );
 
     ev3_sensor_init();
-    test_system( sn_sonar,  sn_compass,  sn_color,  sn_touch,  l_sn);
 
+    if (ev3_sensor_init() == 0) {
+        printf("No sensors found\n");
+        return 1;
+    }
+
+    test_system( sn_sonar,  sn_compass,  sn_color,  sn_touch,  l_sn);
+    printf("je lance mon tirage aleatoire\n");
     srand(time(NULL)); //demarage tirage alea
     int index = rand() % 2 ;
+    printf("j'ai obtenu un nombre aleatoire %d\n", index);
     mvt_motor(l_sn, r_sn, 1500, 200, 2, 2, l_state, r_state); // sortir du carré
     printf("je sors du carré\n");
     start_angl = compas( sn_compass, value);
-    printf("%s/n", start_angl);
+    printf("j'ai obtenu ma direction\n");
+    printf("%f/n", start_angl);
     if (index == 0) {
         while (compas( sn_compass, value) > orientation [index] ){
                 mvt_motor(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state); // tourner vers la gauche
@@ -127,4 +138,5 @@ int main( void )
     }
     fflush( stdout );
     ev3_uninit();
+    return 0;
 }
