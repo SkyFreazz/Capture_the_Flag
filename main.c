@@ -7,6 +7,7 @@
 #include "ev3_sensor.h"
 #include "mvt.h"
 #include "flag.h"
+#include "step1.h"
 
 #define R_WHEEL 65
 #define L_WHEEL 68
@@ -53,7 +54,6 @@ int main( void )
 uint8_t sn_compass;
 
 ev3_sensor_init();
-srand(time(NULL));
 
 float initial_angle;
 
@@ -63,6 +63,56 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   }
   printf("initial_angle: %f", initial_angle);
 }
+
+test_system( sn_sonar,  sn_compass,  sn_color,  sn_touch,  l_sn);
+//printf("je lance mon tirage aleatoire\n");
+srand(time(NULL)); //demarage tirage alea
+int index = rand() % 2 ;
+//printf("j'ai obtenu un nombre aleatoire %d\n", index);
+mvt_motor(l_sn, r_sn, 1500, 200, 2, 2, l_state, r_state); // sortir du carré
+//printf("je sors du carré\n");
+start_angl = compas( sn_compass, value);
+//printf("j'ai obtenu ma direction\n");
+printf("%f/n", start_angl);
+if (index == 0) {
+    while (compas( sn_compass, value) > orientation [index] ){
+            mvt_motor(l_sn, r_sn, 100, 35, -4, 4, l_state, r_state); // tourner vers la gauche
+            printf("je suis a gauche\n");
+    }
+} else{
+    while (compas( sn_compass, value) < orientation [index] ){
+            mvt_motor(l_sn, r_sn, 100, 35, 4, -4, l_state, r_state); // tourner vers la droite
+            printf("je suis a droite\n");
+    }
+}
+fflush( stdout );
+stp = 1;
+cross_2 = 0;
+while (!e1){
+    if (stp == 3){
+        e1 = 1;
+    } 
+    //utilise tous les capteurs
+    dist = sonar( sn_sonar, value);
+    stp = couleur( sn_color, val, stp);
+    tch = touch(sn_compass, sn_touch, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state);
+    if (dist == -1.0 || tch == -1){ //si capteur non detecté
+        e1 = 1;
+    }
+    if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
+        turn(sn_compass, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state, index, 20.0);
+        printf("j'ai atteint le centre\n");
+        cross_2 +=1;
+    }
+    mvt_motor(l_sn, r_sn, 100, 0, 3, 3, l_state, r_state); //avance 
+    fflush( stdout );
+}
+if (dist == -1.0 || tch == -1){
+    printf("Il y a une erreur dans mes capteurs\n");
+}else {
+    printf("J'ai fini ma course\n");
+}
+fflush( stdout );
 
 //mvt_forward(4000, 0, 2, 2);
 
