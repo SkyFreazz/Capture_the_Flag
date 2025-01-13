@@ -128,7 +128,7 @@ int main( void )
             printf("j'ai atteint le centre\n");
             cross_2 +=1;
         }
-        mvt_motor(l_sn, r_sn, 100, 0, 2, 2, l_state, r_state); //avance 
+        mvt_motor(l_sn, r_sn, 100, 0, 3, 3, l_state, r_state); //avance 
         fflush( stdout );
     }
     if (dist == -1.0 || tch == -1){
