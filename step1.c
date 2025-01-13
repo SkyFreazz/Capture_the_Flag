@@ -43,36 +43,50 @@ void mvt_motor(uint8_t l_sn, uint8_t r_sn, int time, int ramp, int l_vit, int r_
     if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
       int l_max_speed;
       int r_max_speed;
+      //printf("j'ai initialisé mes variables\n");
       get_tacho_max_speed( l_sn, &l_max_speed );
       get_tacho_max_speed( r_sn, &r_max_speed );
+      //printf("j'ai recup la vitesse max\n");
       set_tacho_stop_action_inx( l_sn, TACHO_COAST );
       set_tacho_stop_action_inx( r_sn, TACHO_COAST );
+      //printf("j'ai defini l'action stop\n");
       l_max_speed = -l_max_speed;
       r_max_speed = -r_max_speed;
+      //printf("j'ai defini ma vitesse\n");
       set_tacho_speed_sp( l_sn, l_max_speed / l_vit );
       set_tacho_speed_sp( r_sn, r_max_speed / r_vit );
+      //printf("j'ai dis au moteur de rouler a telle vitesse\n");
       set_tacho_time_sp( l_sn, time );
       set_tacho_time_sp( r_sn, time );
+      //printf("j'ai dit aux moteurs de rouler pendant %d temps\n", time);
       set_tacho_ramp_up_sp( l_sn, ramp );
       set_tacho_ramp_up_sp( r_sn, ramp );
+      //printf("j'ai dit aux moteurs de faire un ramp up de %d\n", ramp);
       set_tacho_ramp_down_sp( l_sn, ramp );
       set_tacho_ramp_down_sp( r_sn, ramp );
+      //printf("j'ai dit aux moteurs de faire un ramp down de %d\n", ramp);
       set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
       set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
+      //printf("je sais plus mais la loop posiblement infinie va se lancer\n");
       do {
         get_tacho_state_flags( l_sn, &l_state );
         get_tacho_state_flags( r_sn, &r_state );
+        printf("Je suis dans une boucle infinie\n");
       } while ( l_state && r_state ); // d'apres gpt (l_state || r_state)
+      //printf("ça pas été une loop infinie\n");
     } else {
       printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
     }
+    //printf("je vais sortir de la fonction\n");
     return;
 }
 
 float compas(uint8_t sn_compass, float value){
+    //printf("je regarde ma bousole");
     if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
       if ( !get_sensor_value0(sn_compass, &value )) {
         value = -1.0;
+        //printf("je regarde si mon capteur marche pas");
       }
       //fflush( stdout ); //seulement utile pour les print 
       return(value);
@@ -106,11 +120,13 @@ float sonar(uint8_t sn_sonar, float value){
                     while (angl > -45.0){ 
                         mvt_motor(l_sn, r_sn, 100, 0, 4, -4, l_state, r_state); //tourner a droite
                         angl = compas(sn_compass, avalue);
+                        printf("le mur est trop proche à gauche\n");
                     }
                 } else { // si parti vers la droite
                     while (angl < 45.0){ 
                         mvt_motor(l_sn, r_sn, 100, 0, -4, 4, l_state, r_state); //tourner a gauche
                         angl = compas(sn_compass, avalue);
+                        printf("le mur est trop proch à droitee\n");
                     }
                 }
             } else {
