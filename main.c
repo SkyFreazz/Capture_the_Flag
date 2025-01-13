@@ -81,8 +81,6 @@ int tch;
   printf( "Found tacho motors:\n" );
 
 
-uint8_t sn_compass;
-
 ev3_sensor_init();
 
 float initial_angle;
