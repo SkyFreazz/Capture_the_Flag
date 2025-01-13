@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "ev3.h"
 #include "ev3_port.h"
 #include "ev3_tacho.h"
@@ -52,6 +53,8 @@ int main( void )
 uint8_t sn_compass;
 
 ev3_sensor_init();
+srand(time(NULL));
+
 float initial_angle;
 
 if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
