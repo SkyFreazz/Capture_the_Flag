@@ -29,33 +29,10 @@
 
 int main( void )
 {
-
-//int i;
-//FLAGS_T l_state;
-//FLAGS_T r_state;
-//FLAGS_T a_state;
-//FLAGS_T sm_state;
-//uint8_t sn_touch;
-//uint8_t sn_color;
 uint8_t sn_compass;
-//uint8_t sn_sonar;
-//char s[ 256 ];
-//int val;
-//float value;
-//uint32_t n, ii;
-//int l_max_speed;
-//uint8_t l_sn;
-//int r_max_speed;
-//uint8_t r_sn;
-//int a_max_speed;
-//uint8_t a_sn;
-//int sm_max_speed;
-//uint8_t sm_sn;
 int e1 = 0;
 float dist;
-float angl;
 int stp;
-//float start_angl;
 int cross_2;
 int orientation[2] = {-40.0, 40.0};
 int tch;
@@ -93,7 +70,7 @@ test_system();
 srand(time(NULL)); //demarage tirage alea
 int index = rand() % 2 ;
 
-mvt_motor(l_sn, r_sn, 1500, 200, 2, 2, l_state, r_state); // sortir du carré
+mvt_motor(1500, 200, 2, 2); // sortir du carré
 
 if (index == 0) {
     while (compas() > orientation [index] ){
@@ -112,9 +89,9 @@ while (!e1){
         e1 = 1;
     } 
     //utilise tous les capteurs
-    dist = sonar( sn_sonar, value);
-    stp = couleur( sn_color, val, stp);
-    tch = touch(sn_compass, sn_touch, l_sn, r_sn, 100, 35, 4, 4, l_state, r_state);
+    dist = sonar();
+    stp = couleur(stp);
+    tch = touch(100, 35, 4, 4);
     if (dist == -1.0 || tch == -1){ //si capteur non detecté
         e1 = 1;
     }
