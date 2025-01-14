@@ -65,7 +65,8 @@ test_system();
 srand(time(NULL)); //random initialization
 int index = rand() % 2 ;
 
-mvt_forward(1500, 100, 1, 1); // get out of our area
+mvt_forward(2000, 200, 1, 1); // get out of our area
+mvt_forward(1000, 200, -1,-1);
 
 if (index == 0) {
     while (compas() > orientation [index] ){
