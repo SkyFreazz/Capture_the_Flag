@@ -65,7 +65,7 @@ test_system();
 srand(time(NULL)); //random initialization
 int index = rand() % 2 ;
 
-mvt_forward(1500, 200, 2, 2); // get out of our area
+mvt_forward(1500, 100, 1, 1); // get out of our area
 
 if (index == 0) {
     while (compas() > orientation [index] ){
@@ -97,7 +97,7 @@ while (stp != 3){
         cross_2 +=1;
       }      
     }
-    mvt_forward(100, 0, 3, 3);
+    mvt_forward(100, 0, 4, 4);
     printf("stp end: %d\n", stp);
 }
 

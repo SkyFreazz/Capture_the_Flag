@@ -113,7 +113,7 @@ int couleur(int stp){
             }else {
                 return 1;
             }
-        }else if (strcmp(color[val], "WHITE") == 0) { // pour detecter le plot orange || strcmp(color[*val], "YELLOW") == 0
+        }else { // pour detecter le plot orange || strcmp(color[*val], "YELLOW") == 0
             return stp;
         }
       
