@@ -27,7 +27,6 @@
 int main( void )
 {
 uint8_t sn_compass;
-int e1 = 0;
 float dist;
 int stp = 1;
 int cross_2 = 0;
@@ -77,6 +76,7 @@ if (index == 0) {
 
 while (stp != 3){
 
+    printf("stp: %d", stp);
     //get all the value of the sensor
     dist = sonar();
     stp = couleur(stp);
