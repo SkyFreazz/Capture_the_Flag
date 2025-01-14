@@ -245,6 +245,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
       if (phase == 3){
         turn_precise(initial_angle, 1);
         current_angle = initial_angle;
+        phase == 4;
       }
 
       mvt_forward(100, 0, 4, 4);
