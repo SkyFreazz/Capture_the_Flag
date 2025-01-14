@@ -92,10 +92,8 @@ float sonar(){
                 }
             }    
         }
-        printf("bon");
         return value;
     }
-    printf("bof");
     return -1.0; //error
 }
 
@@ -161,8 +159,8 @@ int touch(int time, int ramp, int l_vit, int r_vit){
                     }
                 }
             }
-        return 0;
-        }
+       }
+       return 0;
     }
     return -1; //error
 }
