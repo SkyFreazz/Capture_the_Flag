@@ -28,7 +28,7 @@ int catch_flag(float initial_angle)
   turn_precise(initial_angle, 1);
 
   //choose the flag to grab
-  int flag = 0;//rand() % 2; //0: left, 1: right
+  int flag = rand() % 2; //0: left, 1: right
 
   if (flag == 0){
   //Turn 90 left
