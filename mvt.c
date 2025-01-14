@@ -207,10 +207,11 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         }
       }
 
-      if (value <= 60.0){ //there's an object
+      if (value <= dist_min){ //there's an object
         if (phase == 1){
           mvt_forward(500, 100, -2, -2);
-          turn_precise((initial_angle + (initial_angle  - first_angle)), 1);
+          current_angle = (initial_angle + (initial_angle  - first_angle));
+          turn_precise(current_angle, 1);
         }
 
         if(phase == 2){
@@ -221,13 +222,14 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
             turn_precise(initial_angle + 90.0, 1);
           }
           mvt_forward(1000, 250, 2, 2);
-          turn_precise(initial_angle, 1);
+          turn_precise(second_angle, 1);
         }
       }
 
       if ((phase == 2) && (cross_2 <= 1)){ //we are in the middle
         if(cross_2 == 1){
           turn_precise(second_angle, 1);
+          current_angle = second_angle;
           cross_2 +=1;
         } else {
           mvt_forward(300, 100, 1, 1);
@@ -237,6 +239,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
 
       if (phase == 3){
         turn_precise(initial_angle, 1);
+        current_angle = initial_angle;
       }
 
       mvt_forward(100, 0, 4, 4);
