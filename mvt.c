@@ -74,7 +74,7 @@ void mvt_forward(int time, int ramp, int l_vit, int r_vit)
       set_tacho_stop_action_inx( r_sn, TACHO_COAST );
       l_max_speed = -l_max_speed;
       r_max_speed = -r_max_speed;
-      set_tacho_speed_sp( l_sn, l_max_speed * 1/l_vit );
+      set_tacho_speed_sp( l_sn, (l_max_speed * 1/l_vit) + 0.01 );
       set_tacho_speed_sp( r_sn, r_max_speed * 1/r_vit );
       set_tacho_time_sp( l_sn, time );
       set_tacho_time_sp( r_sn, time );
@@ -150,7 +150,7 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
         }
       }
 
-      mvt_forward(100, 0, 3.01, 3);
+      mvt_forward(100, 0, 3, 3);
     }
   }
 }
