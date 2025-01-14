@@ -61,12 +61,12 @@ srand(time(NULL)); //random initialization
 int index = rand() % 2 ;
 int flag = rand() %2;
 
-/*if (flag == 0){
+if (flag == 0){
   mvt_forward(4000, 200, 1, 1); // get out of our area
   mvt_forward(2000, 200, -1,-1);
-} else {*/
+} else {
   mvt_forward(1200, 250, 1, 1);
-//}
+}
 
 float start_angle = initial_angle + orientation[index];
 float second_angle = initial_angle + angle_postb[index];
