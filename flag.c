@@ -23,10 +23,7 @@
 int catch_flag(float initial_angle, int flag)
 {
   float last_angle = initial_angle;
-
-  //Go back to initial angle (0°)
-  turn_precise(initial_angle, 1);
-
+  float second_angle;
 
   if (flag == 0){
   //Turn 90 left
@@ -59,13 +56,16 @@ int catch_flag(float initial_angle, int flag)
   if (flag == 0){
     turn_precise(initial_angle - 183.0, 0);
     last_angle = initial_angle - 183.0;
+    second_angle = initial_angle - 200.0;
   } else{
     turn_precise(initial_angle - 177.0, 0);
     last_angle = initial_angle - 177.0;
+    second_angle = initial_angle - 150.0;
   }
 
-  //Move forward to the wall
-  forward_to_wall(150, last_angle, 1, 2);
+  //Move forward to the wall of our base
+  forward_to_base(60.0, initial_angle - 180.0, last_angle, second_angle, 1, 2);
+  forward_to_wall(150.0, initial_angle - 180.0, 1, 2);
   
   //Open the clamp
   turn_arm(-3, 500);

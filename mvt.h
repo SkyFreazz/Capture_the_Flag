@@ -10,4 +10,6 @@ void turn_precise(float final_angle, float tol);
 
 void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol_angle);
 
+void forward_to_base(float dist_min, float initial_angle, float first_angle, float second_angle, float tol_dev, float tol_angle);
+
 #endif

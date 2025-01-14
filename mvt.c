@@ -24,6 +24,9 @@
 //////////////////////////////////////////////////
 #endif
 
+const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
+#define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
+
 static bool _check_pressed( uint8_t sn )
 {
   int val;
@@ -155,3 +158,87 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
   }
 }
 
+void forward_to_base(float dist_min, float initial_angle, float first_angle, float second_angle, float tol_dev, float tol_angle){
+  uint8_t sn_sonar, sn_compass, sn_touch, sn_color;
+  int val;
+  float value, angle;
+  int phase = 1;
+  int cross_2 = 0;
+
+  ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 );
+
+  if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
+    while(phase != 4){
+
+      //get all the values
+
+      //angle + adjustment
+      if(ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
+        if ( !get_sensor_value0(sn_compass, &angle )) {
+          angle = 0;
+        }
+
+        if (fabs(start_angle - angle) >= tol_dev){
+          turn_precise(start_angle, tol_angle);
+        }
+      }
+
+      //distance
+      if (!get_sensor_value0(sn_sonar, &value )) { 
+        value = 0;
+      }
+      if ( (value < 40.0) || (value > 2500.0) ){
+        value = 0;
+      }
+
+      //color
+      if ( ev3_search_sensor( LEGO_EV3_COLOR, &sn_color, 0 )) {
+        if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+          val = 0;
+        }
+        if (strcmp(color[val], "BLACK") == 0){
+          phase = 2;
+        }else if (strcmp(color[val], "GREEN") == 0 || strcmp(color[val], "YELLOW") == 0) {
+          if (phase == 2 ) {
+              phase = 3;               
+          }
+        }
+      }
+
+      if (dist <= 60.0){ //there's an object
+        if (phase == 1){
+          mvt_forward(500, 100, -2, -2);
+          turn_precise((initial_angle + (initial_angle  - first_angle)), 1);
+        }
+
+        if(phase == 2){
+          mvt_forward(200, 50, -2, -2);
+          if(index){
+            turn_precise(initial_angle - 90.0, 1);
+          } else {
+            turn_precise(initial_angle + 90.0, 1);
+          }
+          mvt_forward(1000, 250, 2, 2);
+          turn_precise(initial_angle, 1);
+        }
+      }
+
+      if ((phase == 2) && (cross_2 <= 1)){ //we are in the middle
+        if(cross_2 == 1){
+          turn_precise(second_angle, 1);
+          cross_2 +=1;
+        } else {
+          mvt_forward(300, 100, 1, 1);
+          cross_2 +=1;
+        }
+      }
+
+      if (phase == 3){
+        turn_precise(initial_angle, 1);
+      }
+
+      mvt_forward(100, 0, 4, 4);
+    }
+  }
+  return;
+}

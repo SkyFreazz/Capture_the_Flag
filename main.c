@@ -29,8 +29,6 @@ int main( void )
 {
 uint8_t sn_compass;
 float dist;
-int stp = 1;
-int cross_2 = 0;
 int orientation[2] = {-36.0, 36.0};
 int angle_postb[2] = {20.0, -20.0};
 float initial_angle;
@@ -71,46 +69,12 @@ int flag = rand() %2;
   mvt_forward(1200, 250, 1, 1);
 //}
 
-turn_precise(initial_angle + orientation[index], 1);
+float start_angle = initial_angle + orientation[index];
+float second_angle = initial_angle + angle_postb[index];
 
-while (stp != 3){
+turn_precise(start_angle, 1);
 
-    //get all the value of the sensor
-    dist = sonar();
-    stp = couleur(stp);
-
-    if (dist == -1.0){ //no sensor
-        break;
-    }
-
-    if (dist <= 60.0){ //there's an object
-      if (stp == 1){
-        mvt_forward(500, 100, -2, -2);
-        turn_precise(initial_angle + orientation[(index+1) % 2], 1);
-      }
-
-      if(stp == 2){
-        mvt_forward(200, 50, -2, -2);
-        if(index){
-          turn_precise(initial_angle - 90.0, 1);
-        } else {
-          turn_precise(initial_angle + 90.0, 1);
-        }
-        mvt_forward(1000, 250, 2, 2);
-        turn_precise(initial_angle, 1);
-      }
-    }
-    if ((stp == 2) && (cross_2 <= 1)){ //we are in the middle
-      if(cross_2 == 1){
-        turn_precise(initial_angle + angle_postb[index], 1);
-        cross_2 +=1;
-      } else {
-        mvt_forward(300, 100, 1, 1);
-        cross_2 +=1;
-      }
-    }
-    mvt_forward(100, 0, 4, 4);
-}
+forward_to_base(60.0, initial_angle, start_angle, second_angle, 1, 2);
 
 //We arrive in the opponent's area, let's catch a flag
 
