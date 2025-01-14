@@ -92,8 +92,10 @@ float sonar(){
                 }
             }    
         }
+        printf("bon");
         return value;
     }
+    printf("bof");
     return -1.0; //error
 }
 

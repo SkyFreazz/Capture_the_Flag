@@ -84,6 +84,8 @@ while (stp != 3){
     stp = couleur(stp);
     tch = touch(100, 35, 4, 4);
 
+    printf("dist: %f\ntch: %d", dist, tch);
+
     if (dist == -1.0 || tch == -1){ //no sensor
         printf("here");
         break;
