@@ -172,6 +172,8 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
   if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
     while(phase != 4){
 
+      printf("phase: %d\n", phase);
+
       //get all the values
 
       //angle + adjustment
@@ -199,15 +201,18 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
           val = 0;
         }
         if (strcmp(color[val], "BLACK") == 0){
+          printf("middle line detect\n");
           phase = 2;
         }else if (strcmp(color[val], "GREEN") == 0 || strcmp(color[val], "YELLOW") == 0) {
           if (phase == 2 ) {
+              printf("green line detected\n");
               phase = 3;               
           }
         }
       }
 
       if (value <= dist_min){ //there's an object
+        printf("OBJECT\n");
         if (phase == 1){
           mvt_forward(500, 100, -2, -2);
           current_angle = (initial_angle + (initial_angle  - first_angle));

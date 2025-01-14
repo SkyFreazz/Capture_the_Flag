@@ -75,6 +75,8 @@ turn_precise(start_angle, 1);
 
 forward_to_base(60.0, initial_angle, start_angle, second_angle, 1, 2);
 
+
+printf("Arrived in the other base\n");
 //We arrive in the opponent's area, let's catch a flag
 
 catch_flag(initial_angle, flag);
