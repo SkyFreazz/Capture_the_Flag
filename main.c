@@ -90,6 +90,7 @@ while (stp != 3){
         cross_2 +=1;
     }
     mvt_forward(100, 0, 3, 3);
+    printf("stp end: %d", stp);
 }
 
 //We arrive in the opponent's area, let's catch a flag
