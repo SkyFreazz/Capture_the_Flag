@@ -6,6 +6,8 @@ void turn_arm(int vit, int time);
 
 void mvt_forward(int time, int ramp, int l_vit, int r_vit);
 
+void turn(int time, int ramp, int l_vit, int r_vit, int index, float degre);
+
 void turn_precise(float final_angle, float tol);
 
 void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol_angle);

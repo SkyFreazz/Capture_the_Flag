@@ -5,6 +5,7 @@
 #include "ev3_port.h"
 #include "ev3_tacho.h"
 #include "ev3_sensor.h"
+#include "mvt.h"
 
 #define R_WHEEL 65
 #define L_WHEEL 68
@@ -37,57 +38,7 @@ static bool _check_pressed( uint8_t sn )
     }
     return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
-
-void mvt_motor(int time, int ramp, int l_vit, int r_vit)
-{
-    uint8_t l_sn;
-    uint8_t r_sn;
-    FLAGS_T l_state;
-    FLAGS_T r_state;
-    if ( ev3_search_tacho_plugged_in(L_WHEEL,0, &l_sn, 0 ) && ev3_search_tacho_plugged_in(R_WHEEL,0, &r_sn, 0 ) ){
-        if (l_sn == TACHO__NONE_ || r_sn == TACHO__NONE_) {
-            printf("Erreur : Identifiant de moteur non valide.\n");
-            return;
-        }
-        int l_max_speed;
-        int r_max_speed;
-
-        if (!get_tacho_max_speed(l_sn, &l_max_speed) ||
-            !get_tacho_max_speed(r_sn, &r_max_speed)) {
-            printf("Erreur : Impossible de récupérer la vitesse maximale des moteurs.\n");
-            return;
-        }
-        set_tacho_stop_action_inx( l_sn, TACHO_COAST );
-        set_tacho_stop_action_inx( r_sn, TACHO_COAST );
-
-        l_max_speed = -l_max_speed;
-        r_max_speed = -r_max_speed;
-
-        set_tacho_speed_sp( l_sn, l_max_speed / l_vit );
-        set_tacho_speed_sp( r_sn, r_max_speed / r_vit );
-
-        set_tacho_time_sp( l_sn, time );
-        set_tacho_time_sp( r_sn, time );
-
-        set_tacho_ramp_up_sp( l_sn, ramp );
-        set_tacho_ramp_up_sp( r_sn, ramp );
-
-        set_tacho_ramp_down_sp( l_sn, ramp );
-        set_tacho_ramp_down_sp( r_sn, ramp );
-
-        set_tacho_command_inx( l_sn, TACHO_RUN_TIMED );
-        set_tacho_command_inx( r_sn, TACHO_RUN_TIMED );
-        do {
-            get_tacho_state_flags( l_sn, &l_state );
-            get_tacho_state_flags( r_sn, &r_state );
-            printf("Je suis dans une boucle presque infinie");
-        } while ( l_state && r_state ); // d'apres gpt (l_state || r_state)
-    } else {
-        printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
-    }
-    return;
-}
-
+ 
 float compas(){
     uint8_t sn_compass;
     float value;
@@ -113,34 +64,30 @@ float sonar(){
       }
 
       if (value < 100.0){
-            mvt_motor(100, 35, -2, -2); //reculer
+            mvt_forward(100, 35, -2, -2); //go backward
             angl = compas();
             if (angl > -20.0 && angl < 20.0){
-                if (angl < 0){
+                if (angl < 0){ //if go left
                     while (angl > -45.0){ 
-                        mvt_motor(100, 0, 4, -4); //tourner a droite
+                        mvt_forward(100, 0, 4, -4); //turn right
                         angl = compas();
-                        printf("Je suis coincé dans 1");
                     }
-                } else { // si parti vers la droite
+                } else { // if go right
                     while (angl < 45.0){ 
-                        mvt_motor(100, 0, -4, 4); //tourner a gauche
+                        mvt_forward(100, 0, -4, 4); //turn left
                         angl = compas();
-                        printf("Je suis coincé dans 2");
                     }
                 }
             } else {
-                if (angl < 0){ // si partis vers la gauche
+                if (angl < 0){ // if go left
                     while (!(angl > 0 && angl < 5.0)) {
-                        mvt_motor(100, 0, 4, -4); //tourner a droite
+                        mvt_forward(100, 0, 4, -4); //turn right
                         angl = compas();
-                        printf("Je suis coincé dans 3");
                     }
-                } else { // si parti vers la droite
+                } else { // if go right
                     while (!(angl < 0 && angl > -5.0)) {
-                        mvt_motor(100, 0, -4, 4); //tourner a gauche
+                        mvt_forward(100, 0, -4, 4); //turn left
                         angl = compas();
-                        printf("Je suis coincé dans 3");
                     }
                 }
             }    
@@ -157,13 +104,11 @@ int couleur(int stp){
         if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
             val = 0;
         }
-        printf("la couleur %s\n",color[val]);
-        fflush( stdout ); //seulement utile pour les print 
         if (strcmp(color[val], "BLACK") == 0){
             return 2;
         }else if (strcmp(color[val], "GREEN") == 0 || strcmp(color[val], "YELLOW") == 0) {
             if (stp == 2 ) {
-                return 3; // return (stp == 2) ? 3 : 1; //d'apres gpt
+                return 3;
             }else {
                 return 1;
             }
@@ -183,18 +128,18 @@ int touch(int time, int ramp, int l_vit, int r_vit){
         if ( _check_pressed( sn_touch )){
             printf("j'ai touché un mur\n");
             Sleep( 100 );
-            mvt_motor(time, ramp, l_vit, r_vit); //reculer
+            mvt_forward(time, ramp, l_vit, r_vit); //reculer
             angl = compas();
             if (angl > -20 && angl < 20) { // obstacle = plot
                 if (angl < 0){
                     while (angl > -45.0){ 
-                        mvt_motor(time, ramp, l_vit, -r_vit); //tourner a droite
+                        mvt_forward(time, ramp, l_vit, -r_vit); //tourner a droite
                         angl = compas();
                         printf("Je suis coincé dans 5");
                     }
                 } else { // si parti vers la droite
                     while (angl < 45.0){ 
-                        mvt_motor(time, ramp, -l_vit, r_vit); //tourner a gauche
+                        mvt_forward(time, ramp, -l_vit, r_vit); //tourner a gauche
                         angl = compas();
                         printf("Je suis coincé dans 6");
                     }
@@ -202,13 +147,13 @@ int touch(int time, int ramp, int l_vit, int r_vit){
             } else {
                 if (angl < 0){ // si partis vers la gauche
                     while (!(angl > 0 && angl < 5.0)) {
-                        mvt_motor(time, ramp, l_vit, r_vit); //tourner a droite
+                        mvt_forward(time, ramp, l_vit, r_vit); //tourner a droite
                         angl = compas();
                         printf("Je suis coincé dans 7");
                     }
                 } else { // si parti vers la droite
                     while (!(angl < 0 && angl > -5.0)) {
-                        mvt_motor(time, ramp, l_vit, r_vit); //tourner a gauche
+                        mvt_forward(time, ramp, l_vit, r_vit); //tourner a gauche
                         angl = compas();
                         printf("Je suis coincé dans 8");
                     }
@@ -276,17 +221,4 @@ void test_system(){
     fflush( stdout );
 }
 
-void turn(int time, int ramp, int l_vit, int r_vit, int index, float degre) {
-    float angl = compas();
-    if (index == 0){ // si partis vers la gauche
-                while (angl < degre){ 
-                    mvt_motor(time, ramp, l_vit, -r_vit); //tourner a droite
-                    angl = compas();
-                }
-            } else { // si parti vers la droite
-                while (angl > -degre){ 
-                    mvt_motor(time, ramp, -l_vit, r_vit); //tourner a gauche
-                    angl = compas();
-                }
-            }
-}
+

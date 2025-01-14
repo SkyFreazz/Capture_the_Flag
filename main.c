@@ -9,10 +9,7 @@
 #include "flag.h"
 #include "step1.h"
 
-#define R_WHEEL 65
-#define L_WHEEL 68
-#define ARM 67
-#define M_SENSOR 66
+
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -32,14 +29,15 @@ int main( void )
 uint8_t sn_compass;
 int e1 = 0;
 float dist;
-int stp;
-int cross_2;
+int stp = 1;
+int cross_2 = 0;
 int orientation[2] = {-40.0, 40.0};
 int tch;
+float initial_angle;
 
 #ifndef __ARM_ARCH_4T__
   /* Disable auto-detection of the brick (you have to set the correct address below) */
-  ev3_brick_addr = "192.168.0.204";
+  ev3_brick_addr = "192.168.79.191";
 
 #endif
   if ( ev3_init() == -1 ) return ( 1 );
@@ -48,63 +46,53 @@ int tch;
   printf( "The EV3 brick auto-detection is DISABLED,\nwaiting %s online with plugged tacho...\n", ev3_brick_addr );
 
 #else
-  printf( "Waiting tacho is plugged...\n" );
+  printf( "Waiting tachos is plugged...\n" );
 
 #endif
-  while ( ev3_tacho_init() < 1) Sleep( 1000 );
+  while ( ev3_tacho_init() < 3) Sleep( 1000 );
 
 
 ev3_sensor_init();
-
-float initial_angle;
 
 if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   if ( !get_sensor_value0(sn_compass, &initial_angle )) {
     initial_angle = 0;
   }
-  printf("initial_angle: %f", initial_angle);
 }
 
-test_system();
-
-srand(time(NULL)); //demarage tirage alea
+srand(time(NULL)); //random initialization
 int index = rand() % 2 ;
 
-mvt_motor(1500, 200, 2, 2); // sortir du carré
+mvt_forward(1500, 200, 2, 2); // get out of our area
 
 if (index == 0) {
     while (compas() > orientation [index] ){
-            mvt_motor(100, 35, -4, 4); // tourner vers la gauche
+            mvt_forward(100, 35, -4, 4); // turn left
     }
 } else{
     while (compas() < orientation [index] ){
-            mvt_motor(100, 35, 4, -4); // tourner vers la droite
+            mvt_forward(100, 35, 4, -4); // turn right
     }
 }
-fflush( stdout );
-stp = 1;
-cross_2 = 0;
-while (!e1){
-    if (stp == 3){
-        e1 = 1;
-    } 
-    //utilise tous les capteurs
+
+while (stp != 3){
+
+    //get all the value of the sensor
     dist = sonar();
     stp = couleur(stp);
     tch = touch(100, 35, 4, 4);
-    if (dist == -1.0 || tch == -1){ //si capteur non detecté
-        e1 = 1;
+
+    if (dist == -1.0 || tch == -1){ //no sensor
+        break;
     }
-    if ((stp == 2) && (cross_2 ==0)){ //quand on arrive a la ligne du centre
+    if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
         turn(100, 35, 4, 4, index, 20.0);
-        printf("j'ai atteint le centre\n");
         cross_2 +=1;
     }
-    mvt_motor(100, 0, 3, 3); //avance 
-    fflush( stdout );
+    mvt_forward(100, 0, 3, 3);
 }
-fflush( stdout );
 
+//We arrive in the opponent's area, let's catch a flag
 
 catch_flag(initial_angle);
 
