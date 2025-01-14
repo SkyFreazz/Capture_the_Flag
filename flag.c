@@ -20,15 +20,13 @@
 //////////////////////////////////////////////////
 #endif
 
-int catch_flag(float initial_angle)
+int catch_flag(float initial_angle, int flag)
 {
   float last_angle = initial_angle;
 
   //Go back to initial angle (0°)
   turn_precise(initial_angle, 1);
 
-  //choose the flag to grab
-  int flag = rand() % 2; //0: left, 1: right
 
   if (flag == 0){
   //Turn 90 left

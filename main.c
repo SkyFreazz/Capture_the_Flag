@@ -31,7 +31,7 @@ uint8_t sn_compass;
 float dist;
 int stp = 1;
 int cross_2 = 0;
-int orientation[2] = {-35.0, 35.0};
+int orientation[2] = {-32.0, 32.0};
 int tch;
 float initial_angle;
 
@@ -64,9 +64,14 @@ test_system();
 
 srand(time(NULL)); //random initialization
 int index = rand() % 2 ;
+int flag = rand() %2;
 
-mvt_forward(4000, 200, 1, 1); // get out of our area
-mvt_forward(2000, 200, -1,-1);
+/*if (flag == 0){
+  mvt_forward(4000, 200, 1, 1); // get out of our area
+  mvt_forward(2000, 200, -1,-1);
+} else {*/
+  mvt_forward(800, 200, 1, 1);
+//}
 
 if (index == 0) {
     while (compas() > orientation [index] ){
@@ -80,16 +85,12 @@ if (index == 0) {
 
 while (stp != 3){
 
-    printf("stp: %d\n", stp);
     //get all the value of the sensor
     dist = sonar();
     stp = couleur(stp);
     tch = touch(100, 35, 4, 4);
 
-    printf("dist: %f\ntch: %d", dist, tch);
-
     if (dist == -1.0 || tch == -1){ //no sensor
-        printf("here");
         break;
     }
     if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
@@ -99,12 +100,11 @@ while (stp != 3){
       }      
     }
     mvt_forward(100, 0, 4, 4);
-    printf("stp end: %d\n", stp);
 }
 
 //We arrive in the opponent's area, let's catch a flag
 
-catch_flag(initial_angle);
+catch_flag(initial_angle, flag);
 
 
 ev3_uninit();

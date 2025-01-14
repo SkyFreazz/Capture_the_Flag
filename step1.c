@@ -104,7 +104,6 @@ int couleur(int stp){
         if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
             val = 0;
         }
-        printf("\nval: %d\n", val);
         if (strcmp(color[val], "BLACK") == 0){
             return 2;
         }else if (strcmp(color[val], "GREEN") == 0 || strcmp(color[val], "YELLOW") == 0) {
