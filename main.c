@@ -85,7 +85,7 @@ while (stp != 3){
     if (dist <= 60.0){ //there's an object
       if (stp == 1){
         mvt_forward(500, 100, -2, -2);
-        turn_precise(initial_angle + [(index+1) % 2], 1);
+        turn_precise(initial_angle + orientation[(index+1) % 2], 1);
       }
 
       if(stp == 2){
