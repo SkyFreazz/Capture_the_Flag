@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "ev3.h"
 #include "ev3_port.h"
@@ -162,6 +163,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
   uint8_t sn_sonar, sn_compass, sn_touch, sn_color;
   int val;
   float value, angle;
+  float current_angle = first_angle;
   int phase = 1;
   int cross_2 = 0;
 
@@ -178,8 +180,8 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
           angle = 0;
         }
 
-        if (fabs(start_angle - angle) >= tol_dev){
-          turn_precise(start_angle, tol_angle);
+        if (fabs(current_angle - angle) >= tol_dev){
+          turn_precise(current_angle, tol_angle);
         }
       }
 
@@ -205,7 +207,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         }
       }
 
-      if (dist <= 60.0){ //there's an object
+      if (value <= 60.0){ //there's an object
         if (phase == 1){
           mvt_forward(500, 100, -2, -2);
           turn_precise((initial_angle + (initial_angle  - first_angle)), 1);
@@ -213,7 +215,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
 
         if(phase == 2){
           mvt_forward(200, 50, -2, -2);
-          if(index){
+          if(first_angle > initial_angle){
             turn_precise(initial_angle - 90.0, 1);
           } else {
             turn_precise(initial_angle + 90.0, 1);
