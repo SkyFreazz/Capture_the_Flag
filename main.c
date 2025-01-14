@@ -31,7 +31,7 @@ uint8_t sn_compass;
 float dist;
 int stp = 1;
 int cross_2 = 0;
-int orientation[2] = {-33.0, 33.0};
+int orientation[2] = {-35.0, 35.0};
 float initial_angle;
 
 #ifndef __ARM_ARCH_4T__
