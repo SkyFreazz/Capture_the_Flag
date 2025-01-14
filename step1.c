@@ -10,7 +10,6 @@
 #define R_WHEEL 65
 #define L_WHEEL 68
 #define ARM 67
-#define M_SENSOR 66
 
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
@@ -62,37 +61,8 @@ float sonar(){
       if ( (value < 50.0) || (value > 2500.0) ){
         value = 0;
       }
-
-      if (value < 100.0){
-            mvt_forward(100, 35, -2, -2); //go backward
-            angl = compas();
-            if (angl > -20.0 && angl < 20.0){
-                if (angl < 0){ //if go left
-                    while (angl > -45.0){ 
-                        mvt_forward(100, 0, 4, -4); //turn right
-                        angl = compas();
-                    }
-                } else { // if go right
-                    while (angl < 45.0){ 
-                        mvt_forward(100, 0, -4, 4); //turn left
-                        angl = compas();
-                    }
-                }
-            } else {
-                if (angl < 0){ // if go left
-                    while (!(angl > 0 && angl < 5.0)) {
-                        mvt_forward(100, 0, 4, -4); //turn right
-                        angl = compas();
-                    }
-                } else { // if go right
-                    while (!(angl < 0 && angl > -5.0)) {
-                        mvt_forward(100, 0, -4, 4); //turn left
-                        angl = compas();
-                    }
-                }
-            }    
-        }
-        return value;
+    
+    return value;
     }
     return -1.0; //error
 }
