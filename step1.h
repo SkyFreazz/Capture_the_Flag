@@ -11,4 +11,6 @@ int touch(int time, int ramp, int l_vit, int r_vit);
 
 void test_system();
 
+void turn(int time, int ramp, int l_vit, int r_vit, int index, float degre);
+
 #endif

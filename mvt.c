@@ -94,21 +94,6 @@ void mvt_forward(int time, int ramp, int l_vit, int r_vit)
     return;
 }
 
-void turn(int time, int ramp, int l_vit, int r_vit, int index, float degre) {
-    float angl = compas();
-    if (index == 0){ // si partis vers la gauche
-                while (angl < degre){ 
-                    mvt_forward(time, ramp, l_vit, -r_vit); //tourner a droite
-                    angl = compas();
-                }
-            } else { // si parti vers la droite
-                while (angl > -degre){ 
-                    mvt_forward(time, ramp, -l_vit, r_vit); //tourner a gauche
-                    angl = compas();
-                }
-            }
-}
-
 void turn_precise(float final_angle, float tol){
 
   uint8_t sn_compass;
