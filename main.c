@@ -99,12 +99,15 @@ while (stp != 3){
         turn_precise(initial_angle, 1);
       }
     }
-    if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
+    if ((stp == 2) && (cross_2 <= 1)){ //we are in the middle
       if(fabs(initial_angle - compas()) >= 5){
         turn_precise(initial_angle, 1);
         cross_2 +=1;
-        mvt_forward(500, 50, 1, 1);
       }      
+      if (cross_2 == 1){
+        mvt_forward(500, 50, 1, 1);
+        cross_2 +=1;
+      }
     }
     mvt_forward(100, 0, 4, 4);
 }

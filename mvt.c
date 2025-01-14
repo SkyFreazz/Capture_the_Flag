@@ -150,7 +150,7 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
         }
       }
 
-      mvt_forward(100, 0, 3, 3);
+      mvt_forward(100, 0, 3.01, 3);
     }
   }
 }
