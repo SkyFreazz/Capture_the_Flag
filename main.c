@@ -105,7 +105,7 @@ while (stp != 3){
         turn_precise(initial_angle + angle_postb[index], 1);
         cross_2 +=1;
       } else {
-        mvt_forward(500, 50, 1, 1);
+        mvt_forward(300, 100, 1, 1);
         cross_2 +=1;
       }
     }
