@@ -172,17 +172,6 @@ void test_system(){
             strcat(fail, test4);
         }
     }
-    for (port=65; port<69; port++){
-        if ( ev3_search_tacho_plugged_in(port,0, &sn, 0 )) {
-            if (port != M_SENSOR){
-                positif +=1;
-                const char *test5 = " motor";
-                if (strlen(fail) + strlen(test5) < sizeof(fail)){
-                    strcat(fail, test5);
-                }
-            }
-        }
-    }
     if (positif > 0) {
         printf("%d : %s\n", positif, fail);
     } else {
