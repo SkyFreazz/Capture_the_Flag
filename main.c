@@ -31,7 +31,7 @@ uint8_t sn_compass;
 float dist;
 int stp = 1;
 int cross_2 = 0;
-int orientation[2] = {-35.0, 32.0};
+int orientation[2] = {-33.0, 33.0};
 float initial_angle;
 
 #ifndef __ARM_ARCH_4T__
@@ -101,11 +101,7 @@ while (stp != 3){
     }
     if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
       if(fabs(initial_angle - compas()) >= 5){
-        if(index){
-          turn_precise(initial_angle + 20.0, 1);
-        } else {
-          turn_precise(initial_angle - 20.0, 1);
-        }
+        turn_precise(initial_angle, 1);
         cross_2 +=1;
       }      
     }
