@@ -103,6 +103,7 @@ while (stp != 3){
       if(fabs(initial_angle - compas()) >= 5){
         turn_precise(initial_angle, 1);
         cross_2 +=1;
+        mvt_forward(200, 50, 1, 1);
       }      
     }
     mvt_forward(100, 0, 4, 4);
