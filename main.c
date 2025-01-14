@@ -103,9 +103,9 @@ while (stp != 3){
       if(stp == 2){
         mvt_forward(200, 50, -2, -2);
         if(compas() > initial_angle){
-          turn_precise(initial_angle - 90.0, 2);
-        } else {
           turn_precise(initial_angle + 90.0, 2);
+        } else {
+          turn_precise(initial_angle - 90.0, 2);
         }
         mvt_forward(1000, 250, 2, 2);
         turn_precise(initial_angle, 2);
