@@ -31,7 +31,7 @@ uint8_t sn_compass;
 float dist;
 int stp = 1;
 int cross_2 = 0;
-int orientation[2] = {-32.0, 32.0};
+int orientation[2] = {-33.0, 33.0};
 int tch;
 float initial_angle;
 
@@ -92,6 +92,24 @@ while (stp != 3){
 
     if (dist == -1.0 || tch == -1){ //no sensor
         break;
+    }
+
+    if (dist <= 60.0){ //there's an object
+      if (stp == 1){
+        mvt_forward(500, 100, -2, -2);
+        turn_precise(orientation[(index+1) % 2], 2);
+      }
+
+      if(stp == 2){
+        mvt_forward(200, 50, -2, -2);
+        if(compas() > initial_angle){
+          turn_precise(initial_angle - 90.0, 2);
+        } else {
+          turn_precise(initial_angle + 90.0, 2);
+        }
+        mvt_forward(1000, 250, 2, 2);
+        turn_precise(initial_angle, 2);
+      }
     }
     if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
       if(fabs(initial_angle - compas()) >= 5){

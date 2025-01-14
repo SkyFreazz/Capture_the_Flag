@@ -55,10 +55,14 @@ int catch_flag(float initial_angle, int flag)
 
 
   //Turn to go back to area
-  turn_precise(initial_angle - 183.0, 0);
+  if (flag == 0){
+    turn_precise(initial_angle - 183.0, 0);
+    last_angle = initial_angle - 183.0;
+  } else{
+    turn_precise(initial_angle - 177.0, 0);
+    last_angle = initial_angle - 177.0;
+  }
 
-  last_angle = initial_angle - 183.0;
-  
   //Move forward to the wall
   forward_to_wall(150, last_angle, 0, 1);
   
