@@ -31,8 +31,7 @@ uint8_t sn_compass;
 float dist;
 int stp = 1;
 int cross_2 = 0;
-int orientation[2] = {-35.0, 30.0};
-int tch;
+int orientation[2] = {-35.0, 32.0};
 float initial_angle;
 
 #ifndef __ARM_ARCH_4T__
@@ -60,8 +59,6 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   }
 }
 
-test_system();
-
 srand(time(NULL)); //random initialization
 int index = rand() % 2 ;
 int flag = rand() %2;
@@ -73,47 +70,42 @@ int flag = rand() %2;
   mvt_forward(1200, 250, 1, 1);
 //}
 
-if (index == 0) {
-    while (compas() > orientation [index] ){
-            mvt_forward(100, 35, -4, 4); // turn left
-    }
-} else{
-    while (compas() < orientation [index] ){
-            mvt_forward(100, 35, 4, -4); // turn right
-    }
-}
+turn_precise(orientation[index], 1);
 
 while (stp != 3){
 
     //get all the value of the sensor
     dist = sonar();
     stp = couleur(stp);
-    tch = touch(100, 35, 4, 4);
 
-    if (dist == -1.0 || tch == -1){ //no sensor
+    if (dist == -1.0){ //no sensor
         break;
     }
 
     if (dist <= 60.0){ //there's an object
       if (stp == 1){
         mvt_forward(500, 100, -2, -2);
-        turn_precise(orientation[(index+1) % 2], 2);
+        turn_precise(orientation[(index+1) % 2], 1);
       }
 
       if(stp == 2){
         mvt_forward(200, 50, -2, -2);
-        if(compas() > initial_angle){
-          turn_precise(initial_angle + 90.0, 2);
+        if(index){
+          turn_precise(initial_angle - 90.0, 1);
         } else {
-          turn_precise(initial_angle - 90.0, 2);
+          turn_precise(initial_angle + 90.0, 1);
         }
         mvt_forward(1000, 250, 2, 2);
-        turn_precise(initial_angle, 2);
+        turn_precise(initial_angle, 1);
       }
     }
     if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
       if(fabs(initial_angle - compas()) >= 5){
-        turn(100, 35, 4, 4, index, 20.0);
+        if(index){
+          turn_precise(initial_angle + 20.0, 1);
+        } else {
+          turn_precise(initial_angle -20. 0, 1);
+        }
         cross_2 +=1;
       }      
     }

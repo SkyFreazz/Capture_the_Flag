@@ -53,12 +53,11 @@ float compas(){
 float sonar(){
     uint8_t sn_sonar;
     float value;
-    float angl;
     if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
       if ( !get_sensor_value0(sn_sonar, &value )) {
         value = -1.0;
       }
-      if ( (value < 50.0) || (value > 2500.0) ){
+      if ( (value < 40.0) || (value > 2500.0) ){
         value = 0;
       }
     
@@ -90,60 +89,13 @@ int couleur(int stp){
     return -1; //error
 }
 
-int touch(int time, int ramp, int l_vit, int r_vit){
-    uint8_t sn_touch;
-    float angl;
-
-    if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )){
-        if ( _check_pressed( sn_touch )){
-            printf("j'ai touché un mur\n");
-            Sleep( 100 );
-            mvt_forward(time, ramp, l_vit, r_vit); //reculer
-            angl = compas();
-            if (angl > -20 && angl < 20) { // obstacle = plot
-                if (angl < 0){
-                    while (angl > -45.0){ 
-                        mvt_forward(time, ramp, l_vit, -r_vit); //tourner a droite
-                        angl = compas();
-                        printf("Je suis coincé dans 5");
-                    }
-                } else { // si parti vers la droite
-                    while (angl < 45.0){ 
-                        mvt_forward(time, ramp, -l_vit, r_vit); //tourner a gauche
-                        angl = compas();
-                        printf("Je suis coincé dans 6");
-                    }
-                }
-            } else {
-                if (angl < 0){ // si partis vers la gauche
-                    while (!(angl > 0 && angl < 5.0)) {
-                        mvt_forward(time, ramp, l_vit, r_vit); //tourner a droite
-                        angl = compas();
-                        printf("Je suis coincé dans 7");
-                    }
-                } else { // si parti vers la droite
-                    while (!(angl < 0 && angl > -5.0)) {
-                        mvt_forward(time, ramp, l_vit, r_vit); //tourner a gauche
-                        angl = compas();
-                        printf("Je suis coincé dans 8");
-                    }
-                }
-            }
-       }
-       return 0;
-    }
-    return -1; //error
-}
-
 void test_system(){
     int positif = 0;
     char fail[45] = ""; //"sonar compas color touch motor motor motor"
-    int port;
     uint8_t sn_sonar;
     uint8_t sn_compass;
     uint8_t sn_color;
     uint8_t sn_touch;
-    uint8_t sn;
     if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
         positif += 1;
         const char *test1 = "sonar ";
@@ -178,19 +130,4 @@ void test_system(){
         printf("No sensor detected\n");
     }
     fflush( stdout );
-}
-
-void turn(int time, int ramp, int l_vit, int r_vit, int index, float degre) {
-    float angl = compas();
-    if (index == 0){ // si partis vers la gauche
-                while (angl < degre){ 
-                    mvt_forward(time, ramp, l_vit, -r_vit); //tourner a droite
-                    angl = compas();
-                }
-            } else { // si parti vers la droite
-                while (angl > -degre){ 
-                    mvt_forward(time, ramp, -l_vit, r_vit); //tourner a gauche
-                    angl = compas();
-                }
-            }
 }
