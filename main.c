@@ -31,7 +31,7 @@ uint8_t sn_compass;
 float dist;
 int stp = 1;
 int cross_2 = 0;
-int orientation[2] = {-40.0, 40.0};
+int orientation[2] = {-35.0, 35.0};
 int tch;
 float initial_angle;
 
@@ -79,7 +79,7 @@ if (index == 0) {
 
 while (stp != 3){
 
-    printf("stp: %d", stp);
+    printf("stp: %d\n", stp);
     //get all the value of the sensor
     dist = sonar();
     stp = couleur(stp);
@@ -98,7 +98,7 @@ while (stp != 3){
       }      
     }
     mvt_forward(100, 0, 3, 3);
-    printf("stp end: %d", stp);
+    printf("stp end: %d\n", stp);
 }
 
 //We arrive in the opponent's area, let's catch a flag
