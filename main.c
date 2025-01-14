@@ -104,7 +104,7 @@ while (stp != 3){
         if(index){
           turn_precise(initial_angle + 20.0, 1);
         } else {
-          turn_precise(initial_angle -20. 0, 1);
+          turn_precise(initial_angle - 20.0, 1);
         }
         cross_2 +=1;
       }      
