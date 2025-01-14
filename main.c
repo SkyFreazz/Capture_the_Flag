@@ -91,8 +91,10 @@ while (stp != 3){
         break;
     }
     if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
+      if(fabs(initial_angle - compas()) >= 5){
         turn(100, 35, 4, 4, index, 20.0);
         cross_2 +=1;
+      }      
     }
     mvt_forward(100, 0, 3, 3);
     printf("stp end: %d", stp);
