@@ -59,6 +59,8 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   }
 }
 
+test_system();
+
 srand(time(NULL)); //random initialization
 int index = rand() % 2 ;
 
@@ -83,6 +85,7 @@ while (stp != 3){
     tch = touch(100, 35, 4, 4);
 
     if (dist == -1.0 || tch == -1){ //no sensor
+        printf("here")
         break;
     }
     if ((stp == 2) && (cross_2 ==0)){ //we are in the middle
