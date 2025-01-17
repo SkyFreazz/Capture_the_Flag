@@ -104,5 +104,5 @@ void main ()
 
   ev3_uninit();
   printf( "*** ( EV3 ) Bye! ***\n" );
-
+  return;
 }
