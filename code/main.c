@@ -6,9 +6,8 @@
 #include "ev3_port.h"
 #include "ev3_tacho.h"
 #include "ev3_sensor.h"
-#include "mvt.h"
-#include "flag.h"
-#include "step1.h"
+#include "./lib/mvt.h"
+#include "./lib/flag.h"
 
 
 // WIN32 /////////////////////////////////////////

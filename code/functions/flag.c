@@ -4,7 +4,7 @@
 #include "ev3_port.h"
 #include "ev3_tacho.h"
 #include "ev3_sensor.h"
-#include "mvt.h"
+#include "../lib/mvt.h"
 
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
