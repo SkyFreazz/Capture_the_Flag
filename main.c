@@ -72,8 +72,6 @@ if (flag == 0){
   turn_precise(start_angle, 1);
 
   forward_to_base(60.0, initial_angle, start_angle, second_angle, 1, 2);
-
-  printf("Arrived in the other base\n");
 }
 
 
