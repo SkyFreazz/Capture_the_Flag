@@ -211,13 +211,14 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
 
       if (value <= dist_min){ //there's an object
         mvt_forward(200, 50, -2, -2);
-        if(first_angle > initial_angle){
+        if(first_angle - second_angle > 0){
           turn_precise(initial_angle - 90.0, 1);
         } else {
           turn_precise(initial_angle + 90.0, 1);
         }
         mvt_forward(1000, 250, 2, 2);
-        turn_precise(initial_angle, 1);
+        current_angle = initial_angle;
+        turn_precise(current_angle, 1);
       }
 
       if ((phase == 2) && (cross_2 <= 1)){ //we are in the middle
