@@ -36,7 +36,7 @@ int catch_flag(float initial_angle, int flag)
   //Move forward to the wall
   forward_to_wall(150, last_angle, 0, 1);
   printf("hit first wall\n");
-  mvt_forward(100, 0, -2, -2);
+  mvt_forward(100, 0, -3, -3);
 
   //Turn 90 right
   turn_precise(last_angle + 90.0, 0);
