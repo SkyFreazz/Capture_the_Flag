@@ -36,7 +36,7 @@ int catch_flag(float initial_angle, int flag)
   //Move forward to the wall
   forward_to_wall(150, last_angle, 0, 1);
   printf("hit first wall\n");
-  mvt_forward(100, 25, -2, -2);
+  mvt_forward(100, 0, -2, -2);
 
   //Turn 90 right
   turn_precise(last_angle + 90.0, 0);
@@ -49,11 +49,11 @@ int catch_flag(float initial_angle, int flag)
   //Move to the flag
   forward_to_wall(150, last_angle, 0, 1);
   printf("touch the other wall");
-  //mvt_forward(100, 0, -2, -2);
 
 
   //Close the clamp
   turn_arm(3, 500);
+  mvt_forward(100, 0, -2, -2);
 
   //Turn to go back to area
   if (flag == 0){
