@@ -78,7 +78,7 @@ void mvt_forward(int time, int ramp, int l_vit, int r_vit)
       set_tacho_stop_action_inx( r_sn, TACHO_COAST );
       l_max_speed = -l_max_speed;
       r_max_speed = -r_max_speed;
-      set_tacho_speed_sp( l_sn, l_max_speed * 1/(l_vit + 0.5)  );
+      set_tacho_speed_sp( l_sn, l_max_speed * 1/(l_vit + 0.6)  );
       set_tacho_speed_sp( r_sn, r_max_speed * 1/r_vit );
       set_tacho_time_sp( l_sn, time );
       set_tacho_time_sp( r_sn, time );
@@ -217,7 +217,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
           turn_precise(initial_angle + 90.0, 1);
         }
         mvt_forward(1000, 250, 2, 2);
-        turn_precise(second_angle, 1);
+        turn_precise(initial_angle, 1);
       }
 
       if ((phase == 2) && (cross_2 <= 1)){ //we are in the middle
