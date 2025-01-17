@@ -21,4 +21,4 @@ test_sensor:
 	arm-linux-gnueabi-gcc test_sensor.o -Wall -lm -lev3dev-c -o test_sensor
 
 clean:
-	rm -f functions/*.o lib/*.o main.o test_sensor.o
+	rm -f functions/*.o lib/*.o main.o test_sensor.o test_sensor main
