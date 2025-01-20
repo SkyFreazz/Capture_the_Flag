@@ -222,7 +222,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
       }
 
       if ((phase == 2) && (cross_2 <= 1)){ //we are in the middle
-        if(cross_2 == 1){
+        if(cross_2 == 0){
           turn_precise(second_angle, 1);
           current_angle = second_angle;
           cross_2 +=1;

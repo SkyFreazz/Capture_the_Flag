@@ -70,6 +70,7 @@ int catch_flag(float initial_angle, int flag)
 
   //Move forward to the wall of our base
   printf("let's go to base\n");
+  mvt_forward(1000, 200, 1, 1);
   forward_to_base(60.0, initial_angle - 180.0, last_angle, second_angle, 1, 2);
   forward_to_wall(150.0, initial_angle - 180.0, 1, 2);
   printf("touch wall\n");
