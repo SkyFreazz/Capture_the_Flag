@@ -68,7 +68,7 @@ int catch_flag(float initial_angle, int flag)
     second_angle = initial_angle - 150.0;
   }
 
-  //Move forward to the wall of our base
+  //Move forward to the wall of our base (first to the base and the to the wall)
   printf("let's go to base\n");
   mvt_forward(1500, 200, 1, 1);
   forward_to_base(60.0, initial_angle - 180.0, last_angle, second_angle, 1, 2);

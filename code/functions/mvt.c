@@ -25,8 +25,12 @@
 //////////////////////////////////////////////////
 #endif
 
+//base fonction (BOTH)
+
 const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
+
+//Check if the touch button is activated
 
 static bool _check_pressed( uint8_t sn )
 {
@@ -37,6 +41,8 @@ static bool _check_pressed( uint8_t sn )
   }
   return ( get_sensor_value( 0, sn, &val ) && ( val != 0 ));
 }
+
+//open or close the arm motor
 
 void turn_arm(int vit, int time)
 {
@@ -63,6 +69,8 @@ void turn_arm(int vit, int time)
 
   return;
 }
+
+//Move the two wheel motor from a certain time and speed (with potentially a ramp)
 
 void mvt_forward(int time, int ramp, int l_vit, int r_vit)
 {
@@ -98,6 +106,8 @@ void mvt_forward(int time, int ramp, int l_vit, int r_vit)
     return;
 }
 
+//Turn from a certain angle (with a given tolerance) (LILIAN)
+
 void turn_precise(float final_angle, float tol){
 
   uint8_t sn_compass;
@@ -126,6 +136,8 @@ void turn_precise(float final_angle, float tol){
   }
   return;
 }
+
+//Going forward until we touch a wall and verify that we don't deviate from the start angle (LILIAN)
 
 void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol_angle){
 
@@ -158,6 +170,8 @@ void forward_to_wall(float dist_min, float start_angle, float tol_dev, float tol
     }
   }
 }
+
+// go to the other base using the color of the line (LEONARDO)
 
 void forward_to_base(float dist_min, float initial_angle, float first_angle, float second_angle, float tol_dev, float tol_angle){
   uint8_t sn_sonar, sn_compass, sn_touch, sn_color;
@@ -209,6 +223,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         }
       }
       
+      //touch
       if (_check_pressed( sn_touch )){
         return;
       }
@@ -236,7 +251,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         }
       }
 
-      if (phase == 3){
+      if (phase == 3){ // we reach the other bas
         turn_precise(initial_angle, 1);
         current_angle = initial_angle;
         phase = 4;

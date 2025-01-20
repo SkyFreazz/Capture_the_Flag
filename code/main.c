@@ -24,6 +24,8 @@
 //////////////////////////////////////////////////
 #endif
 
+//main code : assembling of the two parts (go to the other base and catch the flag)
+
 int main( void )
 {
 uint8_t sn_compass;
@@ -50,6 +52,7 @@ float initial_angle;
 
 ev3_sensor_init();
 
+//Get the initial angle (As the 0° point)
 if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
   if ( !get_sensor_value0(sn_compass, &initial_angle )) {
     initial_angle = 0;
@@ -57,14 +60,15 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_compass,0)){
 }
 
 srand(time(NULL)); //random initialization
-int index = rand() % 2 ;
-int flag = rand() %2;
+int index = rand() % 2 ; //Which side of the middle object we go (0:left, 1 right)
+int flag = rand() %2; //Which flag we catch (0:left, 1:right)
 
+//Go to the other base (LEONARDO)
 if (flag == 0){
-  mvt_forward(4000, 200, 1, 1); // get out of our area
-  mvt_forward(500, 100, -2,-1);
+  mvt_forward(4000, 200, 1, 1); // drive onto the platform
+  mvt_forward(500, 100, -2,-1); 
 } else {
-  mvt_forward(1200, 250, 1, 1);
+  mvt_forward(1200, 250, 1, 1); // get out of the base
   float start_angle = initial_angle + orientation[index];
   float second_angle = initial_angle + angle_postb[index];
 
@@ -74,7 +78,7 @@ if (flag == 0){
   forward_to_base(60.0, initial_angle, start_angle, second_angle, 1, 2);
 }
 
-//We arrive in the opponent's area, let's catch a flag
+//We arrive in the opponent's area, let's catch a flag (LILIAN)
 
 catch_flag(initial_angle, flag);
 
