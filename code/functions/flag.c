@@ -57,12 +57,12 @@ int catch_flag(float initial_angle, int flag)
 
   //Turn to go back to area
   if (flag == 0){
-    mvt_forward(500, 200, -2, -4);
+    mvt_forward(1000, 300, -2, -5);
     turn_precise(initial_angle - 182.0, 0);
     last_angle = initial_angle - 182.0;
     second_angle = initial_angle - 200.0;
   } else{
-    mvt_forward(500, 200, -4, -2);
+    mvt_forward(1000, 300, -5, -2);
     turn_precise(initial_angle - 178.0, 0);
     last_angle = initial_angle - 178.0;
     second_angle = initial_angle - 150.0;
