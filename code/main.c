@@ -69,7 +69,7 @@ if (flag == 0){
   float second_angle = initial_angle + angle_postb[index];
 
   turn_precise(start_angle, 1);
-  mvt_forward(300, 100, 1, 1);
+  mvt_forward(700, 100, 1, 1);
 
   forward_to_base(60.0, initial_angle, start_angle, second_angle, 1, 2);
 }

@@ -57,12 +57,12 @@ int catch_flag(float initial_angle, int flag)
 
   //Turn to go back to area
   if (flag == 0){
-    mvt_forward(500, 200, -2, -3);
+    mvt_forward(500, 200, -2, -4);
     turn_precise(initial_angle - 182.0, 0);
     last_angle = initial_angle - 182.0;
     second_angle = initial_angle - 200.0;
   } else{
-    mvt_forward(500, 200, -3, -2);
+    mvt_forward(500, 200, -4, -2);
     turn_precise(initial_angle - 178.0, 0);
     last_angle = initial_angle - 178.0;
     second_angle = initial_angle - 150.0;
@@ -70,7 +70,7 @@ int catch_flag(float initial_angle, int flag)
 
   //Move forward to the wall of our base
   printf("let's go to base\n");
-  mvt_forward(1000, 200, 1, 1);
+  mvt_forward(1500, 200, 1, 1);
   forward_to_base(60.0, initial_angle - 180.0, last_angle, second_angle, 1, 2);
   forward_to_wall(150.0, initial_angle - 180.0, 1, 2);
   printf("touch wall\n");

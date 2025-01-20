@@ -231,7 +231,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
           current_angle = second_angle;
           cross_2 +=1;
         } else {
-          mvt_forward(300, 100, 1, 1);
+          mvt_forward(700, 100, 1, 1);
           cross_2 +=1;
         }
       }
