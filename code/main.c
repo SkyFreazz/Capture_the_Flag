@@ -73,7 +73,6 @@ if (flag == 0){
   forward_to_base(60.0, initial_angle, start_angle, second_angle, 1, 2);
 }
 
-
 //We arrive in the opponent's area, let's catch a flag
 
 catch_flag(initial_angle, flag);
