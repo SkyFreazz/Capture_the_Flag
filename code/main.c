@@ -62,7 +62,7 @@ int flag = rand() %2;
 
 if (flag == 0){
   mvt_forward(4000, 200, 1, 1); // get out of our area
-  mvt_forward(500, 100, -1,-1);
+  mvt_forward(500, 100, -2,-1);
 } else {
   mvt_forward(1200, 250, 1, 1);
   float start_angle = initial_angle + orientation[index];
