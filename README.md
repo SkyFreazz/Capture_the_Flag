@@ -19,6 +19,8 @@ Welcome to our project named ***CATCH!***. This report is devided in 4 parts :
 
 ***CRASH!*** is a robot capable of picking up a flag located in each corner of the opponent's base and bringing it back to its base. Thanks to its 3 motors, it can turn the two wheels independently of each other and activate its arm to grab the flag. He's also equipped with 4 sensors: a sonar, a gyroscope, a color sensor and a touch sensor, enabling him to find his way around the play area and dodge any objects that get in his way. And if these objects give him no other option, thanks to his armored tank reinforcement and daredevil mentality, he can charge right at them and smash his way through. 
 
+![image of the robot](https://gitlab.eurecom.fr/mosqueda/capture_the_flag_robot/-/raw/main/pictures/lest_arm.jpg?ref_type=heads)
+
 In short, ***CRASH!*** is **THE** solution for getting to your opponent's flag as quickly as possible without fear of being blown to smithereens.
 
 ## 3. Presentation of our git
@@ -33,7 +35,7 @@ The git is divided in 3 directories:
 
 ## 4. How to use the code
 
-> [!NOTE]
+>  <span style="color:GREEN"> **[NOTE]** </span>  
 > All the code is in the code directory. You can download it and use the directory as source directory.
 
 1. Intall the ev3 docker image
@@ -58,7 +60,7 @@ $ docker run --rm -it -h ev3 -v PATH/TO/PROJECT/:/src -w /src ev3cc /bin/bash
 [Shell in container]$ cd /src/code
 [Shell in container]$ make all
 ```
-> [!NOTE]
+> <span style="color:GREEN"> **[NOTE]** </span>  
 > 'make all' compile both 'main.c' and 'test_sensor.c'. You can also run 'make main' or 'make test' to compile only one. You can also run 'make clean' to remove all .o files and 'main' and 'test_sensor.
 
 6. Leave the docker and copy the code on the robot
@@ -67,7 +69,7 @@ $ docker run --rm -it -h ev3 -v PATH/TO/PROJECT/:/src -w /src ev3cc /bin/bash
 $scp $(pwd)/code/main robot@IP_addr_of_your_robot:/home/robot
 ```
 
-> [!WARNING]
+> <span style="color:red"> **[WARNING]** </span>  
 > Your computer and you robot needs to be connected on the same connection!
 
 7. Connect to the robot and launch the code
