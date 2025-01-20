@@ -208,6 +208,10 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
           }
         }
       }
+      
+      if (_check_pressed( sn_touch )){
+        return;
+      }
 
       if (value <= dist_min){ //there's an object
         mvt_forward(200, 50, -2, -2);
