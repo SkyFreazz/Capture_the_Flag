@@ -21,7 +21,7 @@ Welcome to our project named ***CATCH!***. This report is devided in 4 parts :
 
 ![image of the robot](https://gitlab.eurecom.fr/mosqueda/capture_the_flag_robot/-/raw/main/pictures/lest_arm.jpg?ref_type=heads)
 
-In short, ***CRASH!*** is **THE** solution for getting to your opponent's flag as quickly as possible without fear of being blown to smithereens.
+In short, ***CRASH!*** is **THE** solution for getting to your opponent's flag the most efficient way without fear of being blown to smithereens.
 
 ## 3. Presentation of our git
 
