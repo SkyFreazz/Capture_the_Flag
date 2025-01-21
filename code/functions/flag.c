@@ -56,7 +56,7 @@ int catch_flag(float initial_angle, int flag)
   
 
   //Turn 90 right
-  turn_precise(last_angle + 89.0, 0);
+  turn_precise(last_angle + 88.0, 0);
   printf("turn done\n");
   last_angle += 90.0;
 
