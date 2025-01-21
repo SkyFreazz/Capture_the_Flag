@@ -25,6 +25,7 @@ int catch_flag(float initial_angle, int flag)
   float last_angle = initial_angle;
   float second_angle;
   uint8_t sn_sonar;
+  float value;
 
   printf("flag: %d\n", flag);
 
