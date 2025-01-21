@@ -75,7 +75,7 @@ if (flag == 0){
   turn_precise(start_angle, 1);
   mvt_forward(700, 100, 1, 1);
 
-  forward_to_base(60.0, initial_angle, start_angle, second_angle, 1, 2);
+  forward_to_base(40.0, initial_angle, start_angle, second_angle, 1, 2);
 }
 
 //We arrive in the opponent's area, let's catch a flag (LILIAN)
