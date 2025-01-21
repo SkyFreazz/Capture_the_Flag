@@ -29,7 +29,7 @@
 int main( void )
 {
 uint8_t sn_compass;
-int orientation[2] = {-38.0, 36.0};
+int orientation[2] = {-40.0, 36.0};
 int angle_postb[2] = {20.0, -20.0};
 float initial_angle;
 
