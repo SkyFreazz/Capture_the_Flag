@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <time.t>
+#include <time.h>
 #include "ev3.h"
 #include "ev3_port.h"
 #include "ev3_tacho.h"
