@@ -80,8 +80,8 @@ int catch_flag(float initial_angle, int flag)
     second_angle = initial_angle - 200.0;
   } else{
     mvt_forward(1000, 300, -5, -2);
-    turn_precise(initial_angle - 182.0, 0);
-    last_angle = initial_angle - 182.0;
+    turn_precise(initial_angle - 185.0, 0);
+    last_angle = initial_angle - 185.0;
     second_angle = initial_angle - 175.0;
   }
 
