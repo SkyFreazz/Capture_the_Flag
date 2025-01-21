@@ -241,7 +241,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         return;
       }
 
-      if (value <= dist_min){ //there's an object
+      if (value <= dist_min && diff_t <= 10){ //there's an object
         mvt_forward(200, 50, -2, -2);
         if(first_angle - second_angle > 0){
           turn_precise(initial_angle - 90.0, 1);
