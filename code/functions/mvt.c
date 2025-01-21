@@ -230,7 +230,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
 
       time(&end_t);
       diff_t = difftime(end_t, start_t);
-      if (diff_t >= 3.0 && phase !=2){
+      if (diff_t >= 5.0 && phase !=2){
         printf("too long, phase 2");
         phase = 2;
       }
@@ -252,7 +252,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         turn_precise(current_angle, 1);
       }
 
-      if ((phase == 2) && (cross_2 <= 1)){ //we are in the middle
+      if ((phase == 2) && (cross_2 <= 1) ){ //we are in the middle
         if(cross_2 == 0){
           turn_precise(second_angle, 1);
           current_angle = second_angle;
