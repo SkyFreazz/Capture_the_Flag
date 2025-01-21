@@ -180,6 +180,10 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
   float current_angle = first_angle;
   int phase = 1;
   int cross_2 = 0;
+  time_t start_t, end_t;
+  double diff_t;
+
+  time(&start_t);
 
   ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 );
 
@@ -221,6 +225,13 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
               phase = 3;               
           }
         }
+      }
+
+      time(&end_t);
+      diff_t = difftime(end_t, start_t);
+      if (diff_t >= 3.0){
+        printf("too long, phase 2");
+        phase = 2;
       }
       
       //touch
