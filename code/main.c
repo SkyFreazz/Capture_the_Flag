@@ -65,7 +65,7 @@ int flag = rand() %2; //Which flag we catch (0:left, 1:right)
 
 //Go to the other base (LEONARDO)
 if (flag == 0){
-  mvt_forward(5000, 200, 1, 1); // drive onto the platform
+  mvt_forward(4000, 200, 1, 1); // drive onto the platform
   mvt_forward(500, 100, -2,-1); 
 } else {
   mvt_forward(1200, 250, 1, 1); // get out of the base
