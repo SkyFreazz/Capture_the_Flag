@@ -219,10 +219,11 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
           val = 0;
         }
+        printf("color: %d\n", val);
         if (strcmp(color[val], "BLACK") == 0){
           phase = 2;
         }else if (strcmp(color[val], "GREEN") == 0 || strcmp(color[val], "YELLOW") == 0) {
-          if (phase == 2 ) {
+          if (phase == 2) {
               phase = 3;               
           }
         }
