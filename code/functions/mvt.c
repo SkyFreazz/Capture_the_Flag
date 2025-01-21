@@ -230,7 +230,7 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
 
       time(&end_t);
       diff_t = difftime(end_t, start_t);
-      if (diff_t >= 3.0){
+      if (diff_t >= 3.0 and phase !=2){
         printf("too long, phase 2");
         phase = 2;
       }
