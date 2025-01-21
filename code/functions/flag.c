@@ -39,9 +39,11 @@ int catch_flag(float initial_angle, int flag)
   forward_to_wall(150, last_angle, 0, 1);
   printf("hit first wall\n");
   while(true){
-    if (!get_sensor_value0(sn_sonar, &value )) {
-        value = 0;
-      }
+    if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
+      if (!get_sensor_value0(sn_sonar, &value )) {
+          value = 0;
+        }
+    }
     
     if (value < 50.0){
       mvt_forward(100, 0, -4, -4);
