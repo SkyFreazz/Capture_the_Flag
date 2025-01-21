@@ -45,9 +45,9 @@ int catch_flag(float initial_angle, int flag)
         }
     }
     
-    if (value < 50.0){
+    if (value < 0.0){
       mvt_forward(100, 0, -4, -4);
-    } else if (value > 60.0){
+    } else if (value > 55.0){
       mvt_forward(100, 0, 4, 4);      
     } else {
       break;
