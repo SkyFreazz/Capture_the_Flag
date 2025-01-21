@@ -24,6 +24,7 @@ int catch_flag(float initial_angle, int flag)
 {
   float last_angle = initial_angle;
   float second_angle;
+  uint8_t sn_sonar;
 
   printf("flag: %d\n", flag);
 
@@ -36,7 +37,20 @@ int catch_flag(float initial_angle, int flag)
   //Move forward to the wall
   forward_to_wall(150, last_angle, 0, 1);
   printf("hit first wall\n");
-  mvt_forward(100, 0, -4, -4);
+  while(true){
+    if (!get_sensor_value0(sn_sonar, &value )) {
+        value = 0;
+      }
+    
+    if (value < 50.0){
+      mvt_forward(100, 0, -4, -4);
+    } else if (value > 60.0){
+      mvt_forward(100, 0, 4, 4);      
+    } else {
+      break;
+    }
+  }
+  
 
   //Turn 90 right
   turn_precise(last_angle + 90.0, 0);
@@ -79,7 +93,7 @@ int catch_flag(float initial_angle, int flag)
   turn_arm(-3, 500);
 
   //Move backward a bit
-  mvt_forward(500, 0, -2, -2);
+  mvt_forward(1000, 0, -2, -2);
 
 return 0;
 }
