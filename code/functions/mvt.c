@@ -235,6 +235,9 @@ void forward_to_base(float dist_min, float initial_angle, float first_angle, flo
         printf("too long, phase 2");
         phase = 2;
       }
+      if (diff_t >= 15.0 and phase == 2){
+        phase = 3;
+      }
       
       //touch
       if (_check_pressed( sn_touch )){

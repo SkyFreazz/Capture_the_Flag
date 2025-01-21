@@ -80,9 +80,9 @@ int catch_flag(float initial_angle, int flag)
     second_angle = initial_angle - 200.0;
   } else{
     mvt_forward(1000, 300, -5, -2);
-    turn_precise(initial_angle - 180.0, 0);
-    last_angle = initial_angle - 180.0;
-    second_angle = initial_angle - 150.0;
+    turn_precise(initial_angle - 182.0, 0);
+    last_angle = initial_angle - 182.0;
+    second_angle = initial_angle - 175.0;
   }
 
   //Move forward to the wall of our base (first to the base and the to the wall)
