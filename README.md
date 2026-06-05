@@ -15,11 +15,11 @@ Welcome to our project named ***CATCH!***. This report is devided in 4 parts :
 
 ## 2. Presentation of the robot
 
-![CRASH!](https://gitlab.eurecom.fr/mosqueda/capture_the_flag_robot/-/raw/main/pictures/crash.jpg?ref_type=heads)
+![CRASH!](https://github.com/SkyFreazz/Capture_the_Flag/-/raw/main/pictures/crash.jpg?ref_type=heads)
 
 ***CRASH!*** is a robot capable of picking up a flag located in each corner of the opponent's base and bringing it back to its base. Thanks to its 3 motors, it can turn the two wheels independently of each other and activate its arm to grab the flag. He's also equipped with 4 sensors: a sonar, a gyroscope, a color sensor and a touch sensor, enabling him to find his way around the play area and dodge any objects that get in his way. And if these objects give him no other option, thanks to his armored tank reinforcement and daredevil mentality, he can charge right at them and smash his way through. 
 
-![image of the robot](https://gitlab.eurecom.fr/mosqueda/capture_the_flag_robot/-/raw/main/pictures/lest_arm.jpg?ref_type=heads)
+![image of the robot](https://github.com/SkyFreazz/Capture_the_Flag/-/raw/main/pictures/lest_arm.jpg?ref_type=heads)
 
 In short, ***CRASH!*** is **THE** solution for getting to your opponent's flag the most efficient way without fear of being blown to smithereens.
 
@@ -27,11 +27,11 @@ In short, ***CRASH!*** is **THE** solution for getting to your opponent's flag t
 
 The git is divided in 3 directories:
 
-- [code](https://gitlab.eurecom.fr/mosqueda/capture_the_flag_robot/-/tree/main/code?ref_type=heads): this is where all the code of the project is. You can find the Makefile to be able to launch the code ([click to see how it works](#how-to-use-the-code)), the main code with all the related functions, and a code to test the sensors.
+- [code](https://github.com/SkyFreazz/Capture_the_Flag/-/tree/main/code?ref_type=heads): this is where all the code of the project is. You can find the Makefile to be able to launch the code ([click to see how it works](#how-to-use-the-code)), the main code with all the related functions, and a code to test the sensors.
 
-- [pictures](https://gitlab.eurecom.fr/mosqueda/capture_the_flag_robot/-/tree/main/pictures?ref_type=heads): you can find some pictures of our robots from different side and also the pictures of the different sensors we are using in our robot.
+- [pictures](https://github.com/SkyFreazz/Capture_the_Flag/-/tree/main/pictures?ref_type=heads): you can find some pictures of our robots from different side and also the pictures of the different sensors we are using in our robot.
 
-- [videos](https://gitlab.eurecom.fr/mosqueda/capture_the_flag_robot/-/tree/main/videos?ref_type=heads): you can find some videos of how **CRASH!** works on the field.
+- [videos](https://github.com/SkyFreazz/Capture_the_Flag/-/tree/main/videos?ref_type=heads): you can find some videos of how **CRASH!** works on the field.
 
 ## 4. How to use the code
 
